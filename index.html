@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>A.S ELECTRICIAN — Material Estimation &amp; Site Procurement</title>
+  <meta name="description" content="A.S ELECTRICIAN - Interactive mobile-friendly material estimation system for plumbing and electrical site projects." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- App Stylesheet -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Top Header (A.S ELECTRICIAN) -->
+  <header class="site-header">
+    <div class="container site-header__wrapper">
+      <div class="site-header__brand">
+        <div class="site-header__logo-badge">⚡</div>
+        <div class="site-header__titles">
+          <h1 class="site-header__company">A.S ELECTRICIAN</h1>
+          <div class="site-header__tagline">
+            <span>Electrical &amp; Plumbing Estimation</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="site-header__actions">
+        <button type="button" class="header-btn" id="resetBtn" title="Reset all quantities to 0">
+          <span>🔄</span> <span class="btn-text">Reset 0</span>
+        </button>
+        <button type="button" class="header-btn" id="loadRefAllBtn" title="Load Reference Sheet Quantities">
+          <span>📋</span> <span class="btn-text">Load Ref Qty</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Project Meta Context Bar (Mobile Friendly Summary + Collapsible Editor) -->
+  <section class="meta-bar" aria-label="Project Details">
+    <div class="container">
+      
+      <!-- Mobile Quick Summary Line -->
+      <div class="meta-summary" id="metaSummaryToggle" title="Tap to edit Date and Site details">
+        <div class="meta-summary__chips">
+          <span class="meta-chip">📅 <strong id="chipDateVal">14.03.2026</strong></span>
+          <span class="meta-chip">🏗️ <strong id="chipSiteVal">SINTHAMANI</strong></span>
+          <span class="meta-chip">🔧 <strong id="chipWorkVal">Plumbing</strong></span>
+        </div>
+        <button type="button" class="meta-summary__toggle-btn" aria-label="Edit site info">
+          <span>✏️ Edit</span>
+        </button>
+      </div>
+
+      <!-- Expandable / Desktop Input Grid -->
+      <div class="meta-fields-container" id="metaFieldsContainer">
+        <div class="meta-field">
+          <label class="meta-field__label" for="metaDate">Date</label>
+          <input type="text" id="metaDate" class="meta-field__input" value="14.03.2026" placeholder="DD.MM.YYYY" />
+        </div>
+
+        <div class="meta-field">
+          <label class="meta-field__label" for="metaSite">Site Name</label>
+          <input type="text" id="metaSite" class="meta-field__input" value="SINTHAMANI" placeholder="Enter site name" />
+        </div>
+
+        <div class="meta-field">
+          <label class="meta-field__label" for="metaWork">Work Type</label>
+          <select id="metaWork" class="meta-field__input">
+            <option value="Plumbing" selected>Plumbing Work</option>
+            <option value="Electrical">Electrical Work</option>
+            <option value="Plumbing &amp; Electrical">Plumbing &amp; Electrical (Combined)</option>
+          </select>
+        </div>
+
+        <div class="meta-field">
+          <label class="meta-field__label" for="metaEngineer">Prepared By</label>
+          <input type="text" id="metaEngineer" class="meta-field__input" value="A.S Electrician" placeholder="Electrician / Engineer" />
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Sticky Category Navigation Bar (Plumbing / Electrical) -->
+  <div class="category-nav-bar">
+    <div class="container">
+      <nav class="category-nav" role="tablist" aria-label="Work Categories">
+        <button 
+          type="button" 
+          class="category-nav__tab category-nav__tab--active" 
+          data-category="plumbing" 
+          role="tab" 
+          aria-selected="true"
+        >
+          <span>💧 Plumbing</span>
+          <span class="category-nav__badge" id="plumbingCountBadge">44</span>
+        </button>
+
+        <button 
+          type="button" 
+          class="category-nav__tab" 
+          data-category="electrical" 
+          role="tab" 
+          aria-selected="false"
+        >
+          <span>⚡ Electrical</span>
+          <span class="category-nav__badge" id="electricalCountBadge">32</span>
+        </button>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Main Body Content -->
+  <main class="container">
+
+    <!-- Search & Filter Toolbar -->
+    <div class="toolbar-card">
+      <div class="search-box">
+        <span class="search-box__icon">🔍</span>
+        <input 
+          type="text" 
+          id="searchInput" 
+          class="search-box__input" 
+          placeholder="Search material (e.g. CPVC, elbow, wire, 1½, conduit)..." 
+          autocomplete="off"
+        />
+        <button type="button" id="searchClear" class="search-box__clear" style="display:none;" title="Clear search">
+          ✕
+        </button>
+      </div>
+
+      <!-- Horizontal Swipeable Subcategory Chips -->
+      <div class="subcat-chips" id="subcatChips">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+
+    <!-- Workspace Grid -->
+    <div class="workspace-grid">
+
+      <!-- LEFT: Materials Catalog Grid -->
+      <section aria-label="Material Items List">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem; padding: 0 0.2rem;">
+          <span id="catalogCount" style="font-size:0.82rem; font-weight:800; color:#475569;">Showing items</span>
+          <span style="font-size:0.75rem; color:#64748b;">Default is 0 • Tap <strong>+ ADD</strong> to select</span>
+        </div>
+
+        <div class="catalog-list" id="catalogList">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </section>
+
+      <!-- RIGHT / MOBILE DRAWER: Selected Materials Panel -->
+      <div class="cart-drawer-overlay" id="cartDrawerOverlay"></div>
+      
+      <aside class="cart-panel" id="cartPanel" aria-label="Selected Materials List">
+        <!-- Mobile pull down indicator -->
+        <div class="cart-panel__drag-handle"></div>
+
+        <!-- Cart Header -->
+        <div class="cart-header">
+          <div class="cart-header__top">
+            <div class="cart-header__title-wrap">
+              <span style="font-size:1.15rem;">📋</span>
+              <h2 class="cart-header__title">Selected Materials</h2>
+              <span class="cart-header__badge" id="cartBadge">0 items</span>
+            </div>
+            <button type="button" class="cart-header__close-btn" id="cartCloseBtn" aria-label="Close drawer">✕</button>
+          </div>
+
+          <div class="cart-header__sub">
+            <span>Review materials before confirming</span>
+            <button type="button" class="cart-header__clear-btn" id="cartClearBtn" title="Clear all">
+              <span>🗑 Clear All</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Cart Items Scrollable Body -->
+        <div class="cart-body">
+          <!-- Empty State -->
+          <div class="cart-empty-state" id="cartEmpty">
+            <div class="cart-empty-state__icon">📦</div>
+            <h3 class="cart-empty-state__title">No materials selected</h3>
+            <p class="cart-empty-state__desc">Tap <strong>+ ADD</strong> on any material in the list to select it for estimation.</p>
+          </div>
+
+          <!-- Items Rows -->
+          <div id="cartList">
+            <!-- Dynamically populated via JS -->
+          </div>
+        </div>
+
+        <!-- Cart Footer -->
+        <div class="cart-footer">
+          <div class="cart-totals">
+            <span>Total Items: <strong id="cartTotalItems">0</strong></span>
+            <span>Total Units: <strong id="cartTotalUnits">0</strong></span>
+          </div>
+
+          <!-- Add Custom Item Button -->
+          <button type="button" class="cart-add-custom-btn" id="cartAddCustomBtn">
+            <span>➕</span> Add Custom / Unlisted Material
+          </button>
+
+          <!-- Confirm Button -->
+          <button type="button" class="confirm-big-btn" id="cartConfirmBtn" disabled>
+            <span>✓</span> CONFIRM ESTIMATION
+          </button>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <!-- Sticky Bottom Floating Bar (Mobile View) -->
+  <div class="floating-bottom-bar" id="mobileBottomBar">
+    <div class="floating-bottom-bar__left">
+      <span class="floating-bottom-bar__badge" id="mobileBarCount">🛒 0 Materials</span>
+      <span class="floating-bottom-bar__units" id="mobileBarUnits">0 Units Selected</span>
+    </div>
+    <button type="button" class="floating-bottom-bar__btn" id="mobileBarOpenBtn">
+      <span>View List 📋</span>
+    </button>
+  </div>
+
+  <!-- MODAL: Official Final Estimation Summary (A.S ELECTRICIAN) -->
+  <div class="modal-backdrop" id="estimateModal" role="dialog" aria-modal="true" aria-labelledby="modalEstimateTitle">
+    <div class="modal-window">
+      <div class="modal-window__header">
+        <div class="modal-window__title" id="modalEstimateTitle">
+          <span>⚡</span> A.S ELECTRICIAN — Final Estimation
+        </div>
+        <button type="button" class="modal-window__close-btn" id="estimateCloseBtn" title="Close">✕</button>
+      </div>
+
+      <div class="modal-window__body">
+        <div id="estimateSheetContent">
+          <!-- Rendered Official Sheet via JS -->
+        </div>
+      </div>
+
+      <div class="modal-window__footer">
+        <button type="button" class="btn-action btn-action--secondary" id="estimateBackBtn">
+          <span>← Back to Edit</span>
+        </button>
+        <button type="button" class="btn-action btn-action--secondary" id="estimateCopyBtn">
+          <span>📋 Copy Text</span>
+        </button>
+        <button type="button" class="btn-action btn-action--secondary" id="estimateCsvBtn">
+          <span>📥 Export CSV</span>
+        </button>
+        <button type="button" class="btn-action btn-action--whatsapp" id="estimateWhatsAppBtn">
+          <span>💬 WhatsApp Share</span>
+        </button>
+        <button type="button" class="btn-action btn-action--primary" id="estimatePrintBtn">
+          <span>🖨️ Print / PDF</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Add Custom / Special Job Site Material -->
+  <div class="modal-backdrop" id="customModal" role="dialog" aria-modal="true" aria-labelledby="customModalTitle">
+    <div class="modal-window" style="max-width: 440px;">
+      <div class="modal-window__header">
+        <div class="modal-window__title" id="customModalTitle">
+          <span>➕</span> Add Custom Material
+        </div>
+        <button type="button" class="modal-window__close-btn" id="customModalClose" title="Close">✕</button>
+      </div>
+
+      <form id="customForm">
+        <div style="padding: 1.25rem; display: flex; flex-direction: column; gap: 0.85rem;">
+          <div class="meta-field">
+            <label class="meta-field__label" for="customName">Material Name *</label>
+            <input type="text" id="customName" class="meta-field__input" placeholder='e.g. 2" Brass Gate Valve' required />
+          </div>
+
+          <div class="meta-field">
+            <label class="meta-field__label" for="customCategory">Category</label>
+            <select id="customCategory" class="meta-field__input">
+              <option value="plumbing">Plumbing</option>
+              <option value="electrical">Electrical</option>
+            </select>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+            <div class="meta-field">
+              <label class="meta-field__label" for="customQty">Quantity *</label>
+              <input type="number" id="customQty" class="meta-field__input" value="1" min="1" inputmode="numeric" required />
+            </div>
+
+            <div class="meta-field">
+              <label class="meta-field__label" for="customUnit">Unit *</label>
+              <input type="text" id="customUnit" class="meta-field__input" value="Nos" placeholder="Nos, kg, set..." required />
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-window__footer" style="justify-content: flex-end;">
+          <button type="button" class="btn-action btn-action--secondary" id="customModalCancel">Cancel</button>
+          <button type="submit" class="btn-action btn-action--primary">Add Material</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-box" id="toastContainer" aria-live="polite"></div>
+
+  <!-- Application Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
