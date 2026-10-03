@@ -75,10 +75,8 @@ function cacheDOM() {
     estimateModal: document.getElementById("estimateModal"),
     estimateCloseBtn: document.getElementById("estimateCloseBtn"),
     estimateBackBtn: document.getElementById("estimateBackBtn"),
-    estimatePrintBtn: document.getElementById("estimatePrintBtn"),
+    estimateDownloadPdfBtn: document.getElementById("estimateDownloadPdfBtn"),
     estimateWhatsAppBtn: document.getElementById("estimateWhatsAppBtn"),
-    estimateCopyBtn: document.getElementById("estimateCopyBtn"),
-    estimateCsvBtn: document.getElementById("estimateCsvBtn"),
     estimateSheetContent: document.getElementById("estimateSheetContent"),
 
     // Custom Item Modal
@@ -181,7 +179,6 @@ function bindEvents() {
         if (DOM.searchInput) DOM.searchInput.value = "";
         if (DOM.searchClear) DOM.searchClear.style.display = "none";
 
-        // Auto update work type default if user hasn't heavily customized
         if (DOM.metaWork) {
           DOM.metaWork.value = cat === "plumbing" ? "Plumbing" : "Electrical";
           state.projectMeta.workType = DOM.metaWork.value;
@@ -247,15 +244,13 @@ function bindEvents() {
     handleAddCustomItem();
   });
 
-  // Estimation Modal Actions
+  // Estimation Modal Actions (Direct PDF Download & WhatsApp Share)
   DOM.estimateCloseBtn?.addEventListener("click", () => closeEstimationModal());
   DOM.estimateBackBtn?.addEventListener("click", () => closeEstimationModal());
-  DOM.estimatePrintBtn?.addEventListener("click", () => window.print());
+  DOM.estimateDownloadPdfBtn?.addEventListener("click", () => downloadDirectPDF());
   DOM.estimateWhatsAppBtn?.addEventListener("click", () => shareWhatsApp());
-  DOM.estimateCopyBtn?.addEventListener("click", () => copyEstimationText());
-  DOM.estimateCsvBtn?.addEventListener("click", () => exportCSV());
 
-  // Reset Button
+  // Reset Button (Default 0)
   DOM.resetBtn?.addEventListener("click", () => {
     if (confirm("Reset everything to 0? (அனைத்தையும் 0 ஆக்கவா?)")) {
       localStorage.removeItem("as_project_meta");
@@ -277,7 +272,7 @@ function bindEvents() {
     }
   });
 
-  // Load All Reference Sheet Quantities Button (Optional helper)
+  // Load All Reference Sheet Quantities Button
   DOM.loadRefAllBtn?.addEventListener("click", () => {
     const list = PRODUCT_CATALOG[state.currentCategory] || [];
     let count = 0;
@@ -375,7 +370,7 @@ function getFilteredItems() {
 }
 
 /**
- * Render Material Cards (Mobile-first, user-friendly cards)
+ * Render Material Cards (Mobile-first, touch-optimized)
  */
 function renderCatalog() {
   if (!DOM.catalogList) return;
@@ -388,9 +383,9 @@ function renderCatalog() {
   if (items.length === 0) {
     DOM.catalogList.innerHTML = `
       <div style="text-align:center; padding: 2.5rem 1rem; background:#fff; border-radius:12px; border:1px dashed #cbd5e1; grid-column:1/-1;">
-        <div style="font-size:2rem; margin-bottom:0.5rem;">🔍</div>
+        <div style="font-size:2rem; margin-bottom:0.4rem;">🔍</div>
         <div style="font-weight:800; color:#334155;">No materials found</div>
-        <div style="font-size:0.82rem; color:#64748b; margin-top:0.25rem;">Try a different keyword or tap Clear</div>
+        <div style="font-size:0.8rem; color:#64748b; margin-top:0.2rem;">Try a different keyword or tap Clear</div>
       </div>
     `;
     return;
@@ -479,7 +474,6 @@ window.handleFirstAdd = function(itemId) {
   const itemData = findProductById(itemId);
   if (!itemData) return;
 
-  // Add with qty = 1
   state.selectedMaterials.set(itemId, {
     id: itemData.id,
     name: itemData.name,
@@ -530,7 +524,6 @@ window.handleCardStep = function(itemId, delta) {
   const newQty = current.qty + delta;
 
   if (newQty <= 0) {
-    // If decreased to 0, remove it and reset card to [+ ADD]
     state.selectedMaterials.delete(itemId);
     showToast(`Removed "${current.name}"`, "info");
   } else {
@@ -549,7 +542,6 @@ window.handleCardStep = function(itemId, delta) {
 window.handleCardInput = function(itemId, rawVal) {
   let val = parseInt(rawVal, 10);
   if (isNaN(val) || val <= 0) {
-    // Remove if 0 or empty
     if (state.selectedMaterials.has(itemId)) {
       const item = state.selectedMaterials.get(itemId);
       state.selectedMaterials.delete(itemId);
@@ -603,7 +595,7 @@ function renderCart() {
 
   // Update mobile bottom bar
   if (DOM.mobileBarCount) DOM.mobileBarCount.textContent = `🛒 ${count} Materials`;
-  if (DOM.mobileBarUnits) DOM.mobileBarUnits.textContent = `${totalUnits} Units`;
+  if (DOM.mobileBarUnits) DOM.mobileBarUnits.textContent = `${totalUnits} Units Selected`;
 
   if (DOM.cartConfirmBtn) {
     DOM.cartConfirmBtn.disabled = count === 0;
@@ -611,7 +603,7 @@ function renderCart() {
 
   // Empty state handling
   if (count === 0) {
-    if (DOM.cartEmpty) DOM.cartEmpty.style.display = "flex";
+    if (DOM.cartEmpty) DOM.cartEmpty.style.display = "block";
     if (DOM.cartList) DOM.cartList.innerHTML = "";
     return;
   }
@@ -777,6 +769,7 @@ function handleAddCustomItem() {
 function openEstimationModal() {
   renderEstimateSheet();
   DOM.estimateModal?.classList.add("modal-backdrop--open");
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function closeEstimationModal() {
@@ -800,58 +793,64 @@ function renderEstimateSheet() {
         <div class="as-sheet__doc-title">Material Estimation</div>
       </div>
 
-      <table class="as-sheet__meta-grid">
-        <tr>
-          <td class="as-sheet__meta-label">DATE</td>
-          <td class="as-sheet__meta-val">${date}</td>
-          <td class="as-sheet__meta-label">SITE NAME</td>
-          <td class="as-sheet__meta-val">${siteName}</td>
-        </tr>
-        <tr>
-          <td class="as-sheet__meta-label">WORK</td>
-          <td class="as-sheet__meta-val">${workType}</td>
-          <td class="as-sheet__meta-label">PREPARED BY</td>
-          <td class="as-sheet__meta-val">${engineer}</td>
-        </tr>
-      </table>
+      <div class="as-sheet__meta-box">
+        <div class="as-sheet__meta-item as-sheet__meta-item--highlight">
+          <span class="as-sheet__meta-label">DATE:</span>
+          <span class="as-sheet__meta-val">${date}</span>
+        </div>
+        <div class="as-sheet__meta-item as-sheet__meta-item--highlight">
+          <span class="as-sheet__meta-label">SITE NAME:</span>
+          <span class="as-sheet__meta-val">${siteName}</span>
+        </div>
+        <div class="as-sheet__meta-item">
+          <span class="as-sheet__meta-label">WORK TYPE:</span>
+          <span class="as-sheet__meta-val">${workType}</span>
+        </div>
+        <div class="as-sheet__meta-item">
+          <span class="as-sheet__meta-label">PREPARED BY:</span>
+          <span class="as-sheet__meta-val">${engineer}</span>
+        </div>
+      </div>
 
-      <table class="as-sheet__table">
-        <thead>
-          <tr>
-            <th>S.NO</th>
-            <th>MATERIAL DESCRIPTION</th>
-            <th>QUANTITY</th>
-            <th>UNIT</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${selectedList.map((item, idx) => `
+      <div class="as-sheet__table-wrap">
+        <table class="as-sheet__table">
+          <thead>
             <tr>
-              <td>${idx + 1}</td>
-              <td>${item.name}</td>
-              <td><strong>${item.qty}</strong></td>
-              <td>${item.unit}</td>
+              <th>S.NO</th>
+              <th>MATERIAL DESCRIPTION</th>
+              <th>QTY</th>
+              <th>UNIT</th>
             </tr>
-          `).join("")}
-          <tr class="as-sheet__total-row">
-            <td colspan="2" style="text-align: right;">TOTAL ESTIMATED MATERIALS:</td>
-            <td style="text-align: center;">${totalUnits.toLocaleString("en-IN")}</td>
-            <td style="text-align: center;">${selectedList.length} Items</td>
-          </tr>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            ${selectedList.map((item, idx) => `
+              <tr>
+                <td>${idx + 1}</td>
+                <td>${item.name}</td>
+                <td><strong>${item.qty}</strong></td>
+                <td>${item.unit}</td>
+              </tr>
+            `).join("")}
+            <tr class="as-sheet__total-row">
+              <td colspan="2" style="text-align: right;">TOTAL ESTIMATED:</td>
+              <td style="text-align: center;">${totalUnits.toLocaleString("en-IN")}</td>
+              <td style="text-align: center;">${selectedList.length} Items</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <div class="as-sheet__signatures">
         <div class="as-sheet__sign-box">
           <div class="as-sheet__sign-line"></div>
           <div class="as-sheet__sign-name">${engineer}</div>
-          <div class="as-sheet__sign-sub">Site Engineer Signature</div>
+          <div class="as-sheet__sign-sub">Site Engineer / Electrician</div>
         </div>
 
         <div class="as-sheet__sign-box">
           <div class="as-sheet__sign-line"></div>
           <div class="as-sheet__sign-name">A.S ELECTRICIAN</div>
-          <div class="as-sheet__sign-sub">Authorized Signatory / Approver</div>
+          <div class="as-sheet__sign-sub">Authorized Signatory</div>
         </div>
       </div>
     </div>
@@ -859,7 +858,43 @@ function renderEstimateSheet() {
 }
 
 /**
- * WhatsApp Share (Formatted with A.S ELECTRICIAN)
+ * Direct PDF Download (No print dialog - downloads actual .pdf file directly!)
+ */
+function downloadDirectPDF() {
+  const element = document.getElementById("officialSheetPrint");
+  if (!element) {
+    showToast("Estimation sheet not found", "warning");
+    return;
+  }
+
+  const siteName = (state.projectMeta.siteName || "SINTHAMANI").replace(/[^a-zA-Z0-9]/g, "_");
+  const date = (state.projectMeta.date || "14-03-2026").replace(/[^a-zA-Z0-9]/g, "-");
+  const filename = `AS_Electrician_Estimation_${siteName}_${date}.pdf`;
+
+  showToast("Downloading PDF file... (PDF பதிவிறக்கம் செய்யப்படுகிறது)", "info");
+
+  if (typeof html2pdf !== "undefined") {
+    const opt = {
+      margin: [6, 6, 6, 6],
+      filename: filename,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2, useCORS: true, letterRendering: true },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    html2pdf().set(opt).from(element).save().then(() => {
+      showToast("PDF Downloaded Successfully! ✓ (பதிவிறக்கம் முடிந்தது)", "success");
+    }).catch(err => {
+      console.error("html2pdf failed:", err);
+      showToast("PDF download failed, retrying...", "warning");
+    });
+  } else {
+    showToast("PDF generator initializing, please try in a moment...", "warning");
+  }
+}
+
+/**
+ * WhatsApp Share
  */
 function shareWhatsApp() {
   const selectedList = Array.from(state.selectedMaterials.values());
@@ -885,70 +920,10 @@ function shareWhatsApp() {
   const totalUnits = selectedList.reduce((sum, item) => sum + (parseInt(item.qty, 10) || 0), 0);
   text += `━━━━━━━━━━━━━━━━━━━━\n`;
   text += `*Total Items:* ${selectedList.length} | *Total Units:* ${totalUnits}\n`;
-  text += `_Generated via A.S Electrician Estimation App_`;
+  text += `_Generated via A.S Electrician App_`;
 
   const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
   window.open(url, "_blank");
-}
-
-/**
- * Copy to Clipboard
- */
-function copyEstimationText() {
-  const selectedList = Array.from(state.selectedMaterials.values());
-  if (selectedList.length === 0) return;
-
-  const siteName = state.projectMeta.siteName || "SINTHAMANI";
-  const date = state.projectMeta.date || "14.03.2026";
-  const workType = state.projectMeta.workType || "Plumbing";
-
-  let text = `A.S ELECTRICIAN - MATERIAL ESTIMATION\n`;
-  text += `Date: ${date}\n`;
-  text += `Site Name: ${siteName}\n`;
-  text += `Work: ${workType}\n\n`;
-  text += `S.No | Material | Quantity | Unit\n`;
-  text += `----------------------------------------\n`;
-
-  selectedList.forEach((item, idx) => {
-    text += `${idx + 1} | ${item.name} | ${item.qty} | ${item.unit}\n`;
-  });
-
-  const totalUnits = selectedList.reduce((sum, item) => sum + (parseInt(item.qty, 10) || 0), 0);
-  text += `----------------------------------------\n`;
-  text += `Total: ${selectedList.length} items (${totalUnits} units)\n`;
-
-  navigator.clipboard.writeText(text).then(() => {
-    showToast("Copied estimation to clipboard!", "success");
-  }).catch(() => {
-    showToast("Could not copy to clipboard", "warning");
-  });
-}
-
-/**
- * Export CSV
- */
-function exportCSV() {
-  const selectedList = Array.from(state.selectedMaterials.values());
-  if (selectedList.length === 0) return;
-
-  const siteName = state.projectMeta.siteName || "SINTHAMANI";
-  const date = state.projectMeta.date || "14.03.2026";
-
-  let csv = "S.No,Material Description,Quantity,Unit,Category\n";
-  selectedList.forEach((item, idx) => {
-    const escapedName = `"${item.name.replace(/"/g, '""')}"`;
-    csv += `${idx + 1},${escapedName},${item.qty},"${item.unit}","${item.category}"\n`;
-  });
-
-  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.setAttribute("href", url);
-  link.setAttribute("download", `AS_Electrician_${siteName.replace(/\s+/g, "_")}_${date.replace(/\./g, "-")}.csv`);
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  showToast("CSV file exported successfully", "success");
 }
 
 /**

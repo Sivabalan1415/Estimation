@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>A.S ELECTRICIAN — Material Estimation &amp; Site Procurement</title>
-  <meta name="description" content="A.S ELECTRICIAN - Interactive mobile-friendly material estimation system for plumbing and electrical site projects." />
+  <meta name="description" content="A.S ELECTRICIAN - Mobile-first material estimation application for plumbing and electrical construction projects." />
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -30,7 +30,7 @@
       </div>
 
       <div class="site-header__actions">
-        <button type="button" class="header-btn" id="resetBtn" title="Reset all quantities to 0">
+        <button type="button" class="header-btn" id="resetBtn" title="Reset all to 0">
           <span>🔄</span> <span class="btn-text">Reset 0</span>
         </button>
         <button type="button" class="header-btn" id="loadRefAllBtn" title="Load Reference Sheet Quantities">
@@ -145,9 +145,9 @@
 
       <!-- LEFT: Materials Catalog Grid -->
       <section aria-label="Material Items List">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem; padding: 0 0.2rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem; padding: 0 0.2rem;">
           <span id="catalogCount" style="font-size:0.82rem; font-weight:800; color:#475569;">Showing items</span>
-          <span style="font-size:0.75rem; color:#64748b;">Default is 0 • Tap <strong>+ ADD</strong> to select</span>
+          <span style="font-size:0.75rem; color:#64748b;">Default is 0 • Tap <strong>+ ADD</strong></span>
         </div>
 
         <div class="catalog-list" id="catalogList">
@@ -234,7 +234,7 @@
     <div class="modal-window">
       <div class="modal-window__header">
         <div class="modal-window__title" id="modalEstimateTitle">
-          <span>⚡</span> A.S ELECTRICIAN — Final Estimation
+          <span>⚡</span> A.S ELECTRICIAN — Estimation Summary
         </div>
         <button type="button" class="modal-window__close-btn" id="estimateCloseBtn" title="Close">✕</button>
       </div>
@@ -245,29 +245,24 @@
         </div>
       </div>
 
+      <!-- Action Footer: Direct PDF Download & WhatsApp Share (No print) -->
       <div class="modal-window__footer">
-        <button type="button" class="btn-action btn-action--secondary" id="estimateBackBtn">
-          <span>← Back to Edit</span>
+        <button type="button" class="btn-pdf-download" id="estimateDownloadPdfBtn">
+          <span>📥</span> DOWNLOAD PDF (பதிவிறக்கம்)
         </button>
-        <button type="button" class="btn-action btn-action--secondary" id="estimateCopyBtn">
-          <span>📋 Copy Text</span>
+        <button type="button" class="btn-whatsapp-share" id="estimateWhatsAppBtn">
+          <span>💬</span> Share WhatsApp
         </button>
-        <button type="button" class="btn-action btn-action--secondary" id="estimateCsvBtn">
-          <span>📥 Export CSV</span>
-        </button>
-        <button type="button" class="btn-action btn-action--whatsapp" id="estimateWhatsAppBtn">
-          <span>💬 WhatsApp Share</span>
-        </button>
-        <button type="button" class="btn-action btn-action--primary" id="estimatePrintBtn">
-          <span>🖨️ Print / PDF</span>
+        <button type="button" class="btn-back-edit" id="estimateBackBtn">
+          <span>←</span> Back / Edit
         </button>
       </div>
     </div>
   </div>
 
-  <!-- MODAL: Add Custom / Special Job Site Material -->
+  <!-- MODAL: Add Custom Material -->
   <div class="modal-backdrop" id="customModal" role="dialog" aria-modal="true" aria-labelledby="customModalTitle">
-    <div class="modal-window" style="max-width: 440px;">
+    <div class="modal-window" style="max-width: 440px; min-height: auto; margin: auto;">
       <div class="modal-window__header">
         <div class="modal-window__title" id="customModalTitle">
           <span>➕</span> Add Custom Material
@@ -276,7 +271,7 @@
       </div>
 
       <form id="customForm">
-        <div style="padding: 1.25rem; display: flex; flex-direction: column; gap: 0.85rem;">
+        <div style="padding: 1.15rem; display: flex; flex-direction: column; gap: 0.85rem;">
           <div class="meta-field">
             <label class="meta-field__label" for="customName">Material Name *</label>
             <input type="text" id="customName" class="meta-field__input" placeholder='e.g. 2" Brass Gate Valve' required />
@@ -303,9 +298,9 @@
           </div>
         </div>
 
-        <div class="modal-window__footer" style="justify-content: flex-end;">
-          <button type="button" class="btn-action btn-action--secondary" id="customModalCancel">Cancel</button>
-          <button type="submit" class="btn-action btn-action--primary">Add Material</button>
+        <div style="padding: 0.75rem 1.15rem; background: var(--color-slate-50); border-top: 1px solid var(--color-slate-200); display: flex; justify-content: flex-end; gap: 0.5rem;">
+          <button type="button" class="btn-back-edit" id="customModalCancel" style="width: auto;">Cancel</button>
+          <button type="submit" class="btn-pdf-download" style="width: auto; padding: 0.65rem 1.15rem; font-size: 0.9rem;">Add Material</button>
         </div>
       </form>
     </div>
@@ -314,7 +309,8 @@
   <!-- Toast Notification Container -->
   <div class="toast-box" id="toastContainer" aria-live="polite"></div>
 
-  <!-- Application Scripts -->
+  <!-- Scripts -->
+  <script src="js/html2pdf.bundle.min.js"></script>
   <script src="js/data.js"></script>
   <script src="js/app.js"></script>
 </body>
