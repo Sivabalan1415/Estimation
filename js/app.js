@@ -94,7 +94,8 @@ function cacheDOM() {
 
     // Quick Actions
     resetBtn: document.getElementById("resetBtn"),
-    loadRefAllBtn: document.getElementById("loadRefAllBtn")
+    loadRefAllBtn: document.getElementById("loadRefAllBtn"),
+
   };
 }
 
@@ -159,6 +160,16 @@ function bindEvents() {
 
   DOM.metaWork?.addEventListener("change", (e) => {
     state.projectMeta.workType = e.target.value;
+    if (e.target.value === "Roof Pipe Line") {
+      state.currentCategory = "electrical";
+      state.activeSubcategory = "roof_pipeline";
+      state.searchQuery = "";
+      if (DOM.searchInput) DOM.searchInput.value = "";
+      if (DOM.searchClear) DOM.searchClear.style.display = "none";
+      renderCategoryTabs();
+      renderSubcategoryChips();
+      renderCatalog();
+    }
     updateMetaSummaryChips();
     saveState();
   });
@@ -347,7 +358,21 @@ function renderSubcategoryChips() {
 
   DOM.subcatContainer.querySelectorAll(".subcat-chip").forEach(btn => {
     btn.addEventListener("click", () => {
-      state.activeSubcategory = btn.getAttribute("data-subcat") || "all";
+      const selectedSubcat = btn.getAttribute("data-subcat") || "all";
+      state.activeSubcategory = selectedSubcat;
+
+      // Clear search query so the 15 items appear immediately without conflict
+      state.searchQuery = "";
+      if (DOM.searchInput) DOM.searchInput.value = "";
+      if (DOM.searchClear) DOM.searchClear.style.display = "none";
+
+      if (selectedSubcat === "roof_pipeline") {
+        state.projectMeta.workType = "Roof Pipe Line";
+        if (DOM.metaWork) DOM.metaWork.value = "Roof Pipe Line";
+        updateMetaSummaryChips();
+        saveState();
+      }
+
       renderSubcategoryChips();
       renderCatalog();
     });
@@ -585,20 +610,21 @@ function findProductById(id) {
  */
 function renderCart() {
   const selectedList = Array.from(state.selectedMaterials.values());
+  const activeCount = selectedList.filter(item => (parseInt(item.qty, 10) || 0) > 0).length;
   const count = selectedList.length;
   const totalUnits = selectedList.reduce((sum, item) => sum + (parseInt(item.qty, 10) || 0), 0);
 
   // Update badges
-  if (DOM.cartBadge) DOM.cartBadge.textContent = `${count} items`;
-  if (DOM.cartTotalItems) DOM.cartTotalItems.textContent = `${count}`;
+  if (DOM.cartBadge) DOM.cartBadge.textContent = `${activeCount} items`;
+  if (DOM.cartTotalItems) DOM.cartTotalItems.textContent = `${activeCount}`;
   if (DOM.cartTotalUnits) DOM.cartTotalUnits.textContent = `${totalUnits.toLocaleString("en-IN")}`;
 
   // Update mobile bottom bar
-  if (DOM.mobileBarCount) DOM.mobileBarCount.textContent = `🛒 ${count} Materials`;
+  if (DOM.mobileBarCount) DOM.mobileBarCount.textContent = `🛒 ${activeCount} Materials`;
   if (DOM.mobileBarUnits) DOM.mobileBarUnits.textContent = `${totalUnits} Units Selected`;
 
   if (DOM.cartConfirmBtn) {
-    DOM.cartConfirmBtn.disabled = count === 0;
+    DOM.cartConfirmBtn.disabled = activeCount === 0;
   }
 
   // Empty state handling
@@ -612,8 +638,9 @@ function renderCart() {
 
   if (DOM.cartList) {
     DOM.cartList.innerHTML = selectedList.map((item, idx) => {
+      const isZero = (parseInt(item.qty, 10) || 0) === 0;
       return `
-        <div class="cart-row" id="cart-item-${item.id}">
+        <div class="cart-row ${isZero ? "cart-row--zero" : "cart-row--active"}" id="cart-item-${item.id}">
           <div class="cart-row__top">
             <div class="cart-row__desc">
               <span class="cart-row__sno">${idx + 1}</span>
@@ -631,7 +658,20 @@ function renderCart() {
           </div>
 
           <div class="cart-row__bottom">
-            <span class="cart-row__unit">Unit: <strong>${item.unit}</strong></span>
+            <div style="display:flex; align-items:center; gap:0.45rem; flex-wrap:wrap;">
+              <span class="cart-row__unit">Unit: <strong>${item.unit}</strong></span>
+              ${isZero ? `<span style="font-size:0.68rem; background:#fef3c7; color:#b45309; padding:0.12rem 0.45rem; border-radius:4px; font-weight:800;">⚡ Enter Qty</span>` : `<span style="font-size:0.68rem; background:#dcfce7; color:#15803d; padding:0.12rem 0.45rem; border-radius:4px; font-weight:800;">✓ Ready</span>`}
+              ${item.refQty > 0 ? `
+                <button 
+                  type="button" 
+                  class="cart-ref-pill" 
+                  onclick="handleCartSetRefQty('${item.id}', ${item.refQty})" 
+                  title="Quick fill reference quantity (${item.refQty})"
+                >
+                  +${item.refQty} Ref
+                </button>
+              ` : ""}
+            </div>
 
             <div class="cart-stepper">
               <button 
@@ -639,20 +679,25 @@ function renderCart() {
                 class="cart-stepper__btn" 
                 onclick="handleCartStepperChange('${item.id}', -1)"
                 title="Decrease"
+                aria-label="Decrease quantity"
               >−</button>
               <input 
                 type="number" 
                 class="cart-stepper__input" 
                 value="${item.qty}" 
-                min="1"
+                min="0"
                 inputmode="numeric"
+                pattern="[0-9]*"
+                onfocus="this.select()"
                 onchange="handleCartManualChange('${item.id}', this.value)"
+                aria-label="Quantity for ${item.name}"
               />
               <button 
                 type="button" 
                 class="cart-stepper__btn" 
                 onclick="handleCartStepperChange('${item.id}', 1)"
                 title="Increase"
+                aria-label="Increase quantity"
               >+</button>
             </div>
           </div>
@@ -665,9 +710,9 @@ function renderCart() {
 window.handleCartStepperChange = function(itemId, delta) {
   if (!state.selectedMaterials.has(itemId)) return;
   const item = state.selectedMaterials.get(itemId);
-  const newQty = item.qty + delta;
+  const newQty = (parseInt(item.qty, 10) || 0) + delta;
 
-  if (newQty <= 0) {
+  if (newQty < 0) {
     handleRemoveFromCart(itemId);
   } else {
     item.qty = newQty;
@@ -680,17 +725,16 @@ window.handleCartStepperChange = function(itemId, delta) {
 
 window.handleCartManualChange = function(itemId, rawVal) {
   let val = parseInt(rawVal, 10);
-  if (isNaN(val) || val <= 0) {
-    handleRemoveFromCart(itemId);
-  } else {
-    if (state.selectedMaterials.has(itemId)) {
-      const item = state.selectedMaterials.get(itemId);
-      item.qty = val;
-      state.selectedMaterials.set(itemId, item);
-      saveState();
-      renderCart();
-      renderCatalog();
-    }
+  if (isNaN(val) || val < 0) {
+    val = 0;
+  }
+  if (state.selectedMaterials.has(itemId)) {
+    const item = state.selectedMaterials.get(itemId);
+    item.qty = val;
+    state.selectedMaterials.set(itemId, item);
+    saveState();
+    renderCart();
+    renderCatalog();
   }
 };
 
@@ -779,7 +823,7 @@ function closeEstimationModal() {
 function renderEstimateSheet() {
   if (!DOM.estimateSheetContent) return;
 
-  const selectedList = Array.from(state.selectedMaterials.values());
+  const selectedList = Array.from(state.selectedMaterials.values()).filter(item => (parseInt(item.qty, 10) || 0) > 0);
   const totalUnits = selectedList.reduce((sum, item) => sum + (parseInt(item.qty, 10) || 0), 0);
   const siteName = state.projectMeta.siteName || "SINTHAMANI";
   const date = state.projectMeta.date || "14.03.2026";
@@ -897,8 +941,11 @@ function downloadDirectPDF() {
  * WhatsApp Share
  */
 function shareWhatsApp() {
-  const selectedList = Array.from(state.selectedMaterials.values());
-  if (selectedList.length === 0) return;
+  const selectedList = Array.from(state.selectedMaterials.values()).filter(item => (parseInt(item.qty, 10) || 0) > 0);
+  if (selectedList.length === 0) {
+    showToast("Please enter quantities greater than 0 before sharing", "warning");
+    return;
+  }
 
   const siteName = state.projectMeta.siteName || "SINTHAMANI";
   const date = state.projectMeta.date || "14.03.2026";
@@ -949,3 +996,27 @@ function showToast(message, type = "info") {
     setTimeout(() => toast.remove(), 220);
   }, 2600);
 }
+
+window.handleCartSetRefQty = function(itemId, refQty) {
+  if (state.selectedMaterials.has(itemId)) {
+    const item = state.selectedMaterials.get(itemId);
+    item.qty = refQty;
+    state.selectedMaterials.set(itemId, item);
+  } else {
+    const p = findProductById(itemId);
+    if (p) {
+      state.selectedMaterials.set(itemId, {
+        id: p.id,
+        name: p.name,
+        category: p.category || state.currentCategory,
+        qty: refQty,
+        unit: p.unit,
+        refQty: p.refQty
+      });
+    }
+  }
+  saveState();
+  renderCart();
+  renderCatalog();
+  showToast(`Set ${refQty} for material`, "success");
+};

@@ -873,38 +873,85 @@ input:focus, select:focus, textarea:focus {
   color: var(--color-slate-500);
 }
 
+.cart-row--zero {
+  border-color: #fde68a;
+  background: #fffbeb;
+}
+
+.cart-row--active {
+  border-color: #a7f3d0;
+  background: #f0fdf4;
+}
+
+.cart-ref-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.35rem 0.55rem;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1d4ed8;
+  font-size: 0.72rem;
+  font-weight: 800;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: all var(--transition-fast);
+}
+
+.cart-ref-pill:active {
+  background: #2563eb;
+  color: #ffffff;
+  transform: scale(0.94);
+}
+
 .cart-stepper {
   display: flex;
   align-items: center;
   background: var(--color-white);
   border: 1.5px solid var(--color-slate-300);
   border-radius: var(--radius-sm);
-  height: 32px;
+  height: 38px;
+  box-shadow: var(--shadow-xs);
 }
 
 .cart-stepper__btn {
-  width: 28px;
+  width: 36px;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 800;
-  font-size: 1rem;
-  color: var(--color-slate-700);
+  font-size: 1.25rem;
+  color: var(--color-slate-800);
   background: var(--color-slate-100);
+  touch-action: manipulation;
+  user-select: none;
+  transition: all var(--transition-fast);
+}
+
+.cart-stepper__btn:active {
+  background: var(--color-slate-300);
+  transform: scale(0.92);
 }
 
 .cart-stepper__input {
-  width: 42px;
+  width: 52px;
   height: 100%;
   border: none;
   background: transparent;
   text-align: center;
   font-weight: 800;
-  font-size: 0.88rem;
+  font-size: 1.05rem;
+  font-family: var(--font-mono);
   color: var(--color-slate-900);
   padding: 0;
   -moz-appearance: textfield;
+}
+
+.cart-stepper__input:focus {
+  background: #eff6ff;
+  outline: none;
 }
 
 .cart-stepper__input::-webkit-outer-spin-button,
@@ -1413,3 +1460,4 @@ input:focus, select:focus, textarea:focus {
   box-shadow: var(--shadow-lg);
   border-left: 4px solid var(--color-primary);
 }
+
