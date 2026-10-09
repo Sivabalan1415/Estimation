@@ -452,9 +452,161 @@ const PRODUCT_CATALOG = {
   ],
 
   electrical: [
+    // --- WORK: ROOF PIPE LINE (Universal Slab Casting Materials 1 to 15) ---
+    {
+      id: "elec-r1",
+      sno: 1,
+      name: '5" Fan Metal Box',
+      defaultQty: 0,
+      refQty: 2,
+      unit: "Nos",
+      subcategory: "roof_pipeline",
+      desc: "5-inch heavy metal fan ceiling box with clamp hook for roof slab casting"
+    },
+    {
+      id: "elec-r2",
+      sno: 2,
+      name: '1" 2mm Electrical Pipe',
+      defaultQty: 0,
+      refQty: 30,
+      unit: "Nos",
+      subcategory: "roof_pipeline",
+      desc: "1-inch heavy duty 2mm PVC rigid electrical roof slab conduit pipe"
+    },
+    {
+      id: "elec-r3",
+      sno: 3,
+      name: '¾" 2mm Electrical Pipe',
+      defaultQty: 0,
+      refQty: 15,
+      unit: "Nos",
+      subcategory: "roof_pipeline",
+      desc: "3/4-inch heavy duty 2mm PVC electrical conduit pipe for roof slab"
+    },
+    {
+      id: "elec-r4",
+      sno: 4,
+      name: '1" Bend',
+      defaultQty: 0,
+      refQty: 0,
+      unit: "Nos",
+      subcategory: "roof_pipeline",
+      desc: "1-inch heavy PVC conduit 90° smooth bend for roof pipe line"
+    },
+    {
+      id: "elec-r5",
+      sno: 5,
+      name: '¾" Bend',
+      defaultQty: 0,
+      refQty: 10,
+      unit: "Nos",
+      subcategory: "roof_pipeline",
+      desc: "3/4-inch heavy PVC conduit smooth bend for slab drop lines"
+    },
+    {
+      id: "elec-r6",
+      sno: 6,
+      name: '1" Depth Box 4 Way',
+      defaultQty: 0,
+      refQty: 0,
+      unit: "Nos",
+      subcategory: "roof_pipeline",
+      desc: "1-inch circular 4-way deep ceiling junction box for concrete slab"
+    },
+    {
+      id: "elec-r7",
+      sno: 7,
+      name: '¾" Depth Box',
+      defaultQty: 0,
+      refQty: 0,
+      unit: "Nos",
+      subcategory: "roof_pipeline",
+      desc: "3/4-inch deep ceiling round junction box for roof slab wiring"
+    },
+    {
+      id: "elec-r8",
+      sno: 8,
+      name: '118 ml PVC Solved',
+      defaultQty: 0,
+      refQty: 5,
+      unit: "Nos",
+      subcategory: "roof_pipeline",
+      desc: "118 ml quick-weld PVC pipe solvent adhesive cement"
+    },
+    {
+      id: "elec-r9",
+      sno: 9,
+      name: '1" Cupler',
+      defaultQty: 0,
+      refQty: 30,
+      unit: "Nos",
+      subcategory: "roof_pipeline",
+      desc: "1-inch PVC conduit pipe joint coupler sleeve"
+    },
+    {
+      id: "elec-r10",
+      sno: 10,
+      name: '¾" Cupler',
+      defaultQty: 0,
+      refQty: 15,
+      unit: "Nos",
+      subcategory: "roof_pipeline",
+      desc: "3/4-inch PVC conduit pipe socket joint coupler"
+    },
+    {
+      id: "elec-r11",
+      sno: 11,
+      name: '1" Hacksaw Blade',
+      defaultQty: 0,
+      refQty: 4,
+      unit: "Nos",
+      subcategory: "roof_pipeline",
+      desc: "1-inch heavy bimetal pipe cutting hacksaw blade"
+    },
+    {
+      id: "elec-r12",
+      sno: 12,
+      name: '3" Packing Tap',
+      defaultQty: 0,
+      refQty: 2,
+      unit: "Rolls",
+      subcategory: "roof_pipeline",
+      desc: "3-inch wide waterproof packing tape for sealing ceiling fan boxes"
+    },
+    {
+      id: "elec-r13",
+      sno: 13,
+      name: 'Insulation Tap',
+      defaultQty: 0,
+      refQty: 10,
+      unit: "Rolls",
+      subcategory: "roof_pipeline",
+      desc: "Electrical PVC vinyl insulation adhesive tape roll"
+    },
+    {
+      id: "elec-r14",
+      sno: 14,
+      name: '½" Hacksaw Blade',
+      defaultQty: 0,
+      refQty: 3,
+      unit: "Nos",
+      subcategory: "roof_pipeline",
+      desc: "1/2-inch fine cut hacksaw blade for conduit cutting"
+    },
+    {
+      id: "elec-r15",
+      sno: 15,
+      name: 'Fancy Box',
+      defaultQty: 0,
+      refQty: 3,
+      unit: "Nos",
+      subcategory: "roof_pipeline",
+      desc: "Concealed ceiling spot light / fancy light junction box"
+    },
+
     {
       id: "elec-1",
-      sno: 1,
+      sno: 16,
       name: "1.0 sq mm Copper Wire Coil (90m)",
       defaultQty: 0,
       refQty: 2,
@@ -464,7 +616,7 @@ const PRODUCT_CATALOG = {
     },
     {
       id: "elec-2",
-      sno: 2,
+      sno: 17,
       name: "1.5 sq mm Copper Wire Coil (90m)",
       defaultQty: 0,
       refQty: 4,
@@ -474,7 +626,7 @@ const PRODUCT_CATALOG = {
     },
     {
       id: "elec-3",
-      sno: 3,
+      sno: 18,
       name: "2.5 sq mm Copper Wire Coil (90m)",
       defaultQty: 0,
       refQty: 3,
@@ -484,7 +636,7 @@ const PRODUCT_CATALOG = {
     },
     {
       id: "elec-4",
-      sno: 4,
+      sno: 19,
       name: "4.0 sq mm Copper Wire Coil (90m)",
       defaultQty: 0,
       refQty: 1,
@@ -494,7 +646,7 @@ const PRODUCT_CATALOG = {
     },
     {
       id: "elec-5",
-      sno: 5,
+      sno: 20,
       name: "6.0 sq mm Copper Wire Coil (90m)",
       defaultQty: 0,
       refQty: 1,
@@ -504,7 +656,7 @@ const PRODUCT_CATALOG = {
     },
     {
       id: "elec-6",
-      sno: 6,
+      sno: 21,
       name: "3-Core Submersible Cable",
       defaultQty: 0,
       refQty: 50,
@@ -514,7 +666,7 @@ const PRODUCT_CATALOG = {
     },
     {
       id: "elec-7",
-      sno: 7,
+      sno: 22,
       name: "4-Core Armoured Cable",
       defaultQty: 0,
       refQty: 35,
@@ -524,7 +676,7 @@ const PRODUCT_CATALOG = {
     },
     {
       id: "elec-8",
-      sno: 8,
+      sno: 23,
       name: "20mm PVC Conduit Pipe",
       defaultQty: 0,
       refQty: 30,
@@ -534,7 +686,7 @@ const PRODUCT_CATALOG = {
     },
     {
       id: "elec-9",
-      sno: 9,
+      sno: 24,
       name: "25mm PVC Conduit Pipe",
       defaultQty: 0,
       refQty: 25,
@@ -544,7 +696,7 @@ const PRODUCT_CATALOG = {
     },
     {
       id: "elec-10",
-      sno: 10,
+      sno: 25,
       name: "20mm Conduit Elbow",
       defaultQty: 0,
       refQty: 40,
@@ -554,7 +706,7 @@ const PRODUCT_CATALOG = {
     },
     {
       id: "elec-11",
-      sno: 11,
+      sno: 26,
       name: "25mm Conduit Elbow",
       defaultQty: 0,
       refQty: 30,
@@ -564,7 +716,7 @@ const PRODUCT_CATALOG = {
     },
     {
       id: "elec-12",
-      sno: 12,
+      sno: 27,
       name: "20mm Conduit Tee",
       defaultQty: 0,
       refQty: 20,
@@ -574,7 +726,7 @@ const PRODUCT_CATALOG = {
     },
     {
       id: "elec-13",
-      sno: 13,
+      sno: 28,
       name: "25mm Conduit Tee",
       defaultQty: 0,
       refQty: 15,
@@ -584,7 +736,7 @@ const PRODUCT_CATALOG = {
     },
     {
       id: "elec-14",
-      sno: 14,
+      sno: 29,
       name: "20mm 4-Way Deep Junction Box",
       defaultQty: 0,
       refQty: 18,
@@ -594,7 +746,7 @@ const PRODUCT_CATALOG = {
     },
     {
       id: "elec-15",
-      sno: 15,
+      sno: 30,
       name: "6A 1-Way Modular Switch",
       defaultQty: 0,
       refQty: 45,
@@ -604,7 +756,7 @@ const PRODUCT_CATALOG = {
     },
     {
       id: "elec-16",
-      sno: 16,
+      sno: 31,
       name: "16A Power Modular Switch",
       defaultQty: 0,
       refQty: 12,
@@ -614,7 +766,7 @@ const PRODUCT_CATALOG = {
     },
     {
       id: "elec-17",
-      sno: 17,
+      sno: 32,
       name: "6A 3-Pin Modular Socket",
       defaultQty: 0,
       refQty: 30,
@@ -624,7 +776,7 @@ const PRODUCT_CATALOG = {
     },
     {
       id: "elec-18",
-      sno: 18,
+      sno: 33,
       name: "16A 6-Pin Multi Socket",
       defaultQty: 0,
       refQty: 12,
@@ -634,7 +786,7 @@ const PRODUCT_CATALOG = {
     },
     {
       id: "elec-19",
-      sno: 19,
+      sno: 34,
       name: "Single Pole 16A MCB (C-Curve)",
       defaultQty: 0,
       refQty: 10,
@@ -644,7 +796,7 @@ const PRODUCT_CATALOG = {
     },
     {
       id: "elec-20",
-      sno: 20,
+      sno: 35,
       name: "Single Pole 25A MCB (C-Curve)",
       defaultQty: 0,
       refQty: 6,
@@ -654,7 +806,7 @@ const PRODUCT_CATALOG = {
     },
     {
       id: "elec-21",
-      sno: 21,
+      sno: 36,
       name: "Double Pole 32A Isolator",
       defaultQty: 0,
       refQty: 2,
@@ -664,7 +816,7 @@ const PRODUCT_CATALOG = {
     },
     {
       id: "elec-22",
-      sno: 22,
+      sno: 37,
       name: "8-Way SPN Distribution Board",
       defaultQty: 0,
       refQty: 2,
@@ -674,7 +826,7 @@ const PRODUCT_CATALOG = {
     },
     {
       id: "elec-23",
-      sno: 23,
+      sno: 38,
       name: "12-Way TPN Distribution Board",
       defaultQty: 0,
       refQty: 1,
@@ -684,7 +836,7 @@ const PRODUCT_CATALOG = {
     },
     {
       id: "elec-24",
-      sno: 24,
+      sno: 39,
       name: "15W Round LED Concealed Light",
       defaultQty: 0,
       refQty: 24,
@@ -694,7 +846,7 @@ const PRODUCT_CATALOG = {
     },
     {
       id: "elec-25",
-      sno: 25,
+      sno: 40,
       name: "20W LED Batten Light (4ft)",
       defaultQty: 0,
       refQty: 14,
@@ -704,7 +856,7 @@ const PRODUCT_CATALOG = {
     },
     {
       id: "elec-26",
-      sno: 26,
+      sno: 41,
       name: "1200mm High Speed Ceiling Fan",
       defaultQty: 0,
       refQty: 8,
@@ -714,7 +866,7 @@ const PRODUCT_CATALOG = {
     },
     {
       id: "elec-27",
-      sno: 27,
+      sno: 42,
       name: "Modular Plate (8 Module)",
       defaultQty: 0,
       refQty: 12,
@@ -724,7 +876,7 @@ const PRODUCT_CATALOG = {
     },
     {
       id: "elec-28",
-      sno: 28,
+      sno: 43,
       name: "Modular Plate (4 Module)",
       defaultQty: 0,
       refQty: 10,
@@ -734,7 +886,7 @@ const PRODUCT_CATALOG = {
     },
     {
       id: "elec-29",
-      sno: 29,
+      sno: 44,
       name: "12-Way Terminal Connector Strip",
       defaultQty: 0,
       refQty: 10,
@@ -744,7 +896,7 @@ const PRODUCT_CATALOG = {
     },
     {
       id: "elec-30",
-      sno: 30,
+      sno: 45,
       name: "200mm Nylon Cable Tie (100 pcs)",
       defaultQty: 0,
       refQty: 5,
@@ -754,7 +906,7 @@ const PRODUCT_CATALOG = {
     },
     {
       id: "elec-31",
-      sno: 31,
+      sno: 46,
       name: "PVC Electrical Insulation Tape",
       defaultQty: 0,
       refQty: 15,
@@ -764,7 +916,7 @@ const PRODUCT_CATALOG = {
     },
     {
       id: "elec-32",
-      sno: 32,
+      sno: 47,
       name: "20mm Flexible Conduit Pipe (50m)",
       defaultQty: 0,
       refQty: 2,
@@ -787,6 +939,7 @@ const SUBCATEGORIES = {
   ],
   electrical: [
     { key: "all", label: "All Items" },
+    { key: "roof_pipeline", label: "🏗️ Roof Pipe Line (15)" },
     { key: "wires", label: "Wires & Cables" },
     { key: "conduits", label: "Conduits & Junctions" },
     { key: "switches", label: "Switches & Sockets" },
@@ -795,3 +948,157 @@ const SUBCATEGORIES = {
     { key: "accessories", label: "Tapes & Accessories" }
   ]
 };
+
+// Universal Preset Combo for Roof Pipe Line Work (15 Common Items)
+const ROOF_PIPELINE_COMBO = [
+  {
+    "id": "elec-r1",
+    "sno": 1,
+    "name": "5\" Fan Metal Box",
+    "defaultQty": 0,
+    "refQty": 2,
+    "unit": "Nos",
+    "subcategory": "roof_pipeline",
+    "desc": "5-inch heavy metal fan ceiling box with clamp hook for roof slab casting"
+  },
+  {
+    "id": "elec-r2",
+    "sno": 2,
+    "name": "1\" 2mm Electrical Pipe",
+    "defaultQty": 0,
+    "refQty": 30,
+    "unit": "Nos",
+    "subcategory": "roof_pipeline",
+    "desc": "1-inch heavy duty 2mm PVC rigid electrical roof slab conduit pipe"
+  },
+  {
+    "id": "elec-r3",
+    "sno": 3,
+    "name": "¾\" 2mm Electrical Pipe",
+    "defaultQty": 0,
+    "refQty": 15,
+    "unit": "Nos",
+    "subcategory": "roof_pipeline",
+    "desc": "3/4-inch heavy duty 2mm PVC electrical conduit pipe for roof slab"
+  },
+  {
+    "id": "elec-r4",
+    "sno": 4,
+    "name": "1\" Bend",
+    "defaultQty": 0,
+    "refQty": 0,
+    "unit": "Nos",
+    "subcategory": "roof_pipeline",
+    "desc": "1-inch heavy PVC conduit 90° smooth bend for roof pipe line"
+  },
+  {
+    "id": "elec-r5",
+    "sno": 5,
+    "name": "¾\" Bend",
+    "defaultQty": 0,
+    "refQty": 10,
+    "unit": "Nos",
+    "subcategory": "roof_pipeline",
+    "desc": "3/4-inch heavy PVC conduit smooth bend for slab drop lines"
+  },
+  {
+    "id": "elec-r6",
+    "sno": 6,
+    "name": "1\" Depth Box 4 Way",
+    "defaultQty": 0,
+    "refQty": 0,
+    "unit": "Nos",
+    "subcategory": "roof_pipeline",
+    "desc": "1-inch circular 4-way deep ceiling junction box for concrete slab"
+  },
+  {
+    "id": "elec-r7",
+    "sno": 7,
+    "name": "¾\" Depth Box",
+    "defaultQty": 0,
+    "refQty": 0,
+    "unit": "Nos",
+    "subcategory": "roof_pipeline",
+    "desc": "3/4-inch deep ceiling round junction box for roof slab wiring"
+  },
+  {
+    "id": "elec-r8",
+    "sno": 8,
+    "name": "118 ml PVC Solved",
+    "defaultQty": 0,
+    "refQty": 5,
+    "unit": "Nos",
+    "subcategory": "roof_pipeline",
+    "desc": "118 ml quick-weld PVC pipe solvent adhesive cement"
+  },
+  {
+    "id": "elec-r9",
+    "sno": 9,
+    "name": "1\" Cupler",
+    "defaultQty": 0,
+    "refQty": 30,
+    "unit": "Nos",
+    "subcategory": "roof_pipeline",
+    "desc": "1-inch PVC conduit pipe joint coupler sleeve"
+  },
+  {
+    "id": "elec-r10",
+    "sno": 10,
+    "name": "¾\" Cupler",
+    "defaultQty": 0,
+    "refQty": 15,
+    "unit": "Nos",
+    "subcategory": "roof_pipeline",
+    "desc": "3/4-inch PVC conduit pipe socket joint coupler"
+  },
+  {
+    "id": "elec-r11",
+    "sno": 11,
+    "name": "1\" Hacksaw Blade",
+    "defaultQty": 0,
+    "refQty": 4,
+    "unit": "Nos",
+    "subcategory": "roof_pipeline",
+    "desc": "1-inch heavy bimetal pipe cutting hacksaw blade"
+  },
+  {
+    "id": "elec-r12",
+    "sno": 12,
+    "name": "3\" Packing Tap",
+    "defaultQty": 0,
+    "refQty": 2,
+    "unit": "Rolls",
+    "subcategory": "roof_pipeline",
+    "desc": "3-inch wide waterproof packing tape for sealing ceiling fan boxes"
+  },
+  {
+    "id": "elec-r13",
+    "sno": 13,
+    "name": "Insulation Tap",
+    "defaultQty": 0,
+    "refQty": 10,
+    "unit": "Rolls",
+    "subcategory": "roof_pipeline",
+    "desc": "Electrical PVC vinyl insulation adhesive tape roll"
+  },
+  {
+    "id": "elec-r14",
+    "sno": 14,
+    "name": "½\" Hacksaw Blade",
+    "defaultQty": 0,
+    "refQty": 3,
+    "unit": "Nos",
+    "subcategory": "roof_pipeline",
+    "desc": "1/2-inch fine cut hacksaw blade for conduit cutting"
+  },
+  {
+    "id": "elec-r15",
+    "sno": 15,
+    "name": "Fancy Box",
+    "defaultQty": 0,
+    "refQty": 3,
+    "unit": "Nos",
+    "subcategory": "roof_pipeline",
+    "desc": "Concealed ceiling spot light / fancy light junction box"
+  }
+];
