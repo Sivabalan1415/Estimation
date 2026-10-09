@@ -96,19 +96,6 @@ function cacheDOM() {
     resetBtn: document.getElementById("resetBtn"),
     loadRefAllBtn: document.getElementById("loadRefAllBtn"),
 
-    // Roof Pipe Line Combo
-    roofComboBanner: document.getElementById("roofComboBanner"),
-    btnLoadRoofCombo: document.getElementById("btnLoadRoofCombo"),
-    btnLoadRoofRef: document.getElementById("btnLoadRoofRef"),
-    btnAdjustRoofCombo: document.getElementById("btnAdjustRoofCombo"),
-    roofComboModal: document.getElementById("roofComboModal"),
-    roofModalClose: document.getElementById("roofModalClose"),
-    roofModalCancel: document.getElementById("roofModalCancel"),
-    roofModalApplyBtn: document.getElementById("roofModalApplyBtn"),
-    roofComboTableBody: document.getElementById("roofComboTableBody"),
-    roofModalTotalUnits: document.getElementById("roofModalTotalUnits"),
-    roofModalTotalItems: document.getElementById("roofModalTotalItems"),
-    roofScaleButtons: document.querySelectorAll(".scale-btn")
   };
 }
 
@@ -173,6 +160,16 @@ function bindEvents() {
 
   DOM.metaWork?.addEventListener("change", (e) => {
     state.projectMeta.workType = e.target.value;
+    if (e.target.value === "Roof Pipe Line") {
+      state.currentCategory = "electrical";
+      state.activeSubcategory = "roof_pipeline";
+      state.searchQuery = "";
+      if (DOM.searchInput) DOM.searchInput.value = "";
+      if (DOM.searchClear) DOM.searchClear.style.display = "none";
+      renderCategoryTabs();
+      renderSubcategoryChips();
+      renderCatalog();
+    }
     updateMetaSummaryChips();
     saveState();
   });
@@ -309,29 +306,11 @@ function bindEvents() {
     showToast(`Loaded reference quantities for ${count} ${state.currentCategory} items!`, "success");
   });
 
-  // Roof Pipe Line Combo Actions
-  DOM.btnLoadRoofCombo?.addEventListener("click", () => handle1ClickLoadRoofCombo(false)); // Default 0!
-  DOM.btnLoadRoofRef?.addEventListener("click", () => handle1ClickLoadRoofCombo(true)); // Reference Quantities!
-  DOM.btnAdjustRoofCombo?.addEventListener("click", () => openRoofComboModal());
-  DOM.roofModalClose?.addEventListener("click", () => closeRoofComboModal());
-  DOM.roofModalCancel?.addEventListener("click", () => closeRoofComboModal());
-  DOM.roofModalApplyBtn?.addEventListener("click", () => handleApplyRoofModal());
-
-  DOM.roofScaleButtons?.forEach(btn => {
-    btn.addEventListener("click", () => {
-      DOM.roofScaleButtons.forEach(b => b.classList.remove("scale-btn--active"));
-      btn.classList.add("scale-btn--active");
-      const scale = parseFloat(btn.getAttribute("data-scale")) || 1;
-      applyRoofScaleMultiplier(scale);
-    });
-  });
-
   // Escape key closes modals
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
       closeEstimationModal();
       closeCustomModal();
-      closeRoofComboModal();
       closeCartDrawer();
     }
   });
@@ -358,11 +337,6 @@ function renderCategoryTabs() {
 
   if (DOM.plumbingBadge) DOM.plumbingBadge.textContent = `${PRODUCT_CATALOG.plumbing.length}`;
   if (DOM.electricalBadge) DOM.electricalBadge.textContent = `${PRODUCT_CATALOG.electrical.length}`;
-
-  // Toggle Roof Combo Banner (visible in electrical mode)
-  if (DOM.roofComboBanner) {
-    DOM.roofComboBanner.style.display = state.currentCategory === "electrical" ? "flex" : "none";
-  }
 }
 
 function renderSubcategoryChips() {
@@ -384,7 +358,21 @@ function renderSubcategoryChips() {
 
   DOM.subcatContainer.querySelectorAll(".subcat-chip").forEach(btn => {
     btn.addEventListener("click", () => {
-      state.activeSubcategory = btn.getAttribute("data-subcat") || "all";
+      const selectedSubcat = btn.getAttribute("data-subcat") || "all";
+      state.activeSubcategory = selectedSubcat;
+
+      // Clear search query so the 15 items appear immediately without conflict
+      state.searchQuery = "";
+      if (DOM.searchInput) DOM.searchInput.value = "";
+      if (DOM.searchClear) DOM.searchClear.style.display = "none";
+
+      if (selectedSubcat === "roof_pipeline") {
+        state.projectMeta.workType = "Roof Pipe Line";
+        if (DOM.metaWork) DOM.metaWork.value = "Roof Pipe Line";
+        updateMetaSummaryChips();
+        saveState();
+      }
+
       renderSubcategoryChips();
       renderCatalog();
     });
@@ -1032,235 +1020,3 @@ window.handleCartSetRefQty = function(itemId, refQty) {
   renderCatalog();
   showToast(`Set ${refQty} for material`, "success");
 };
-
-/**
- * ==========================================================================
- * Roof Pipe Line Combo Pack System (Universal 15 Slab Casting Materials)
- * ==========================================================================
- */
-let modalRoofQuantities = new Map();
-let currentModalScale = 0;
-
-/**
- * Load All 15 Roof Pipe Line items (Default 0 as requested, or with Reference Qty)
- */
-function handle1ClickLoadRoofCombo(useRefQty = false) {
-  const roofItems = PRODUCT_CATALOG.electrical.filter(item => item.subcategory === "roof_pipeline");
-  if (!roofItems || roofItems.length === 0) return;
-
-  roofItems.forEach(item => {
-    state.selectedMaterials.set(item.id, {
-      id: item.id,
-      name: item.name,
-      category: "electrical",
-      qty: useRefQty ? item.refQty : 0, // Default 0 as requested!
-      unit: item.unit,
-      refQty: item.refQty
-    });
-  });
-
-  state.currentCategory = "electrical";
-  state.activeSubcategory = "roof_pipeline";
-  state.projectMeta.workType = "Roof Pipe Line";
-  if (DOM.metaWork) DOM.metaWork.value = "Roof Pipe Line";
-  updateMetaSummaryChips();
-
-  saveState();
-  renderCategoryTabs();
-  renderSubcategoryChips();
-  renderCatalog();
-  renderCart();
-
-  const msg = useRefQty 
-    ? `✓ 15 Roof Pipe Line items loaded with Reference Quantities!`
-    : `✓ 15 Roof Pipe Line items loaded with Default 0! Enter quantities below.`;
-  showToast(msg, "success");
-  openCartDrawer();
-}
-
-/**
- * Open Site Quantity Multiplier / Adjuster Modal
- */
-function openRoofComboModal() {
-  const roofItems = PRODUCT_CATALOG.electrical.filter(item => item.subcategory === "roof_pipeline");
-  modalRoofQuantities.clear();
-  currentModalScale = 0; // Starts at 0 default!
-
-  roofItems.forEach(item => {
-    const existing = state.selectedMaterials.get(item.id);
-    const qty = existing !== undefined ? existing.qty : 0; // Default 0!
-    modalRoofQuantities.set(item.id, qty);
-  });
-
-  renderRoofModalTable();
-  updateRoofModalTotals();
-
-  DOM.roofScaleButtons?.forEach(btn => {
-    const scale = parseFloat(btn.getAttribute("data-scale"));
-    if (scale === 0) btn.classList.add("scale-btn--active");
-    else btn.classList.remove("scale-btn--active");
-  });
-
-  DOM.roofComboModal?.classList.add("modal-backdrop--open");
-}
-
-function closeRoofComboModal() {
-  DOM.roofComboModal?.classList.remove("modal-backdrop--open");
-}
-
-function renderRoofModalTable() {
-  if (!DOM.roofComboTableBody) return;
-  const roofItems = PRODUCT_CATALOG.electrical.filter(item => item.subcategory === "roof_pipeline");
-
-  DOM.roofComboTableBody.innerHTML = roofItems.map(item => {
-    const qty = modalRoofQuantities.get(item.id) ?? 0;
-    return `
-      <tr id="roof-modal-row-${item.id}">
-        <td class="roof-row-sno">#${item.sno}</td>
-        <td>
-          <div class="roof-row-name">${item.name}</div>
-          <span class="roof-row-ref">Ref Sheet: ${item.refQty} ${item.unit}</span>
-        </td>
-        <td style="text-align: center;">
-          <div style="display:flex; align-items:center; justify-content:center; gap:0.4rem; flex-wrap:wrap;">
-            <div class="roof-modal-stepper">
-              <button 
-                type="button" 
-                class="roof-modal-stepper__btn" 
-                onclick="handleRoofModalStep('${item.id}', -1)"
-                title="Decrease"
-                aria-label="Decrease quantity"
-              >−</button>
-              <input 
-                type="number" 
-                class="roof-modal-stepper__input" 
-                id="roof-modal-input-${item.id}"
-                value="${qty}" 
-                min="0"
-                inputmode="numeric"
-                pattern="[0-9]*"
-                onfocus="this.select()"
-                onchange="handleRoofModalInput('${item.id}', this.value)"
-                aria-label="Quantity for ${item.name}"
-              />
-              <button 
-                type="button" 
-                class="roof-modal-stepper__btn" 
-                onclick="handleRoofModalStep('${item.id}', 1)"
-                title="Increase"
-                aria-label="Increase quantity"
-              >+</button>
-            </div>
-            ${item.refQty > 0 ? `
-              <button 
-                type="button" 
-                class="cart-ref-pill" 
-                onclick="handleRoofModalQuickRef('${item.id}', ${item.refQty})" 
-                title="Set reference quantity ${item.refQty}"
-              >+${item.refQty} Ref</button>
-            ` : ""}
-          </div>
-        </td>
-        <td style="text-align: center; font-weight: 700; color: var(--color-slate-600);">${item.unit}</td>
-      </tr>
-    `;
-  }).join("");
-}
-
-window.handleRoofModalStep = function(itemId, delta) {
-  const current = modalRoofQuantities.get(itemId) || 0;
-  const next = Math.max(0, current + delta);
-  modalRoofQuantities.set(itemId, next);
-  const input = document.getElementById(`roof-modal-input-${itemId}`);
-  if (input) input.value = next;
-  updateRoofModalTotals();
-};
-
-window.handleRoofModalInput = function(itemId, valStr) {
-  let val = parseInt(valStr, 10);
-  if (isNaN(val) || val < 0) val = 0;
-  modalRoofQuantities.set(itemId, val);
-  const input = document.getElementById(`roof-modal-input-${itemId}`);
-  if (input) input.value = val;
-  updateRoofModalTotals();
-};
-
-window.handleRoofModalQuickRef = function(itemId, refQty) {
-  modalRoofQuantities.set(itemId, refQty);
-  const input = document.getElementById(`roof-modal-input-${itemId}`);
-  if (input) input.value = refQty;
-  updateRoofModalTotals();
-};
-
-function applyRoofScaleMultiplier(scale) {
-  currentModalScale = scale;
-  const roofItems = PRODUCT_CATALOG.electrical.filter(item => item.subcategory === "roof_pipeline");
-
-  roofItems.forEach(item => {
-    let baseQty = item.refQty;
-    let newQty;
-    if (scale === 0) {
-      newQty = 0;
-    } else if (baseQty === 0) {
-      if (scale > 1) {
-        if (item.id === "elec-r4") newQty = Math.round(5 * scale); // 1" bend
-        else if (item.id === "elec-r6" || item.id === "elec-r7") newQty = Math.round(2 * scale); // depth boxes
-        else newQty = 0;
-      } else {
-        newQty = 0;
-      }
-    } else {
-      newQty = Math.round(baseQty * scale);
-    }
-    modalRoofQuantities.set(item.id, newQty);
-    const input = document.getElementById(`roof-modal-input-${item.id}`);
-    if (input) input.value = newQty;
-  });
-
-  updateRoofModalTotals();
-}
-
-function updateRoofModalTotals() {
-  let totalUnits = 0;
-  let totalItemsSelected = 0;
-  modalRoofQuantities.forEach((qty) => {
-    const q = parseInt(qty, 10) || 0;
-    totalUnits += q;
-    if (q > 0) totalItemsSelected++;
-  });
-
-  if (DOM.roofModalTotalUnits) DOM.roofModalTotalUnits.textContent = totalUnits.toLocaleString("en-IN");
-  if (DOM.roofModalTotalItems) DOM.roofModalTotalItems.textContent = totalItemsSelected;
-}
-
-function handleApplyRoofModal() {
-  const roofItems = PRODUCT_CATALOG.electrical.filter(item => item.subcategory === "roof_pipeline");
-
-  roofItems.forEach(item => {
-    const qty = modalRoofQuantities.get(item.id) !== undefined ? modalRoofQuantities.get(item.id) : 0;
-    state.selectedMaterials.set(item.id, {
-      id: item.id,
-      name: item.name,
-      category: "electrical",
-      qty: qty,
-      unit: item.unit,
-      refQty: item.refQty
-    });
-  });
-
-  state.currentCategory = "electrical";
-  state.activeSubcategory = "roof_pipeline";
-  state.projectMeta.workType = "Roof Pipe Line";
-  if (DOM.metaWork) DOM.metaWork.value = "Roof Pipe Line";
-  updateMetaSummaryChips();
-
-  saveState();
-  closeRoofComboModal();
-  renderCategoryTabs();
-  renderSubcategoryChips();
-  renderCatalog();
-  renderCart();
-
-  showToast(`✓ Added 15 Roof Pipe Line items with site quantities!`, "success");
-  openCartDrawer();
-}

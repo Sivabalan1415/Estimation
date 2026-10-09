@@ -141,44 +141,6 @@
       </div>
     </div>
 
-    <!-- ROOF PIPE LINE COMBO PACK BANNER (Universal Slab Casting Materials 1 to 15) -->
-    <div class="roof-combo-banner" id="roofComboBanner" style="display:none;">
-      <div class="roof-combo-banner__main">
-        <div class="roof-combo-banner__badge">
-          <span class="badge-icon">⚡</span>
-          <span>ROOF SLAB COMBO PACK</span>
-          <span class="badge-pill">15 Common Materials • Default 0</span>
-        </div>
-        <h2 class="roof-combo-banner__title">🏗️ Roof Pipe Line (ரூஃப் பைப் லைன் காம்போ)</h2>
-        <p class="roof-combo-banner__desc">
-          Universal 15 items for slab casting work. 1-click loads all materials with default 0 — punch in your quantities easily on mobile!
-        </p>
-      </div>
-      <div class="roof-combo-banner__actions">
-        <button type="button" class="combo-btn combo-btn--load" id="btnLoadRoofCombo" title="Load 15 Items with Default 0">
-          <span class="combo-btn__icon">⚡</span>
-          <span class="combo-btn__titles">
-            <strong>Load 15 Items (Default 0)</strong>
-            <small>அனைத்தும் 0 என சேர்க்க</small>
-          </span>
-        </button>
-        <button type="button" class="combo-btn combo-btn--ref" id="btnLoadRoofRef" title="Load with Reference Sheet Quantities">
-          <span class="combo-btn__icon">📋</span>
-          <span class="combo-btn__titles">
-            <strong>Fill Ref Qty</strong>
-            <small>30, 15, 10...</small>
-          </span>
-        </button>
-        <button type="button" class="combo-btn combo-btn--adjust" id="btnAdjustRoofCombo" title="Customize for Big Site">
-          <span class="combo-btn__icon">📐</span>
-          <span class="combo-btn__titles">
-            <strong>Big Site Multiplier</strong>
-            <small>1.5x, 2x, 3x மாற்ற</small>
-          </span>
-        </button>
-      </div>
-    </div>
-
     <!-- Workspace Grid -->
     <div class="workspace-grid">
 
@@ -342,76 +304,6 @@
           <button type="submit" class="btn-pdf-download" style="width: auto; padding: 0.65rem 1.15rem; font-size: 0.9rem;">Add Material</button>
         </div>
       </form>
-    </div>
-  <!-- MODAL: Roof Pipe Line Site Quantity Adjuster -->
-  <div class="modal-backdrop" id="roofComboModal" role="dialog" aria-modal="true" aria-labelledby="roofModalTitle">
-    <div class="modal-window roof-combo-modal-window">
-      <div class="modal-window__header">
-        <div class="modal-window__title" id="roofModalTitle">
-          <span>🏗️</span> Roof Pipe Line — Site Quantity Adjuster (அளவு மாற்ற)
-        </div>
-        <button type="button" class="modal-window__close-btn" id="roofModalClose" title="Close">✕</button>
-      </div>
-
-      <div class="roof-combo-modal__body">
-        <!-- Site Scale Selector -->
-        <div class="scale-picker">
-          <div class="scale-picker__title">
-            <span>📐 Quick Scale for Site Size:</span>
-            <span class="scale-picker__hint">(பெரிய சைட் அளவிற்கு உடனே பெருக்க)</span>
-          </div>
-          <div class="scale-picker__buttons">
-            <button type="button" class="scale-btn scale-btn--active" data-scale="0">
-              <span class="scale-btn__label">🔄 0x Default 0</span>
-              <span class="scale-btn__sub">Empty / Custom</span>
-            </button>
-            <button type="button" class="scale-btn" data-scale="1">
-              <span class="scale-btn__label">🏠 1x Standard Site</span>
-              <span class="scale-btn__sub">Ref Sheet</span>
-            </button>
-            <button type="button" class="scale-btn" data-scale="1.5">
-              <span class="scale-btn__label">🏘️ 1.5x Medium Site</span>
-              <span class="scale-btn__sub">~1,500 sq.ft</span>
-            </button>
-            <button type="button" class="scale-btn" data-scale="2">
-              <span class="scale-btn__label">🏢 2x Big Site</span>
-              <span class="scale-btn__sub">~2,000+ sq.ft</span>
-            </button>
-            <button type="button" class="scale-btn" data-scale="3">
-              <span class="scale-btn__label">🏰 3x Large Villa</span>
-              <span class="scale-btn__sub">Commercial / 3,000+</span>
-            </button>
-          </div>
-        </div>
-
-        <div class="roof-items-table-wrap">
-          <table class="roof-items-table">
-            <thead>
-              <tr>
-                <th style="width: 36px; text-align: center;">#</th>
-                <th>Material Description</th>
-                <th style="width: 140px; text-align: center;">Quantity</th>
-                <th style="width: 65px; text-align: center;">Unit</th>
-              </tr>
-            </thead>
-            <tbody id="roofComboTableBody">
-              <!-- Dynamically populated via JS -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="roof-combo-modal__footer">
-        <div class="roof-combo-footer__summary">
-          <span>Total: <strong id="roofModalTotalUnits">129</strong> Units (<strong id="roofModalTotalItems">12</strong> materials selected)</span>
-        </div>
-        <div class="roof-combo-footer__actions">
-          <button type="button" class="btn-back-edit" id="roofModalCancel" style="width:auto; padding: 0.65rem 1.15rem;">Cancel</button>
-          <button type="button" class="btn-pdf-download" id="roofModalApplyBtn" style="width:auto; padding: 0.65rem 1.35rem;">
-            <span>✓</span> Add 15 Items to Estimation
-          </button>
-        </div>
-      </div>
     </div>
   </div>
 
