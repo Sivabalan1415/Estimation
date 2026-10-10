@@ -169,6 +169,15 @@ function bindEvents() {
       renderCategoryTabs();
       renderSubcategoryChips();
       renderCatalog();
+    } else if (e.target.value === "Showroom Work") {
+      state.currentCategory = "electrical";
+      state.activeSubcategory = "showroom_work";
+      state.searchQuery = "";
+      if (DOM.searchInput) DOM.searchInput.value = "";
+      if (DOM.searchClear) DOM.searchClear.style.display = "none";
+      renderCategoryTabs();
+      renderSubcategoryChips();
+      renderCatalog();
     }
     updateMetaSummaryChips();
     saveState();
@@ -285,7 +294,7 @@ function bindEvents() {
 
   // Load All Reference Sheet Quantities Button
   DOM.loadRefAllBtn?.addEventListener("click", () => {
-    const list = PRODUCT_CATALOG[state.currentCategory] || [];
+    const list = state.activeSubcategory === "all" ? (PRODUCT_CATALOG[state.currentCategory] || []) : getFilteredItems();
     let count = 0;
     list.forEach(item => {
       if (item.refQty > 0) {
@@ -303,7 +312,7 @@ function bindEvents() {
     saveState();
     renderCart();
     renderCatalog();
-    showToast(`Loaded reference quantities for ${count} ${state.currentCategory} items!`, "success");
+    showToast(`Loaded reference quantities for ${count} items!`, "success");
   });
 
   // Escape key closes modals
@@ -361,7 +370,7 @@ function renderSubcategoryChips() {
       const selectedSubcat = btn.getAttribute("data-subcat") || "all";
       state.activeSubcategory = selectedSubcat;
 
-      // Clear search query so the 15 items appear immediately without conflict
+      // Clear search query so filtered items appear immediately without conflict
       state.searchQuery = "";
       if (DOM.searchInput) DOM.searchInput.value = "";
       if (DOM.searchClear) DOM.searchClear.style.display = "none";
@@ -369,6 +378,11 @@ function renderSubcategoryChips() {
       if (selectedSubcat === "roof_pipeline") {
         state.projectMeta.workType = "Roof Pipe Line";
         if (DOM.metaWork) DOM.metaWork.value = "Roof Pipe Line";
+        updateMetaSummaryChips();
+        saveState();
+      } else if (selectedSubcat === "showroom_work") {
+        state.projectMeta.workType = "Showroom Work";
+        if (DOM.metaWork) DOM.metaWork.value = "Showroom Work";
         updateMetaSummaryChips();
         saveState();
       }
@@ -382,13 +396,27 @@ function renderSubcategoryChips() {
 function getFilteredItems() {
   const allItems = PRODUCT_CATALOG[state.currentCategory] || [];
   return allItems.filter(item => {
-    if (state.activeSubcategory !== "all" && item.subcategory !== state.activeSubcategory) {
-      return false;
+    if (state.activeSubcategory !== "all") {
+      if (state.activeSubcategory === "showroom_work") {
+        if (!item.isShowroomWork && item.subcategory !== "showroom_work") return false;
+      } else if (state.activeSubcategory === "color_wires") {
+        if (!item.isColorWire) return false;
+      } else if (state.activeSubcategory === "wires") {
+        if (!item.isWire && item.subcategory !== "wires") return false;
+      } else if (state.activeSubcategory === "accessories") {
+        if (!item.isAccessory && item.subcategory !== "accessories") return false;
+      } else if (state.activeSubcategory === "conduits") {
+        if (!item.isConduit && item.subcategory !== "conduits") return false;
+      } else if (item.subcategory !== state.activeSubcategory) {
+        return false;
+      }
     }
     if (state.searchQuery) {
-      const matchName = item.name.toLowerCase().includes(state.searchQuery);
-      const matchDesc = item.desc ? item.desc.toLowerCase().includes(state.searchQuery) : false;
-      return matchName || matchDesc;
+      const q = state.searchQuery.toLowerCase();
+      const matchName = item.name.toLowerCase().includes(q);
+      const matchDesc = item.desc ? item.desc.toLowerCase().includes(q) : false;
+      const matchColor = item.color ? item.color.toLowerCase().includes(q) : false;
+      return matchName || matchDesc || matchColor;
     }
     return true;
   });
@@ -426,7 +454,14 @@ function renderCatalog() {
         <div class="m-card__info">
           <div class="m-card__header-line">
             <span class="m-card__sno">#${item.sno}</span>
-            <span class="m-card__unit">${item.unit}</span>
+            <div style="display:flex; align-items:center; gap:0.35rem;">
+              ${item.color ? `
+                <span class="color-tag color-tag--${item.color}">
+                  ● ${item.color.toUpperCase()}
+                </span>
+              ` : ""}
+              <span class="m-card__unit">${item.unit}</span>
+            </div>
           </div>
 
           <h3 class="m-card__title">${item.name}</h3>

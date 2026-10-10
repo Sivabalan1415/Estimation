@@ -923,6 +923,621 @@ const PRODUCT_CATALOG = {
       unit: "Bundle",
       subcategory: "conduits",
       desc: "Corrugated PVC flexible pipe for drop connections"
+    },
+
+    // =========================================================================
+    // --- WORK: SHOWROOM WORK (Material List 1 to 19 with Wire Colors) ---
+    // All items defaultQty: 0 for manual quantity entry as requested
+    // Reference sheet quantities preserved in refQty
+    // =========================================================================
+
+    // Row 1: 1.0 Sqmm wire 90m (Total 8 coils: Red 2, Yellow 2, Blue 1, Green 0, Black 3)
+    {
+      id: "elec-sw-1-red",
+      sno: 48,
+      sheetNo: 1,
+      name: "1.0 Sqmm Wire 90m — 🔴 RED (சிகப்பு)",
+      defaultQty: 0,
+      refQty: 2,
+      unit: "Coil",
+      color: "red",
+      subcategory: "showroom_work",
+      isColorWire: true,
+      isWire: true,
+      isShowroomWork: true,
+      desc: "1.0 sq mm PVC insulated copper wire 90m coil - RED Phase"
+    },
+    {
+      id: "elec-sw-1-yel",
+      sno: 49,
+      sheetNo: 1,
+      name: "1.0 Sqmm Wire 90m — 🟡 YELLOW (மஞ்சள்)",
+      defaultQty: 0,
+      refQty: 2,
+      unit: "Coil",
+      color: "yellow",
+      subcategory: "showroom_work",
+      isColorWire: true,
+      isWire: true,
+      isShowroomWork: true,
+      desc: "1.0 sq mm PVC insulated copper wire 90m coil - YELLOW Phase"
+    },
+    {
+      id: "elec-sw-1-blu",
+      sno: 50,
+      sheetNo: 1,
+      name: "1.0 Sqmm Wire 90m — 🔵 BLUE (நீலம்)",
+      defaultQty: 0,
+      refQty: 1,
+      unit: "Coil",
+      color: "blue",
+      subcategory: "showroom_work",
+      isColorWire: true,
+      isWire: true,
+      isShowroomWork: true,
+      desc: "1.0 sq mm PVC insulated copper wire 90m coil - BLUE Phase"
+    },
+    {
+      id: "elec-sw-1-grn",
+      sno: 51,
+      sheetNo: 1,
+      name: "1.0 Sqmm Wire 90m — 🟢 GREEN (பச்சை)",
+      defaultQty: 0,
+      refQty: 0,
+      unit: "Coil",
+      color: "green",
+      subcategory: "showroom_work",
+      isColorWire: true,
+      isWire: true,
+      isShowroomWork: true,
+      desc: "1.0 sq mm PVC insulated copper wire 90m coil - GREEN Earth"
+    },
+    {
+      id: "elec-sw-1-blk",
+      sno: 52,
+      sheetNo: 1,
+      name: "1.0 Sqmm Wire 90m — ⚫ BLACK (கருப்பு)",
+      defaultQty: 0,
+      refQty: 3,
+      unit: "Coil",
+      color: "black",
+      subcategory: "showroom_work",
+      isColorWire: true,
+      isWire: true,
+      isShowroomWork: true,
+      desc: "1.0 sq mm PVC insulated copper wire 90m coil - BLACK Neutral"
+    },
+
+    // Row 2: 1.5 Sqmm wire 90m (Total 5 coils: Red 1, Yellow 0, Blue 1, Green 1, Black 2)
+    {
+      id: "elec-sw-2-red",
+      sno: 53,
+      sheetNo: 2,
+      name: "1.5 Sqmm Wire 90m — 🔴 RED (சிகப்பு)",
+      defaultQty: 0,
+      refQty: 1,
+      unit: "Coil",
+      color: "red",
+      subcategory: "showroom_work",
+      isColorWire: true,
+      isWire: true,
+      isShowroomWork: true,
+      desc: "1.5 sq mm PVC insulated copper wire 90m coil - RED Phase"
+    },
+    {
+      id: "elec-sw-2-yel",
+      sno: 54,
+      sheetNo: 2,
+      name: "1.5 Sqmm Wire 90m — 🟡 YELLOW (மஞ்சள்)",
+      defaultQty: 0,
+      refQty: 0,
+      unit: "Coil",
+      color: "yellow",
+      subcategory: "showroom_work",
+      isColorWire: true,
+      isWire: true,
+      isShowroomWork: true,
+      desc: "1.5 sq mm PVC insulated copper wire 90m coil - YELLOW Phase"
+    },
+    {
+      id: "elec-sw-2-blu",
+      sno: 55,
+      sheetNo: 2,
+      name: "1.5 Sqmm Wire 90m — 🔵 BLUE (நீலம்)",
+      defaultQty: 0,
+      refQty: 1,
+      unit: "Coil",
+      color: "blue",
+      subcategory: "showroom_work",
+      isColorWire: true,
+      isWire: true,
+      isShowroomWork: true,
+      desc: "1.5 sq mm PVC insulated copper wire 90m coil - BLUE Phase"
+    },
+    {
+      id: "elec-sw-2-grn",
+      sno: 56,
+      sheetNo: 2,
+      name: "1.5 Sqmm Wire 90m — 🟢 GREEN (பச்சை)",
+      defaultQty: 0,
+      refQty: 1,
+      unit: "Coil",
+      color: "green",
+      subcategory: "showroom_work",
+      isColorWire: true,
+      isWire: true,
+      isShowroomWork: true,
+      desc: "1.5 sq mm PVC insulated copper wire 90m coil - GREEN Earth"
+    },
+    {
+      id: "elec-sw-2-blk",
+      sno: 57,
+      sheetNo: 2,
+      name: "1.5 Sqmm Wire 90m — ⚫ BLACK (கருப்பு)",
+      defaultQty: 0,
+      refQty: 2,
+      unit: "Coil",
+      color: "black",
+      subcategory: "showroom_work",
+      isColorWire: true,
+      isWire: true,
+      isShowroomWork: true,
+      desc: "1.5 sq mm PVC insulated copper wire 90m coil - BLACK Neutral"
+    },
+
+    // Row 3: 2.5 Sqmm wire 90m (Total 4 coils: Red 1, Yellow 1, Blue 0, Green 0, Black 2)
+    {
+      id: "elec-sw-3-red",
+      sno: 58,
+      sheetNo: 3,
+      name: "2.5 Sqmm Wire 90m — 🔴 RED (சிகப்பு)",
+      defaultQty: 0,
+      refQty: 1,
+      unit: "Coil",
+      color: "red",
+      subcategory: "showroom_work",
+      isColorWire: true,
+      isWire: true,
+      isShowroomWork: true,
+      desc: "2.5 sq mm heavy power copper wire 90m coil - RED Phase"
+    },
+    {
+      id: "elec-sw-3-yel",
+      sno: 59,
+      sheetNo: 3,
+      name: "2.5 Sqmm Wire 90m — 🟡 YELLOW (மஞ்சள்)",
+      defaultQty: 0,
+      refQty: 1,
+      unit: "Coil",
+      color: "yellow",
+      subcategory: "showroom_work",
+      isColorWire: true,
+      isWire: true,
+      isShowroomWork: true,
+      desc: "2.5 sq mm heavy power copper wire 90m coil - YELLOW Phase"
+    },
+    {
+      id: "elec-sw-3-blu",
+      sno: 60,
+      sheetNo: 3,
+      name: "2.5 Sqmm Wire 90m — 🔵 BLUE (நீலம்)",
+      defaultQty: 0,
+      refQty: 0,
+      unit: "Coil",
+      color: "blue",
+      subcategory: "showroom_work",
+      isColorWire: true,
+      isWire: true,
+      isShowroomWork: true,
+      desc: "2.5 sq mm heavy power copper wire 90m coil - BLUE Phase"
+    },
+    {
+      id: "elec-sw-3-grn",
+      sno: 61,
+      sheetNo: 3,
+      name: "2.5 Sqmm Wire 90m — 🟢 GREEN (பச்சை)",
+      defaultQty: 0,
+      refQty: 0,
+      unit: "Coil",
+      color: "green",
+      subcategory: "showroom_work",
+      isColorWire: true,
+      isWire: true,
+      isShowroomWork: true,
+      desc: "2.5 sq mm heavy power copper wire 90m coil - GREEN Earth"
+    },
+    {
+      id: "elec-sw-3-blk",
+      sno: 62,
+      sheetNo: 3,
+      name: "2.5 Sqmm Wire 90m — ⚫ BLACK (கருப்பு)",
+      defaultQty: 0,
+      refQty: 2,
+      unit: "Coil",
+      color: "black",
+      subcategory: "showroom_work",
+      isColorWire: true,
+      isWire: true,
+      isShowroomWork: true,
+      desc: "2.5 sq mm heavy power copper wire 90m coil - BLACK Neutral"
+    },
+
+    // Row 4: 4 Sqmm wire 90m (Red 15m, Black 15m - total 30 meters)
+    {
+      id: "elec-sw-4-red-m",
+      sno: 63,
+      sheetNo: 4,
+      name: "4.0 Sqmm Wire — 🔴 RED (15m Cut / Meters)",
+      defaultQty: 0,
+      refQty: 15,
+      unit: "Meters",
+      color: "red",
+      subcategory: "showroom_work",
+      isColorWire: true,
+      isWire: true,
+      isShowroomWork: true,
+      desc: "4.0 sq mm heavy sub-main wire - 15 Meters Cut (RED)"
+    },
+    {
+      id: "elec-sw-4-blk-m",
+      sno: 64,
+      sheetNo: 4,
+      name: "4.0 Sqmm Wire — ⚫ BLACK (15m Cut / Meters)",
+      defaultQty: 0,
+      refQty: 15,
+      unit: "Meters",
+      color: "black",
+      subcategory: "showroom_work",
+      isColorWire: true,
+      isWire: true,
+      isShowroomWork: true,
+      desc: "4.0 sq mm heavy sub-main wire - 15 Meters Cut (BLACK)"
+    },
+    {
+      id: "elec-sw-4-red-c",
+      sno: 65,
+      sheetNo: 4,
+      name: "4.0 Sqmm Wire 90m — 🔴 RED Coil",
+      defaultQty: 0,
+      refQty: 0,
+      unit: "Coil",
+      color: "red",
+      subcategory: "showroom_work",
+      isColorWire: true,
+      isWire: true,
+      isShowroomWork: true,
+      desc: "4.0 sq mm full 90m coil - RED Phase"
+    },
+    {
+      id: "elec-sw-4-blk-c",
+      sno: 66,
+      sheetNo: 4,
+      name: "4.0 Sqmm Wire 90m — ⚫ BLACK Coil",
+      defaultQty: 0,
+      refQty: 0,
+      unit: "Coil",
+      color: "black",
+      subcategory: "showroom_work",
+      isColorWire: true,
+      isWire: true,
+      isShowroomWork: true,
+      desc: "4.0 sq mm full 90m coil - BLACK Neutral"
+    },
+
+    // Row 5: 1.0 sqmm frls 90m (White = 1, Gray = 1 - Total 2 coils)
+    {
+      id: "elec-sw-5-wht",
+      sno: 67,
+      sheetNo: 5,
+      name: "1.0 Sqmm FRLS Wire 90m — ⚪ WHITE (வெள்ளை)",
+      defaultQty: 0,
+      refQty: 1,
+      unit: "Coil",
+      color: "white",
+      subcategory: "showroom_work",
+      isColorWire: true,
+      isWire: true,
+      isShowroomWork: true,
+      desc: "1.0 sq mm Flame Retardant Low Smoke (FRLS) 90m coil - WHITE"
+    },
+    {
+      id: "elec-sw-5-gry",
+      sno: 68,
+      sheetNo: 5,
+      name: "1.0 Sqmm FRLS Wire 90m — 🔘 GRAY (சாம்பல்)",
+      defaultQty: 0,
+      refQty: 1,
+      unit: "Coil",
+      color: "gray",
+      subcategory: "showroom_work",
+      isColorWire: true,
+      isWire: true,
+      isShowroomWork: true,
+      desc: "1.0 sq mm Flame Retardant Low Smoke (FRLS) 90m coil - GRAY"
+    },
+
+    // Row 6: 1.5 sqmm frls 90m (White = 1, Gray = 1 - Total 2 coils)
+    {
+      id: "elec-sw-6-wht",
+      sno: 69,
+      sheetNo: 6,
+      name: "1.5 Sqmm FRLS Wire 90m — ⚪ WHITE (வெள்ளை)",
+      defaultQty: 0,
+      refQty: 1,
+      unit: "Coil",
+      color: "white",
+      subcategory: "showroom_work",
+      isColorWire: true,
+      isWire: true,
+      isShowroomWork: true,
+      desc: "1.5 sq mm Flame Retardant Low Smoke (FRLS) 90m coil - WHITE"
+    },
+    {
+      id: "elec-sw-6-gry",
+      sno: 70,
+      sheetNo: 7,
+      name: "1.5 Sqmm FRLS Wire 90m — 🔘 GRAY (சாம்பல்)",
+      defaultQty: 0,
+      refQty: 1,
+      unit: "Coil",
+      color: "gray",
+      subcategory: "showroom_work",
+      isColorWire: true,
+      isWire: true,
+      isShowroomWork: true,
+      desc: "1.5 sq mm Flame Retardant Low Smoke (FRLS) 90m coil - GRAY"
+    },
+
+    // Row 7: Insulation Tape (Red 4, Yellow 4, Blue 4, Green 4, Black 4 - Total 20 rolls)
+    {
+      id: "elec-sw-7-red",
+      sno: 71,
+      sheetNo: 7,
+      name: "Insulation Tape — 🔴 RED (சிகப்பு)",
+      defaultQty: 0,
+      refQty: 4,
+      unit: "Rolls",
+      color: "red",
+      subcategory: "showroom_work",
+      isAccessory: true,
+      isShowroomWork: true,
+      desc: "High quality PVC electrical insulation tape - RED"
+    },
+    {
+      id: "elec-sw-7-yel",
+      sno: 72,
+      sheetNo: 7,
+      name: "Insulation Tape — 🟡 YELLOW (மஞ்சள்)",
+      defaultQty: 0,
+      refQty: 4,
+      unit: "Rolls",
+      color: "yellow",
+      subcategory: "showroom_work",
+      isAccessory: true,
+      isShowroomWork: true,
+      desc: "High quality PVC electrical insulation tape - YELLOW"
+    },
+    {
+      id: "elec-sw-7-blu",
+      sno: 73,
+      sheetNo: 7,
+      name: "Insulation Tape — 🔵 BLUE (நீலம்)",
+      defaultQty: 0,
+      refQty: 4,
+      unit: "Rolls",
+      color: "blue",
+      subcategory: "showroom_work",
+      isAccessory: true,
+      isShowroomWork: true,
+      desc: "High quality PVC electrical insulation tape - BLUE"
+    },
+    {
+      id: "elec-sw-7-grn",
+      sno: 74,
+      sheetNo: 7,
+      name: "Insulation Tape — 🟢 GREEN (பச்சை)",
+      defaultQty: 0,
+      refQty: 4,
+      unit: "Rolls",
+      color: "green",
+      subcategory: "showroom_work",
+      isAccessory: true,
+      isShowroomWork: true,
+      desc: "High quality PVC electrical insulation tape - GREEN"
+    },
+    {
+      id: "elec-sw-7-blk",
+      sno: 75,
+      sheetNo: 7,
+      name: "Insulation Tape — ⚫ BLACK (கருப்பு)",
+      defaultQty: 0,
+      refQty: 4,
+      unit: "Rolls",
+      color: "black",
+      subcategory: "showroom_work",
+      isAccessory: true,
+      isShowroomWork: true,
+      desc: "High quality PVC electrical insulation tape - BLACK"
+    },
+
+    // Row 8: Wiring spring 30meter
+    {
+      id: "elec-sw-8",
+      sno: 76,
+      sheetNo: 8,
+      name: "Wiring Spring 30m (Pull Spring Wire)",
+      defaultQty: 0,
+      refQty: 2,
+      unit: "Nos",
+      subcategory: "showroom_work",
+      isAccessory: true,
+      isShowroomWork: true,
+      desc: "Flexible steel wire pulling spring guide tool (30 Meter)"
+    },
+
+    // Row 9: 1/2 spring hose 30meter
+    {
+      id: "elec-sw-9",
+      sno: 77,
+      sheetNo: 9,
+      name: '½" Spring Hose 30m (Flexible Corrugated Hose)',
+      defaultQty: 0,
+      refQty: 2,
+      unit: "Nos",
+      subcategory: "showroom_work",
+      isConduit: true,
+      isShowroomWork: true,
+      desc: "1/2-inch flexible corrugated wiring spring hose pipe (30 Meter bundle)"
+    },
+
+    // Row 10: Cat 6 wire
+    {
+      id: "elec-sw-10",
+      sno: 78,
+      sheetNo: 10,
+      name: "Cat 6 LAN / Network Cable (100m)",
+      defaultQty: 0,
+      refQty: 100,
+      unit: "Meters",
+      subcategory: "showroom_work",
+      isWire: true,
+      isShowroomWork: true,
+      desc: "High speed UTP Cat-6 4-pair Ethernet networking cable (100 Meters)"
+    },
+
+    // Row 11: Grease 100 gm
+    {
+      id: "elec-sw-11",
+      sno: 79,
+      sheetNo: 11,
+      name: "Electrical Wire Pulling Grease (100 gm)",
+      defaultQty: 0,
+      refQty: 2,
+      unit: "Nos",
+      subcategory: "showroom_work",
+      isAccessory: true,
+      isShowroomWork: true,
+      desc: "100 gm smooth cable conduit pulling lubricant grease"
+    },
+
+    // Row 12: 1 inch 2mm wiring pipe
+    {
+      id: "elec-sw-12",
+      sno: 80,
+      sheetNo: 12,
+      name: '1" 2mm Wiring Conduit Pipe',
+      defaultQty: 0,
+      refQty: 60,
+      unit: "Nos",
+      subcategory: "showroom_work",
+      isConduit: true,
+      isShowroomWork: true,
+      desc: "1-inch 2mm heavy duty PVC rigid electrical conduit pipe (60 Nos)"
+    },
+
+    // Row 13: 1 inch wiring Bend
+    {
+      id: "elec-sw-13",
+      sno: 81,
+      sheetNo: 13,
+      name: '1" Wiring Bend (Heavy PVC)',
+      defaultQty: 0,
+      refQty: 40,
+      unit: "Nos",
+      subcategory: "showroom_work",
+      isConduit: true,
+      isShowroomWork: true,
+      desc: "1-inch heavy PVC conduit 90° smooth bend (40 Nos)"
+    },
+
+    // Row 14: 1 inch wiring clamp
+    {
+      id: "elec-sw-14",
+      sno: 82,
+      sheetNo: 14,
+      name: '1" Wiring Clamp (15 Dozen / 180 Nos)',
+      defaultQty: 0,
+      refQty: 15,
+      unit: "Dozen",
+      subcategory: "showroom_work",
+      isAccessory: true,
+      isShowroomWork: true,
+      desc: "1-inch heavy GI/PVC saddle pipe clamp (15 Dozen = 180 Nos)"
+    },
+
+    // Row 15: 1 1/2 inch steel nail
+    {
+      id: "elec-sw-15",
+      sno: 83,
+      sheetNo: 15,
+      name: '1½" Steel Concrete Nail',
+      defaultQty: 0,
+      refQty: 2,
+      unit: "Kg",
+      subcategory: "showroom_work",
+      isAccessory: true,
+      isShowroomWork: true,
+      desc: "1.5-inch hardened steel masonry & concrete nails (2 Kg)"
+    },
+
+    // Row 16: Nail washer
+    {
+      id: "elec-sw-16",
+      sno: 84,
+      sheetNo: 16,
+      name: "Nail Washer",
+      defaultQty: 0,
+      refQty: 0.5,
+      unit: "Kg",
+      subcategory: "showroom_work",
+      isAccessory: true,
+      isShowroomWork: true,
+      desc: "Steel round washers for pipe fixing nails (1/2 Kg)"
+    },
+
+    // Row 17: Star screw 1 1/4
+    {
+      id: "elec-sw-17",
+      sno: 85,
+      sheetNo: 17,
+      name: 'Star Screw 1¼" (10 Dozen / 120 Nos)',
+      defaultQty: 0,
+      refQty: 10,
+      unit: "Dozen",
+      subcategory: "showroom_work",
+      isAccessory: true,
+      isShowroomWork: true,
+      desc: "1-1/4 inch Phillips star drive drywall / wood screws (10 Dozen = 120 Nos)"
+    },
+
+    // Row 18: Star screw 1 1/2
+    {
+      id: "elec-sw-18",
+      sno: 86,
+      sheetNo: 18,
+      name: 'Star Screw 1½" (5 Dozen / 60 Nos)',
+      defaultQty: 0,
+      refQty: 5,
+      unit: "Dozen",
+      subcategory: "showroom_work",
+      isAccessory: true,
+      isShowroomWork: true,
+      desc: "1-1/2 inch star head multi-purpose screws (5 Dozen = 60 Nos)"
+    },
+
+    // Row 19: Wooden plugs
+    {
+      id: "elec-sw-19",
+      sno: 87,
+      sheetNo: 19,
+      name: "Wooden Plugs (மர குச்சி / Wall Plugs)",
+      defaultQty: 0,
+      refQty: 10,
+      unit: "Packets",
+      subcategory: "showroom_work",
+      isAccessory: true,
+      isShowroomWork: true,
+      desc: "Hardwood dowel wall plugs for screw anchoring (10 Packets)"
     }
   ]
 };
@@ -939,6 +1554,8 @@ const SUBCATEGORIES = {
   ],
   electrical: [
     { key: "all", label: "All Items" },
+    { key: "showroom_work", label: "🏬 Showroom Work (19 Items)" },
+    { key: "color_wires", label: "🎨 Color Wires (வயர் நிறங்கள்)" },
     { key: "roof_pipeline", label: "🏗️ Roof Pipe Line (15)" },
     { key: "wires", label: "Wires & Cables" },
     { key: "conduits", label: "Conduits & Junctions" },
@@ -1102,3 +1719,7 @@ const ROOF_PIPELINE_COMBO = [
     "desc": "Concealed ceiling spot light / fancy light junction box"
   }
 ];
+
+// Showroom Work Material Combo List (19 Spreadsheet Items with Color Variants)
+const SHOWROOM_WORK_COMBO = PRODUCT_CATALOG.electrical.filter(item => item.isShowroomWork);
+

@@ -1,0 +1,1644 @@
+/* ==========================================================================
+   MASTER PORTAL & LABOUR SALARY / MACHINE RENT SYSTEM
+   ULTRA-PREMIUM EXECUTIVE AESTHETICS (Titanium Obsidian, Champagne Gold & Royal Sapphire)
+   Crafted for Maximum Visual "WOW" Factor, Glassmorphism & Fluid Micro-Interactions
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Mukta+Malar:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap');
+
+/* ==========================================================================
+   DESIGN TOKENS: ULTRA-LUXURY EXECUTIVE PALETTE (Default: Obsidian Dark)
+   ========================================================================== */
+:root {
+  --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-tamil: 'Mukta Malar', 'Plus Jakarta Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Executive Obsidian Base (Default) */
+  --theme-bg: #070a12;
+  --theme-bg-gradient: radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.14) 0%, transparent 55%),
+                       radial-gradient(circle at 100% 60%, rgba(245, 158, 11, 0.08) 0%, transparent 45%),
+                       radial-gradient(circle at 0% 100%, rgba(16, 185, 129, 0.08) 0%, transparent 50%),
+                       #070a12;
+
+  --theme-surface: rgba(15, 23, 42, 0.82);
+  --theme-surface-subtle: rgba(22, 33, 56, 0.55);
+  --theme-border: rgba(255, 255, 255, 0.09);
+  --theme-border-strong: rgba(255, 255, 255, 0.16);
+  --theme-border-hover: rgba(96, 165, 250, 0.45);
+
+  --theme-text-primary: #f8fafc;
+  --theme-text-secondary: #cbd5e1;
+  --theme-text-muted: #94a3b8;
+  --theme-text-subtle: #64748b;
+
+  --theme-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --theme-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --theme-shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.65);
+  --theme-shadow-card: 0 10px 30px -5px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.07);
+
+  /* Card Glass Tokens */
+  --card-bg: rgba(17, 24, 39, 0.78);
+  --card-border: rgba(255, 255, 255, 0.09);
+  --card-header-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
+  --card-total-bg: rgba(16, 185, 129, 0.12);
+  --card-total-border: rgba(16, 185, 129, 0.35);
+  --card-total-text: #34d399;
+
+  /* Executive Color Accents */
+  --accent-labour: #3b82f6;
+  --accent-labour-glow: rgba(59, 130, 246, 0.3);
+  --accent-labour-light: rgba(59, 130, 246, 0.14);
+  --accent-labour-border: rgba(59, 130, 246, 0.35);
+
+  --accent-machine: #f59e0b;
+  --accent-machine-glow: rgba(245, 158, 11, 0.3);
+  --accent-machine-light: rgba(245, 158, 11, 0.14);
+  --accent-machine-border: rgba(245, 158, 11, 0.35);
+
+  --accent-green: #10b981;
+  --accent-green-dark: #059669;
+  --accent-gold: #f59e0b;
+  --accent-gold-light: #fef3c7;
+
+  /* Stepper & Capsule Inputs */
+  --stepper-wrap-bg: #090e1a;
+  --stepper-border: rgba(255, 255, 255, 0.13);
+  --stepper-btn-bg: rgba(255, 255, 255, 0.04);
+  --stepper-btn-text: #ffffff;
+  --stepper-input-text: #ffffff;
+
+  /* Floating Bottom Bar */
+  --bar-bg: rgba(8, 12, 22, 0.88);
+  --bar-border: rgba(255, 255, 255, 0.1);
+  --bar-shadow: 0 -12px 36px rgba(0, 0, 0, 0.7);
+
+  /* Portal Top Bar */
+  --portal-bar-bg: rgba(7, 10, 18, 0.92);
+  --portal-bar-border: rgba(255, 255, 255, 0.09);
+  --portal-container-bg: rgba(15, 23, 42, 0.75);
+  --portal-container-border: rgba(255, 255, 255, 0.1);
+  --portal-btn-inactive-text: #94a3b8;
+  --portal-btn-inactive-hover: rgba(255, 255, 255, 0.07);
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+}
+
+/* ==========================================================================
+   OPTIONAL PEARL LIGHT THEME (Clean Apple Pro Luxury)
+   ========================================================================== */
+[data-theme="light"] {
+  --theme-bg: #f8fafc;
+  --theme-bg-gradient: radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.06) 0%, transparent 60%),
+                       radial-gradient(circle at 100% 50%, rgba(245, 158, 11, 0.05) 0%, transparent 50%),
+                       #f8fafc;
+
+  --theme-surface: #ffffff;
+  --theme-surface-subtle: #f1f5f9;
+  --theme-border: #e2e8f0;
+  --theme-border-strong: #cbd5e1;
+  --theme-border-hover: #94a3b8;
+
+  --theme-text-primary: #0f172a;
+  --theme-text-secondary: #334155;
+  --theme-text-muted: #64748b;
+  --theme-text-subtle: #94a3b8;
+
+  --theme-shadow-card: 0 8px 24px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.04);
+
+  --card-bg: #ffffff;
+  --card-border: #e2e8f0;
+  --card-header-bg: #f8fafc;
+  --card-total-bg: #ecfdf5;
+  --card-total-border: #a7f3d0;
+  --card-total-text: #059669;
+
+  --accent-labour-light: #eff6ff;
+  --accent-labour-border: #bfdbfe;
+  --accent-machine-light: #fffbeb;
+  --accent-machine-border: #fde68a;
+
+  --stepper-wrap-bg: #f1f5f9;
+  --stepper-border: #cbd5e1;
+  --stepper-btn-bg: #ffffff;
+  --stepper-btn-text: #0f172a;
+  --stepper-input-text: #0f172a;
+
+  --bar-bg: rgba(255, 255, 255, 0.94);
+  --bar-border: #e2e8f0;
+  --bar-shadow: 0 -8px 28px rgba(15, 23, 42, 0.1);
+
+  --portal-bar-bg: #ffffff;
+  --portal-bar-border: #e2e8f0;
+  --portal-container-bg: #f1f5f9;
+  --portal-container-border: #e2e8f0;
+  --portal-btn-inactive-text: #64748b;
+  --portal-btn-inactive-hover: #e2e8f0;
+}
+
+/* ==========================================================================
+   1. MASTER PORTAL SWITCHER BAR (Top Luxury Capsule Bar)
+   ========================================================================== */
+.master-portal-bar {
+  background: var(--portal-bar-bg);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1.5px solid var(--portal-bar-border);
+  padding: 0.7rem 0.95rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--theme-shadow-md);
+  transition: all 0.25s ease;
+}
+
+.portal-switcher-wrapper {
+  max-width: 1360px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.portal-switcher-container {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.55rem;
+  background: var(--portal-container-bg);
+  padding: 0.35rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--portal-container-border);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
+  transition: all 0.25s ease;
+}
+
+.portal-switch-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.65rem 0.95rem;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--portal-btn-inactive-text);
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  text-align: left;
+  user-select: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.portal-switch-btn:hover {
+  background: var(--portal-btn-inactive-hover);
+  color: #ffffff;
+}
+
+.portal-switch-btn__icon {
+  font-size: 1.4rem;
+  line-height: 1;
+  filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3));
+  transition: transform 0.25s ease;
+}
+
+.portal-switch-btn__text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.portal-switch-btn__title {
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: -0.2px;
+  color: inherit;
+}
+
+.portal-switch-btn__sub {
+  font-size: 0.7rem;
+  font-family: var(--font-tamil);
+  margin-top: 2px;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+/* Active State: Item Estimation (Emerald Jade Glow) */
+.portal-switch-btn--active[data-target="estimation"] {
+  background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+  color: #ffffff;
+  border-color: #34d399;
+  box-shadow: 0 4px 18px rgba(16, 185, 129, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+.portal-switch-btn--active[data-target="estimation"] .portal-switch-btn__sub {
+  color: #d1fae5;
+}
+.portal-switch-btn--active[data-target="estimation"] .portal-switch-btn__icon {
+  transform: scale(1.15);
+}
+
+/* Active State: Labour Salary (Royal Sapphire & Electric Cyan Glow) */
+.portal-switch-btn--active[data-target="labour"] {
+  background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 50%, #3b82f6 100%);
+  color: #ffffff;
+  border-color: #60a5fa;
+  box-shadow: 0 4px 18px rgba(37, 99, 235, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+.portal-switch-btn--active[data-target="labour"] .portal-switch-btn__sub {
+  color: #dbeafe;
+}
+.portal-switch-btn--active[data-target="labour"] .portal-switch-btn__icon {
+  transform: scale(1.15);
+}
+
+/* Theme Switcher Button */
+.theme-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  height: 46px;
+  padding: 0 0.9rem;
+  background: var(--portal-container-bg);
+  border: 1px solid var(--portal-container-border);
+  border-radius: var(--radius-md);
+  color: var(--theme-text-primary);
+  font-size: 0.84rem;
+  font-weight: 800;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.22s ease;
+  flex-shrink: 0;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.theme-toggle-btn:hover {
+  background: var(--portal-btn-inactive-hover);
+  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.theme-toggle-btn__icon {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+@media (max-width: 540px) {
+  .theme-toggle-btn__label {
+    display: none;
+  }
+  .theme-toggle-btn {
+    padding: 0 0.7rem;
+  }
+  .portal-switch-btn {
+    padding: 0.5rem 0.5rem;
+    gap: 0.45rem;
+  }
+  .portal-switch-btn__title {
+    font-size: 0.8rem;
+  }
+  .portal-switch-btn__sub {
+    font-size: 0.65rem;
+  }
+  .portal-switch-btn__icon {
+    font-size: 1.2rem;
+  }
+}
+
+/* ==========================================================================
+   2. LABOUR SALARY HERO (Executive Branding Bar)
+   ========================================================================== */
+.labour-app {
+  font-family: var(--font-main);
+  background: var(--theme-bg-gradient);
+  background-attachment: fixed;
+  color: var(--theme-text-primary);
+  min-height: calc(100vh - 75px);
+  padding-bottom: 115px; /* Space for sticky bottom bar */
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.labour-hero {
+  background: var(--theme-surface);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1.5px solid var(--theme-border);
+  padding: 1.15rem 0;
+  box-shadow: var(--theme-shadow-sm);
+  transition: all 0.25s ease;
+}
+
+.labour-hero__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.labour-hero__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.95rem;
+}
+
+.labour-hero__logo {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, #1e40af 0%, #2563eb 50%, #3b82f6 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.65rem;
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.labour-hero__title {
+  font-size: 1.38rem;
+  font-weight: 900;
+  color: var(--theme-text-primary);
+  letter-spacing: -0.4px;
+  margin: 0;
+  line-height: 1.15;
+}
+
+.labour-hero__tagline {
+  font-size: 0.8rem;
+  color: var(--theme-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 4px;
+  flex-wrap: wrap;
+}
+
+.labour-hero__tamil-tag {
+  font-family: var(--font-tamil);
+  color: #60a5fa;
+  font-weight: 700;
+  background: rgba(37, 99, 235, 0.16);
+  border: 1px solid rgba(59, 130, 246, 0.35);
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 0.78rem;
+}
+
+.labour-hero__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.labour-btn-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 0.95rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  font-weight: 800;
+  border: 1px solid var(--theme-border-strong);
+  background: var(--theme-surface-subtle);
+  color: var(--theme-text-secondary);
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.labour-btn-pill:hover {
+  background: rgba(255, 255, 255, 0.09);
+  color: var(--theme-text-primary);
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.labour-btn-pill:active {
+  transform: scale(0.95);
+}
+
+.labour-btn-pill--accent {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.25), rgba(59, 130, 246, 0.15));
+  border-color: rgba(59, 130, 246, 0.45);
+  color: #93c5fd;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+}
+.labour-btn-pill--accent:hover {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #ffffff;
+  border-color: #60a5fa;
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.45);
+}
+
+/* ==========================================================================
+   3. SETTINGS ACCORDION & MACHINE PRESET CHIPS
+   ========================================================================== */
+.labour-settings-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  margin-top: 1.1rem;
+  margin-bottom: 1.1rem;
+  overflow: hidden;
+  box-shadow: var(--theme-shadow-card);
+  transition: all 0.25s ease;
+}
+
+.labour-settings-card:hover {
+  border-color: var(--theme-border-hover);
+}
+
+.labour-settings__header {
+  padding: 0.95rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  background: var(--card-header-bg);
+  user-select: none;
+}
+
+.labour-settings__title-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.labour-settings__badge {
+  font-size: 1.25rem;
+}
+
+.labour-settings__title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--theme-text-primary);
+  letter-spacing: -0.2px;
+}
+
+.labour-settings__sub {
+  font-size: 0.75rem;
+  color: var(--theme-text-muted);
+  font-family: var(--font-tamil);
+  margin-left: 0.5rem;
+}
+
+.labour-settings__toggle-icon {
+  font-size: 0.88rem;
+  color: var(--theme-text-muted);
+  transition: transform 0.25s ease;
+}
+
+.labour-settings-card.open .labour-settings__toggle-icon {
+  transform: rotate(180deg);
+}
+
+.labour-settings__body {
+  padding: 1.25rem;
+  border-top: 1px solid var(--theme-border);
+  background: rgba(11, 17, 32, 0.45);
+  display: none;
+}
+
+.labour-settings-card.open .labour-settings__body {
+  display: block;
+}
+
+.labour-grid-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1rem;
+}
+
+.labour-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.labour-field__label {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--theme-text-secondary);
+  display: flex;
+  justify-content: space-between;
+}
+
+.labour-field__label small {
+  font-family: var(--font-tamil);
+  color: #60a5fa;
+  font-size: 0.74rem;
+  text-transform: none;
+  font-weight: 700;
+}
+
+.labour-field__input {
+  background: #0b1120;
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-sm);
+  color: var(--theme-text-primary);
+  padding: 0.7rem 0.9rem;
+  font-size: 0.94rem;
+  font-weight: 700;
+  transition: all 0.2s ease;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.35);
+}
+
+.labour-field__input:focus {
+  border-color: var(--accent-labour);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25), inset 0 1px 2px rgba(0, 0, 0, 0.2);
+  background: #0f172a;
+  outline: none;
+}
+
+/* Machine Preset Quick Chips */
+.machine-preset-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 0.55rem;
+}
+
+.preset-chip {
+  padding: 0.48rem 0.85rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.78rem;
+  font-weight: 800;
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  background: rgba(15, 23, 42, 0.7);
+  color: var(--theme-text-secondary);
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.preset-chip:hover {
+  border-color: #f59e0b;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
+}
+
+.preset-chip:active {
+  transform: scale(0.95);
+}
+
+.preset-chip.active {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(217, 119, 6, 0.15));
+  border-color: #f59e0b;
+  color: #fde68a;
+  font-weight: 900;
+  box-shadow: 0 3px 14px rgba(245, 158, 11, 0.3);
+}
+
+/* ==========================================================================
+   4. CONTROLS STRIP & SEGMENTED VIEW SWITCHER
+   ========================================================================== */
+.labour-controls-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.95rem;
+  margin-bottom: 1.1rem;
+  flex-wrap: wrap;
+}
+
+.labour-week-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  padding: 0.5rem 0.95rem;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--theme-border);
+  font-size: 0.84rem;
+  font-weight: 800;
+  color: #93c5fd;
+  box-shadow: var(--theme-shadow-sm);
+}
+
+.labour-view-switcher {
+  display: inline-flex;
+  background: #0b1120;
+  padding: 3px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.labour-view-btn {
+  padding: 0.48rem 0.95rem;
+  border-radius: 9px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--theme-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.labour-view-btn.active {
+  background: #1e293b;
+  color: #ffffff;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);
+}
+
+/* ==========================================================================
+   5. DAY CARDS (Executive Staggered Glass Cards)
+   ========================================================================== */
+.day-cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.05rem;
+}
+
+@keyframes cardSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.day-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--theme-shadow-card);
+  transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: cardSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.day-card:nth-child(1) { animation-delay: 0.03s; }
+.day-card:nth-child(2) { animation-delay: 0.06s; }
+.day-card:nth-child(3) { animation-delay: 0.09s; }
+.day-card:nth-child(4) { animation-delay: 0.12s; }
+.day-card:nth-child(5) { animation-delay: 0.15s; }
+.day-card:nth-child(6) { animation-delay: 0.18s; }
+.day-card:nth-child(7) { animation-delay: 0.21s; }
+
+.day-card:hover {
+  border-color: rgba(96, 165, 250, 0.4);
+  box-shadow: 0 14px 35px -5px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transform: translateY(-2.5px);
+}
+
+.day-card--has-data {
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
+/* Card Header */
+.day-card__header {
+  padding: 0.95rem 1.25rem;
+  background: var(--card-header-bg);
+  border-bottom: 1.5px solid var(--card-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.85rem;
+}
+
+.day-card__title-box {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.day-card__badge-num {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--theme-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 800;
+  font-family: var(--font-mono);
+}
+
+.day-card__day-name {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: var(--theme-text-primary);
+  letter-spacing: -0.3px;
+}
+
+.day-card__tamil-name {
+  font-family: var(--font-tamil);
+  color: #60a5fa;
+  font-size: 0.84rem;
+  font-weight: 700;
+  background: rgba(37, 99, 235, 0.18);
+  border: 1px solid rgba(59, 130, 246, 0.35);
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.day-card__date-chip {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--theme-text-muted);
+  font-family: var(--font-mono);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2px 7px;
+  border-radius: 5px;
+}
+
+/* Day Total Badge (Jade Glowing Jewel) */
+.day-card__total-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+  background: var(--card-total-bg);
+  border: 1px solid var(--card-total-border);
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 2px 10px rgba(16, 185, 129, 0.15);
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.day-card__total-label {
+  font-size: 0.64rem;
+  text-transform: uppercase;
+  color: #94a3b8;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.day-card__total-val {
+  font-size: 1.22rem;
+  font-weight: 900;
+  color: var(--card-total-text);
+  font-family: var(--font-mono);
+  letter-spacing: -0.4px;
+  line-height: 1.1;
+  text-shadow: 0 0 12px rgba(52, 211, 153, 0.45);
+}
+
+/* Card Body Rows */
+.day-card__body {
+  padding: 1.1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.95rem;
+}
+
+.entry-row {
+  border: 1.5px solid rgba(255, 255, 255, 0.07);
+  border-radius: var(--radius-md);
+  padding: 0.85rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+  transition: all 0.22s ease;
+  backdrop-filter: blur(8px);
+}
+
+/* Labour Row: Midnight Sapphire */
+.entry-row--labour {
+  border-left: 4px solid #3b82f6;
+  background: linear-gradient(90deg, rgba(37, 99, 235, 0.12) 0%, rgba(15, 23, 42, 0.6) 100%);
+}
+.entry-row--labour:hover {
+  border-color: rgba(59, 130, 246, 0.45);
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.15);
+}
+
+/* Machine Row: Champagne Gold & Burnished Copper */
+.entry-row--machine {
+  border-left: 4px solid #f59e0b;
+  background: linear-gradient(90deg, rgba(245, 158, 11, 0.12) 0%, rgba(15, 23, 42, 0.6) 100%);
+}
+.entry-row--machine:hover {
+  border-color: rgba(245, 158, 11, 0.45);
+  box-shadow: 0 4px 16px rgba(245, 158, 11, 0.15);
+}
+
+.entry-row__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 140px;
+}
+
+.entry-row__label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--theme-text-primary);
+}
+
+.entry-row__tamil-sub {
+  font-family: var(--font-tamil);
+  font-size: 0.74rem;
+  color: #94a3b8;
+  font-weight: 700;
+}
+
+.entry-row__formula {
+  font-size: 0.78rem;
+  font-family: var(--font-mono);
+  color: #cbd5e1;
+  margin-top: 2px;
+}
+.entry-row--labour .entry-row__formula strong {
+  color: #93c5fd;
+  text-shadow: 0 0 8px rgba(147, 197, 253, 0.4);
+}
+.entry-row--machine .entry-row__formula strong {
+  color: #fde68a;
+  text-shadow: 0 0 8px rgba(253, 230, 138, 0.4);
+}
+
+/* Touch Stepper Controls (Titanium Spring Capsule) */
+.touch-stepper {
+  display: flex;
+  align-items: center;
+  background: var(--stepper-wrap-bg);
+  border: 1.5px solid var(--stepper-border);
+  border-radius: var(--radius-md);
+  height: 48px;
+  overflow: hidden;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.touch-stepper__btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.45rem;
+  font-weight: 900;
+  background: var(--stepper-btn-bg);
+  color: var(--stepper-btn-text);
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.touch-stepper__btn:active {
+  transform: scale(0.84);
+}
+
+.touch-stepper__btn--minus {
+  color: #f87171;
+  border-right: 1px solid var(--stepper-border);
+}
+.touch-stepper__btn--minus:hover {
+  background: rgba(239, 68, 68, 0.22);
+  color: #ffffff;
+}
+
+.touch-stepper__btn--plus {
+  color: #4ade80;
+  border-left: 1px solid var(--stepper-border);
+}
+.touch-stepper__btn--plus:hover {
+  background: rgba(16, 185, 129, 0.22);
+  color: #ffffff;
+}
+
+/* Pop Scale Micro-Animation */
+@keyframes popScale {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.18); filter: brightness(1.25); }
+  100% { transform: scale(1); }
+}
+
+.animate-pop {
+  animation: popScale 0.28s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+.touch-stepper__input {
+  width: 58px;
+  height: 48px;
+  border: none;
+  background: transparent;
+  color: var(--stepper-input-text);
+  text-align: center;
+  font-size: 1.25rem;
+  font-weight: 900;
+  font-family: var(--font-mono);
+  padding: 0;
+  -moz-appearance: textfield;
+}
+
+.touch-stepper__input::-webkit-outer-spin-button,
+.touch-stepper__input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.touch-stepper__input:focus {
+  background: rgba(59, 130, 246, 0.12);
+  outline: none;
+}
+
+/* Remarks Input */
+.day-card__notes {
+  border-top: 1px dashed rgba(255, 255, 255, 0.08);
+  padding-top: 0.75rem;
+  margin-top: 0.2rem;
+}
+
+.day-card__notes-input {
+  width: 100%;
+  background: rgba(11, 17, 32, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: var(--radius-sm);
+  color: var(--theme-text-primary);
+  font-size: 0.84rem;
+  padding: 0.55rem 0.85rem;
+  transition: all 0.2s ease;
+}
+
+.day-card__notes-input:focus {
+  border-color: #3b82f6;
+  background: #0b1120;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+/* ==========================================================================
+   6. TABLE SPREADSHEET VIEW
+   ========================================================================== */
+.labour-table-container {
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  border: 1.5px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  overflow-x: auto;
+  box-shadow: var(--theme-shadow-card);
+  margin-bottom: 1.5rem;
+}
+
+.labour-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 820px;
+  text-align: left;
+  font-size: 0.85rem;
+}
+
+.labour-table th {
+  background: rgba(11, 17, 32, 0.85);
+  color: var(--theme-text-muted);
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  letter-spacing: 0.6px;
+  padding: 0.95rem 1rem;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.labour-table td {
+  padding: 0.95rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--theme-text-primary);
+  vertical-align: middle;
+}
+
+.labour-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.labour-table tfoot td {
+  background: rgba(11, 17, 32, 0.95);
+  font-weight: 900;
+  color: #ffffff;
+  border-top: 2.5px solid #3b82f6;
+  padding: 1.1rem 1rem;
+}
+
+.table-stepper {
+  display: inline-flex;
+  align-items: center;
+  background: #090e18;
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  border-radius: 7px;
+  height: 36px;
+  overflow: hidden;
+}
+
+.table-stepper button {
+  width: 34px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+  font-weight: 900;
+  font-size: 1.15rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.table-stepper button:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.table-stepper input {
+  width: 44px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  color: #ffffff;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-weight: 900;
+}
+
+/* ==========================================================================
+   7. STICKY BOTTOM ACTION BAR (Floating Frosted Neon Bar)
+   ========================================================================== */
+.labour-bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bar-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--bar-border);
+  box-shadow: var(--bar-shadow);
+  padding: 0.75rem 1rem;
+  z-index: 150;
+  transition: all 0.25s ease;
+}
+
+/* Moving Multi-Color Neon Border */
+.labour-bottom-bar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2.5px;
+  background: linear-gradient(90deg, #3b82f6, #10b981, #f59e0b, #ec4899, #3b82f6);
+  background-size: 300% 100%;
+  animation: neonFlow 5s linear infinite;
+}
+
+@keyframes neonFlow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 300% 50%; }
+}
+
+.labour-bottom-bar__inner {
+  max-width: 1360px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.95rem;
+}
+
+.labour-total-pill {
+  display: flex;
+  flex-direction: column;
+  min-width: 135px;
+}
+
+.labour-total-pill__label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  color: var(--theme-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.labour-total-pill__val {
+  font-size: 1.55rem;
+  font-weight: 900;
+  color: #34d399;
+  font-family: var(--font-mono);
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+  text-shadow: 0 0 16px rgba(52, 211, 153, 0.5);
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.labour-total-pill__sub {
+  font-size: 0.74rem;
+  color: #94a3b8;
+  margin-top: 2px;
+  font-weight: 700;
+}
+
+.labour-actions-group {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-shrink: 0;
+}
+
+.btn-labour-action {
+  height: 48px;
+  padding: 0 1.25rem;
+  border-radius: var(--radius-md);
+  font-size: 0.92rem;
+  font-weight: 900;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-labour-action:active {
+  transform: scale(0.95);
+}
+
+/* WhatsApp Breathing Ambient Pulse */
+@keyframes waBreathe {
+  0%, 100% {
+    box-shadow: 0 4px 14px rgba(34, 197, 94, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    transform: translateY(0);
+  }
+  50% {
+    box-shadow: 0 8px 24px rgba(34, 197, 94, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    transform: translateY(-1.5px);
+  }
+}
+
+.btn-labour-whatsapp {
+  background: linear-gradient(135deg, #16a34a 0%, #22c55e 100%);
+  color: #ffffff;
+  border: 1px solid #4ade80;
+  animation: waBreathe 3.2s ease-in-out infinite;
+}
+.btn-labour-whatsapp:hover {
+  background: linear-gradient(135deg, #15803d 0%, #16a34a 100%);
+  animation: none;
+  transform: translateY(-2px);
+}
+
+/* PDF Sweeping Shine Effect */
+@keyframes shineSweep {
+  0%, 65% {
+    left: -80%;
+  }
+  100% {
+    left: 170%;
+  }
+}
+
+.btn-labour-pdf {
+  background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 50%, #3b82f6 100%);
+  color: #ffffff;
+  border: 1px solid #60a5fa;
+  box-shadow: 0 4px 18px rgba(37, 99, 235, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+.btn-labour-pdf:hover {
+  background: linear-gradient(135deg, #1e40af 0%, #1d4ed8 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(37, 99, 235, 0.6);
+}
+
+.btn-labour-pdf::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -80%;
+  width: 45%;
+  height: 200%;
+  background: linear-gradient(
+    60deg,
+    rgba(255, 255, 255, 0) 10%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0) 90%
+  );
+  transform: rotate(25deg);
+  animation: shineSweep 4.5s ease-in-out infinite;
+}
+
+.btn-labour-preview {
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--theme-text-primary);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  display: none;
+}
+.btn-labour-preview:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+@media (min-width: 640px) {
+  .btn-labour-preview {
+    display: inline-flex;
+  }
+}
+
+@media (max-width: 440px) {
+  .btn-labour-action {
+    padding: 0 0.8rem;
+    font-size: 0.84rem;
+  }
+  .labour-total-pill__val {
+    font-size: 1.25rem;
+  }
+}
+
+/* ==========================================================================
+   8. OFFICIAL A4 INVOICE VOUCHER PREVIEW & PRINT
+   ========================================================================== */
+.a4-voucher-modal-window {
+  max-width: 900px;
+  width: 95vw;
+  background: #ffffff;
+  color: #0f172a;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: 0 25px 65px rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  max-height: 92vh;
+}
+
+.a4-voucher-modal-header {
+  background: #0b1120;
+  color: #ffffff;
+  padding: 0.95rem 1.35rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.a4-voucher-modal-body {
+  padding: 1.5rem;
+  overflow-y: auto;
+  background: #f1f5f9;
+}
+
+/* The Exact A4 Document Sheet */
+.official-voucher-sheet {
+  background: #ffffff;
+  color: #1e293b;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 26px 30px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+  border: 1.5px solid #cbd5e1;
+  border-radius: 6px;
+  font-family: 'Plus Jakarta Sans', Arial, sans-serif;
+  line-height: 1.35;
+}
+
+.ovs-header {
+  border-bottom: 2.5px solid #1e3a8a;
+  padding-bottom: 12px;
+  margin-bottom: 14px;
+}
+
+.ovs-header__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.ovs-header__brand-title {
+  font-size: 1.48rem;
+  font-weight: 900;
+  color: #0f172a;
+  letter-spacing: -0.3px;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.ovs-header__brand-sub {
+  font-size: 0.78rem;
+  color: #475569;
+  font-weight: 600;
+  margin-top: 3px;
+}
+
+.ovs-header__badge-box {
+  text-align: right;
+}
+
+.ovs-badge-official {
+  background: #1e3a8a;
+  color: #ffffff;
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.6px;
+  padding: 3px 10px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  display: inline-block;
+}
+
+.ovs-bill-num {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-top: 4px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.ovs-doc-title {
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: #1e3a8a;
+  text-align: center;
+  margin-top: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ovs-doc-tamil {
+  font-family: var(--font-tamil);
+  font-size: 0.82rem;
+  color: #475569;
+  text-align: center;
+  font-weight: 700;
+}
+
+.ovs-meta-strip {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 10px 14px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px 12px;
+  margin-bottom: 14px;
+  font-size: 0.78rem;
+}
+
+.ovs-meta-item strong {
+  color: #64748b;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  display: block;
+}
+
+.ovs-meta-item span {
+  color: #0f172a;
+  font-weight: 800;
+  font-size: 0.84rem;
+}
+
+.ovs-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.76rem;
+  margin-bottom: 14px;
+}
+
+.ovs-table th {
+  background: #1e293b;
+  color: #ffffff;
+  font-weight: 800;
+  padding: 7px 6px;
+  text-align: center;
+  border: 1px solid #334155;
+  font-size: 0.7rem;
+  line-height: 1.2;
+}
+
+.ovs-table th small {
+  font-family: var(--font-tamil);
+  display: block;
+  font-weight: 500;
+  color: #93c5fd;
+  font-size: 0.65rem;
+}
+
+.ovs-table td {
+  padding: 6px;
+  border: 1px solid #cbd5e1;
+  text-align: center;
+  color: #0f172a;
+  font-size: 0.75rem;
+}
+
+.ovs-table td.text-left {
+  text-align: left;
+}
+.ovs-table td.text-right {
+  text-align: right;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+}
+
+.ovs-table tbody tr:nth-child(even) {
+  background: #f8fafc;
+}
+
+.ovs-table .ovs-row-total td {
+  background: #f1f5f9;
+  font-weight: 900;
+  border-top: 2px solid #0f172a;
+  border-bottom: 2.5px solid #0f172a;
+  font-size: 0.82rem;
+}
+
+.ovs-summary-box {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 12px;
+  background: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 12px 14px;
+  margin-bottom: 24px;
+}
+
+.ovs-words-col {
+  border-right: 1px solid #cbd5e1;
+  padding-right: 12px;
+}
+
+.ovs-words-label {
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #64748b;
+  text-transform: uppercase;
+}
+
+.ovs-words-val {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-top: 4px;
+  line-height: 1.3;
+}
+
+.ovs-totals-col {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: right;
+}
+
+.ovs-tot-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  color: #475569;
+}
+
+.ovs-tot-grand {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: #1e3a8a;
+  border-top: 1.5px solid #cbd5e1;
+  padding-top: 4px;
+  margin-top: 4px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.ovs-signatures {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 40px;
+  padding-top: 10px;
+  text-align: center;
+}
+
+.ovs-sig-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ovs-sig-line {
+  width: 90%;
+  border-top: 1.5px dashed #475569;
+  margin-bottom: 6px;
+}
+
+.ovs-sig-role {
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.ovs-sig-tamil {
+  font-family: var(--font-tamil);
+  font-size: 0.68rem;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.ovs-footer-note {
+  font-size: 0.65rem;
+  color: #94a3b8;
+  text-align: center;
+  margin-top: 22px;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 6px;
+}
+
+/* ==========================================================================
+   9. PRINT STYLESHEET
+   ========================================================================== */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    padding: 0 !important;
+  }
+
+  .master-portal-bar,
+  .site-header,
+  .meta-bar,
+  .category-nav-bar,
+  .toolbar-card,
+  .catalog-list,
+  .cart-panel,
+  .cart-drawer-overlay,
+  .floating-bottom-bar,
+  .labour-hero,
+  .labour-settings-card,
+  .labour-controls-bar,
+  .day-cards-list,
+  .labour-table-container,
+  .labour-bottom-bar,
+  .toast-box,
+  .modal-backdrop:not(.print-active-modal) {
+    display: none !important;
+  }
+
+  .modal-backdrop.print-active-modal {
+    position: static !important;
+    background: none !important;
+    display: block !important;
+    padding: 0 !important;
+  }
+
+  .a4-voucher-modal-window {
+    box-shadow: none !important;
+    border: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+  }
+
+  .a4-voucher-modal-header,
+  .modal-window__footer {
+    display: none !important;
+  }
+
+  .a4-voucher-modal-body {
+    padding: 0 !important;
+    background: #ffffff !important;
+    overflow: visible !important;
+  }
+
+  .official-voucher-sheet {
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+    page-break-after: avoid;
+  }
+}

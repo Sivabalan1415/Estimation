@@ -535,6 +535,55 @@ input:focus, select:focus, textarea:focus {
   border-radius: 4px;
 }
 
+/* Color Badge Tag for Wire / Tape Colors */
+.color-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 0.1rem 0.45rem;
+  border-radius: 9999px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+}
+.color-tag--red {
+  background: rgba(239, 68, 68, 0.12);
+  color: #dc2626;
+  border-color: rgba(239, 68, 68, 0.35);
+}
+.color-tag--yellow {
+  background: rgba(234, 179, 8, 0.14);
+  color: #ca8a04;
+  border-color: rgba(234, 179, 8, 0.4);
+}
+.color-tag--blue {
+  background: rgba(37, 99, 235, 0.12);
+  color: #2563eb;
+  border-color: rgba(37, 99, 235, 0.35);
+}
+.color-tag--green {
+  background: rgba(22, 163, 74, 0.12);
+  color: #16a34a;
+  border-color: rgba(22, 163, 74, 0.35);
+}
+.color-tag--black {
+  background: rgba(15, 23, 42, 0.85);
+  color: #f8fafc;
+  border-color: rgba(15, 23, 42, 0.4);
+}
+.color-tag--white {
+  background: #f1f5f9;
+  color: #334155;
+  border-color: #cbd5e1;
+}
+.color-tag--gray {
+  background: rgba(100, 116, 139, 0.14);
+  color: #475569;
+  border-color: rgba(100, 116, 139, 0.35);
+}
+
 .m-card__title {
   font-size: 0.95rem;
   font-weight: 800;
@@ -1253,6 +1302,7 @@ input:focus, select:focus, textarea:focus {
   width: 100%;
   overflow-x: auto;
   margin-bottom: 1.25rem;
+  color: #000;
 }
 
 .as-sheet__table {
@@ -1460,4 +1510,122 @@ input:focus, select:focus, textarea:focus {
   box-shadow: var(--shadow-lg);
   border-left: 4px solid var(--color-primary);
 }
+
+/* ==========================================================================
+   ULTRA-PREMIUM DARK THEME OVERRIDES FOR ESTIMATION MODULE
+   ========================================================================== */
+[data-theme="dark"] body {
+  background-color: #070a12;
+  background-image: radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.12) 0%, transparent 55%),
+                    radial-gradient(circle at 100% 60%, rgba(16, 185, 129, 0.08) 0%, transparent 45%),
+                    #070a12;
+  background-attachment: fixed;
+  color: #f8fafc;
+}
+
+[data-theme="dark"] .site-header {
+  background: linear-gradient(180deg, #070c18 0%, #0d1527 100%);
+  border-bottom: 2px solid rgba(16, 185, 129, 0.4);
+}
+
+[data-theme="dark"] .meta-bar {
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .meta-summary {
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+[data-theme="dark"] .meta-field__input {
+  background: #0b1120;
+  color: #f8fafc;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+[data-theme="dark"] .meta-field__input:focus {
+  border-color: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
+}
+
+[data-theme="dark"] .category-nav-bar {
+  background: rgba(7, 10, 18, 0.9);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .category-nav {
+  background: #0f172a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .category-nav__tab {
+  color: #94a3b8;
+}
+
+[data-theme="dark"] .toolbar-card {
+  background: rgba(17, 24, 39, 0.8);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+}
+
+[data-theme="dark"] .search-box {
+  background: #0b1120;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+[data-theme="dark"] .search-box__input {
+  color: #f8fafc;
+}
+
+[data-theme="dark"] .subcat-chip {
+  background: rgba(30, 41, 59, 0.7);
+  color: #cbd5e1;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+[data-theme="dark"] .subcat-chip--active {
+  background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+  color: #ffffff;
+  border-color: #34d399;
+  box-shadow: 0 2px 10px rgba(16, 185, 129, 0.35);
+}
+
+[data-theme="dark"] .m-card {
+  background: rgba(17, 24, 39, 0.8);
+  backdrop-filter: blur(14px);
+  border: 1.5px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+}
+[data-theme="dark"] .m-card:hover {
+  border-color: rgba(16, 185, 129, 0.45);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.65);
+}
+
+[data-theme="dark"] .m-card__title {
+  color: #f8fafc;
+}
+
+[data-theme="dark"] .m-card__sno,
+[data-theme="dark"] .m-card__unit,
+[data-theme="dark"] .m-card__ref-chip {
+  background: rgba(255, 255, 255, 0.06);
+  color: #cbd5e1;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .cart-panel {
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(20px);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75);
+}
+
+[data-theme="dark"] .floating-bottom-bar {
+  background: rgba(8, 12, 22, 0.92);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.7);
+}
+
 
