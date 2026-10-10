@@ -143,6 +143,7 @@
     return {
       siteName: "SINTHAMANI - Sri Murugan Towers",
       supervisorName: "Er. A. Sathish (A.S Contractor)",
+      phone: "",
       machineType: "Machine",
       weekStartDate: mondayStr,
       defaultLabourWage: 700,
@@ -165,6 +166,7 @@
       if (saved) {
         const parsed = JSON.parse(saved);
         if (parsed && Array.isArray(parsed.days) && parsed.days.length >= 7) {
+          parsed.phone = parsed.phone || "";
           return parsed;
         }
       }
@@ -260,6 +262,7 @@
       settingsToggle: document.getElementById("labourSettingsToggle"),
       inputSiteName: document.getElementById("labourSiteName"),
       inputSupervisor: document.getElementById("labourSupervisor"),
+      inputPhone: document.getElementById("labourPhone"),
       inputMachineType: document.getElementById("labourMachineType"),
       inputWeekStart: document.getElementById("labourWeekStart"),
       inputWage: document.getElementById("labourWageRate"),
@@ -300,6 +303,7 @@
     if (!labourDOM.inputSiteName) return;
     labourDOM.inputSiteName.value = state.siteName || "";
     labourDOM.inputSupervisor.value = state.supervisorName || "";
+    if (labourDOM.inputPhone) labourDOM.inputPhone.value = state.phone || "";
     labourDOM.inputMachineType.value = state.machineType || "";
     labourDOM.inputWeekStart.value = state.weekStartDate || "";
     labourDOM.inputWage.value = state.defaultLabourWage;
@@ -566,6 +570,7 @@
               <span class="ovs-badge-official">OFFICIAL SETTLEMENT STATEMENT</span>
               <div class="ovs-bill-num">BILL NO: ${escapeHtml(state.billNumber)}</div>
               <div style="font-size:0.72rem; color:#64748b; margin-top:2px;">Date: ${todayDate}</div>
+              ${state.phone ? `<div style="font-size:0.72rem; color:#0f172a; font-weight:700; margin-top:2px;">📞 Ph: ${escapeHtml(state.phone)}</div>` : ""}
             </div>
           </div>
           <div class="ovs-doc-title">WEEKLY LABOUR SALARY &amp; MACHINE RENT VOUCHER</div>
@@ -583,6 +588,10 @@
             <span>${escapeHtml(state.supervisorName)}</span>
           </div>
           <div class="ovs-meta-item">
+            <strong>CONTACT / PHONE:</strong>
+            <span>${escapeHtml(state.phone || "—")}</span>
+          </div>
+          <div class="ovs-meta-item">
             <strong>SETTLEMENT PERIOD:</strong>
             <span>${firstDate} to ${lastDate}</span>
           </div>
@@ -591,12 +600,20 @@
             <span>${escapeHtml(state.machineType)}</span>
           </div>
           <div class="ovs-meta-item">
+            <strong>BILL / VOUCHER NO:</strong>
+            <span>${escapeHtml(state.billNumber)}</span>
+          </div>
+          <div class="ovs-meta-item">
             <strong>STANDARD LABOUR RATE:</strong>
             <span>${formatINR(calc.wageRate)} / Person / Day</span>
           </div>
           <div class="ovs-meta-item">
             <strong>MACHINE RENT RATE:</strong>
             <span>${formatINR(calc.rentRate)} / Day</span>
+          </div>
+          <div class="ovs-meta-item">
+            <strong>TOTAL DEPLOYMENT:</strong>
+            <span>${calc.totalLabourers} Men | ${calc.totalMachines} Mch Days</span>
           </div>
         </div>
 
@@ -662,8 +679,8 @@
         <div class="ovs-signatures">
           <div class="ovs-sig-block">
             <div class="ovs-sig-line"></div>
-            <div class="ovs-sig-role">Prepared By (Site Supervisor)</div>
-            <div class="ovs-sig-tamil">தயாரித்தவர் (தள மேற்பார்வையாளர்)</div>
+            <div class="ovs-sig-role">Prepared By (${escapeHtml(state.supervisorName || "Site Supervisor")})</div>
+            <div class="ovs-sig-tamil">${state.phone ? `Ph: ${escapeHtml(state.phone)} • ` : ""}தள மேற்பார்வையாளர்</div>
           </div>
           <div class="ovs-sig-block">
             <div class="ovs-sig-line"></div>
@@ -794,6 +811,13 @@
     if (labourDOM.inputSupervisor) {
       labourDOM.inputSupervisor.addEventListener("input", (e) => {
         state.supervisorName = e.target.value;
+        saveState();
+      });
+    }
+
+    if (labourDOM.inputPhone) {
+      labourDOM.inputPhone.addEventListener("input", (e) => {
+        state.phone = e.target.value.trim();
         saveState();
       });
     }
@@ -954,6 +978,7 @@
     text += `━━━━━━━━━━━━━━━━━━━━\n`;
     text += `🏗️ *Site:* ${state.siteName}\n`;
     text += `👷 *Supervisor:* ${state.supervisorName}\n`;
+    if (state.phone) text += `📞 *Contact/Phone:* ${state.phone}\n`;
     text += `📅 *Period:* ${firstDate} to ${lastDate}\n`;
     text += `🚜 *Machine:* ${state.machineType}\n`;
     text += `🏷️ *Standard Rates:* Labour: ${formatINR(calc.wageRate)}/day | Machine: ${formatINR(calc.rentRate)}/day\n`;

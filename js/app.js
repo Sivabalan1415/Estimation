@@ -12,6 +12,7 @@ const state = {
   projectMeta: {
     siteName: "SINTHAMANI",
     date: "14.03.2026",
+    phone: "",
     workType: "Plumbing",
     engineer: "A.S Electrician"
   }
@@ -32,12 +33,15 @@ function cacheDOM() {
     // Project Meta
     metaDate: document.getElementById("metaDate"),
     metaSite: document.getElementById("metaSite"),
+    metaPhone: document.getElementById("metaPhone"),
     metaWork: document.getElementById("metaWork"),
     metaEngineer: document.getElementById("metaEngineer"),
     metaSummaryToggle: document.getElementById("metaSummaryToggle"),
     metaFieldsContainer: document.getElementById("metaFieldsContainer"),
     chipDateVal: document.getElementById("chipDateVal"),
     chipSiteVal: document.getElementById("chipSiteVal"),
+    chipPhoneWrapper: document.getElementById("chipPhoneWrapper"),
+    chipPhoneVal: document.getElementById("chipPhoneVal"),
     chipWorkVal: document.getElementById("chipWorkVal"),
 
     // Category Tabs
@@ -118,6 +122,7 @@ function loadSavedState() {
   // Populate inputs and summary chips
   if (DOM.metaDate) DOM.metaDate.value = state.projectMeta.date;
   if (DOM.metaSite) DOM.metaSite.value = state.projectMeta.siteName;
+  if (DOM.metaPhone) DOM.metaPhone.value = state.projectMeta.phone || "";
   if (DOM.metaWork) DOM.metaWork.value = state.projectMeta.workType;
   if (DOM.metaEngineer) DOM.metaEngineer.value = state.projectMeta.engineer;
   updateMetaSummaryChips();
@@ -137,6 +142,14 @@ function updateMetaSummaryChips() {
   if (DOM.chipDateVal) DOM.chipDateVal.textContent = state.projectMeta.date;
   if (DOM.chipSiteVal) DOM.chipSiteVal.textContent = state.projectMeta.siteName;
   if (DOM.chipWorkVal) DOM.chipWorkVal.textContent = state.projectMeta.workType;
+  if (DOM.chipPhoneVal && DOM.chipPhoneWrapper) {
+    if (state.projectMeta.phone && state.projectMeta.phone.trim()) {
+      DOM.chipPhoneVal.textContent = state.projectMeta.phone.trim();
+      DOM.chipPhoneWrapper.style.display = "inline-flex";
+    } else {
+      DOM.chipPhoneWrapper.style.display = "none";
+    }
+  }
 }
 
 function bindEvents() {
@@ -154,6 +167,12 @@ function bindEvents() {
 
   DOM.metaSite?.addEventListener("input", (e) => {
     state.projectMeta.siteName = e.target.value.trim();
+    updateMetaSummaryChips();
+    saveState();
+  });
+
+  DOM.metaPhone?.addEventListener("input", (e) => {
+    state.projectMeta.phone = e.target.value.trim();
     updateMetaSummaryChips();
     saveState();
   });
@@ -279,6 +298,7 @@ function bindEvents() {
       state.projectMeta = {
         siteName: "SINTHAMANI",
         date: "14.03.2026",
+        phone: "",
         workType: "Plumbing",
         engineer: "A.S Electrician"
       };
@@ -862,6 +882,7 @@ function renderEstimateSheet() {
   const totalUnits = selectedList.reduce((sum, item) => sum + (parseInt(item.qty, 10) || 0), 0);
   const siteName = state.projectMeta.siteName || "SINTHAMANI";
   const date = state.projectMeta.date || "14.03.2026";
+  const phone = state.projectMeta.phone || "";
   const workType = state.projectMeta.workType || "Plumbing";
   const engineer = state.projectMeta.engineer || "A.S Electrician";
 
@@ -869,6 +890,7 @@ function renderEstimateSheet() {
     <div class="as-sheet" id="officialSheetPrint">
       <div class="as-sheet__header">
         <h1 class="as-sheet__company">A.S ELECTRICIAN</h1>
+        <div class="as-sheet__company-sub">Electrical &amp; Plumbing Contractor${phone ? ` • 📞 Ph: ${phone}` : ""}</div>
         <div class="as-sheet__doc-title">Material Estimation</div>
       </div>
 
@@ -886,6 +908,10 @@ function renderEstimateSheet() {
           <span class="as-sheet__meta-val">${workType}</span>
         </div>
         <div class="as-sheet__meta-item">
+          <span class="as-sheet__meta-label">PHONE / CONTACT:</span>
+          <span class="as-sheet__meta-val">${phone || "—"}</span>
+        </div>
+        <div class="as-sheet__meta-item as-sheet__meta-item--full">
           <span class="as-sheet__meta-label">PREPARED BY:</span>
           <span class="as-sheet__meta-val">${engineer}</span>
         </div>
@@ -923,7 +949,7 @@ function renderEstimateSheet() {
         <div class="as-sheet__sign-box">
           <div class="as-sheet__sign-line"></div>
           <div class="as-sheet__sign-name">${engineer}</div>
-          <div class="as-sheet__sign-sub">Site Engineer / Electrician</div>
+          <div class="as-sheet__sign-sub">Site Engineer / Electrician${phone ? ` (${phone})` : ""}</div>
         </div>
 
         <div class="as-sheet__sign-box">
@@ -984,6 +1010,7 @@ function shareWhatsApp() {
 
   const siteName = state.projectMeta.siteName || "SINTHAMANI";
   const date = state.projectMeta.date || "14.03.2026";
+  const phone = state.projectMeta.phone || "";
   const workType = state.projectMeta.workType || "Plumbing";
   const engineer = state.projectMeta.engineer || "A.S Electrician";
 
@@ -991,6 +1018,7 @@ function shareWhatsApp() {
   text += `━━━━━━━━━━━━━━━━━━━━\n`;
   text += `📅 *Date:* ${date}\n`;
   text += `🏗️ *Site Name:* ${siteName}\n`;
+  if (phone) text += `📞 *Phone:* ${phone}\n`;
   text += `🔧 *Work Type:* ${workType}\n`;
   text += `👷 *Prepared By:* ${engineer}\n\n`;
   text += `*SELECTED MATERIALS LIST:*\n`;

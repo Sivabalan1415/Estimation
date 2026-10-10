@@ -1251,6 +1251,14 @@ input:focus, select:focus, textarea:focus {
   }
 }
 
+.as-sheet__company-sub {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #334155;
+  margin-bottom: 0.45rem;
+  letter-spacing: 0.4px;
+}
+
 .as-sheet__doc-title {
   display: inline-block;
   background: var(--color-slate-900);
@@ -1281,6 +1289,11 @@ input:focus, select:focus, textarea:focus {
 }
 
 .as-sheet__meta-item--highlight {
+  background: #ffffff;
+}
+
+.as-sheet__meta-item--full {
+  grid-column: 1 / -1;
   background: #ffffff;
 }
 
