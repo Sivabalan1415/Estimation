@@ -1,311 +1,564 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>A.S ELECTRICIAN — Material Estimation &amp; Site Procurement</title>
-  <meta name="description" content="A.S ELECTRICIAN - Mobile-first material estimation application for plumbing and electrical construction projects." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>A.S ELECTRICIAN &amp; CONTRACTOR — Material Estimation &amp; Labour Salary Portal</title>
+  <meta name="description" content="A.S Electrician &amp; Contractor - Mobile-first Material Estimation, Daily Labour Attendance, Machine Rent Tracker, and Official Weekly A4 PDF Bill Generator." />
 
-  <!-- Google Fonts -->
+  <!-- Google Fonts: Plus Jakarta Sans, Mukta Malar (Tamil), JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700;800&family=Mukta+Malar:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
 
-  <!-- App Stylesheet -->
+  <!-- App Stylesheets -->
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/labour.css" />
 </head>
 <body>
 
-  <!-- Top Header (A.S ELECTRICIAN) -->
-  <header class="site-header">
-    <div class="container site-header__wrapper">
-      <div class="site-header__brand">
-        <div class="site-header__logo-badge">⚡</div>
-        <div class="site-header__titles">
-          <h1 class="site-header__company">A.S ELECTRICIAN</h1>
-          <div class="site-header__tagline">
-            <span>Electrical &amp; Plumbing Estimation</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="site-header__actions">
-        <button type="button" class="header-btn" id="resetBtn" title="Reset all to 0">
-          <span>🔄</span> <span class="btn-text">Reset 0</span>
-        </button>
-        <button type="button" class="header-btn" id="loadRefAllBtn" title="Load Reference Sheet Quantities">
-          <span>📋</span> <span class="btn-text">Load Ref Qty</span>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Project Meta Context Bar (Mobile Friendly Summary + Collapsible Editor) -->
-  <section class="meta-bar" aria-label="Project Details">
-    <div class="container">
-      
-      <!-- Mobile Quick Summary Line -->
-      <div class="meta-summary" id="metaSummaryToggle" title="Tap to edit Date and Site details">
-        <div class="meta-summary__chips">
-          <span class="meta-chip">📅 <strong id="chipDateVal">14.03.2026</strong></span>
-          <span class="meta-chip">🏗️ <strong id="chipSiteVal">SINTHAMANI</strong></span>
-          <span class="meta-chip">🔧 <strong id="chipWorkVal">Plumbing</strong></span>
-        </div>
-        <button type="button" class="meta-summary__toggle-btn" aria-label="Edit site info">
-          <span>✏️ Edit</span>
-        </button>
-      </div>
-
-      <!-- Expandable / Desktop Input Grid -->
-      <div class="meta-fields-container" id="metaFieldsContainer">
-        <div class="meta-field">
-          <label class="meta-field__label" for="metaDate">Date</label>
-          <input type="text" id="metaDate" class="meta-field__input" value="14.03.2026" placeholder="DD.MM.YYYY" />
-        </div>
-
-        <div class="meta-field">
-          <label class="meta-field__label" for="metaSite">Site Name</label>
-          <input type="text" id="metaSite" class="meta-field__input" value="SINTHAMANI" placeholder="Enter site name" />
-        </div>
-
-        <div class="meta-field">
-          <label class="meta-field__label" for="metaWork">Work Type</label>
-          <select id="metaWork" class="meta-field__input">
-            <option value="Plumbing" selected>Plumbing Work</option>
-            <option value="Electrical">Electrical Work</option>
-            <option value="Roof Pipe Line">Roof Pipe Line (ரூஃப் பைப் லைன்)</option>
-            <option value="Plumbing &amp; Electrical">Plumbing &amp; Electrical (Combined)</option>
-          </select>
-        </div>
-
-        <div class="meta-field">
-          <label class="meta-field__label" for="metaEngineer">Prepared By</label>
-          <input type="text" id="metaEngineer" class="meta-field__input" value="A.S Electrician" placeholder="Electrician / Engineer" />
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Sticky Category Navigation Bar (Plumbing / Electrical) -->
-  <div class="category-nav-bar">
-    <div class="container">
-      <nav class="category-nav" role="tablist" aria-label="Work Categories">
+  <!-- ==========================================================================
+       TOP MASTER SWITCHER: 2 BUTTONS (Estimation for Item & Labour Salary)
+       ========================================================================== -->
+  <nav class="master-portal-bar" aria-label="Portal Navigation" role="tablist">
+    <div class="portal-switcher-wrapper">
+      <div class="portal-switcher-container">
         <button 
           type="button" 
-          class="category-nav__tab category-nav__tab--active" 
-          data-category="plumbing" 
+          class="portal-switch-btn portal-switch-btn--active" 
+          id="btnTabEstimation" 
+          data-target="estimation" 
           role="tab" 
           aria-selected="true"
+          title="Open Material Estimation for Items"
         >
-          <span>💧 Plumbing</span>
-          <span class="category-nav__badge" id="plumbingCountBadge">44</span>
+          <span class="portal-switch-btn__icon">📦</span>
+          <div class="portal-switch-btn__text">
+            <span class="portal-switch-btn__title">Estimation for Item</span>
+            <span class="portal-switch-btn__sub">பொருட்கள் மதிப்பீடு</span>
+          </div>
         </button>
 
         <button 
           type="button" 
-          class="category-nav__tab" 
-          data-category="electrical" 
+          class="portal-switch-btn" 
+          id="btnTabLabour" 
+          data-target="labour" 
           role="tab" 
           aria-selected="false"
+          title="Open Daily Labour Salary &amp; Machine Rent Tracker"
         >
-          <span>⚡ Electrical</span>
-          <span class="category-nav__badge" id="electricalCountBadge">47</span>
-        </button>
-      </nav>
-    </div>
-  </div>
-
-  <!-- Main Body Content -->
-  <main class="container">
-
-    <!-- Search & Filter Toolbar -->
-    <div class="toolbar-card">
-      <div class="search-box">
-        <span class="search-box__icon">🔍</span>
-        <input 
-          type="text" 
-          id="searchInput" 
-          class="search-box__input" 
-          placeholder="Search material (e.g. CPVC, elbow, wire, 1½, conduit, cupler, solved)..." 
-          autocomplete="off"
-        />
-        <button type="button" id="searchClear" class="search-box__clear" style="display:none;" title="Clear search">
-          ✕
+          <span class="portal-switch-btn__icon">👷</span>
+          <div class="portal-switch-btn__text">
+            <span class="portal-switch-btn__title">Labour Salary</span>
+            <span class="portal-switch-btn__sub">கூலி &amp; மெஷின் பில்</span>
+          </div>
         </button>
       </div>
 
-      <!-- Horizontal Swipeable Subcategory Chips -->
-      <div class="subcat-chips" id="subcatChips">
-        <!-- Injected via JavaScript -->
-      </div>
+      <!-- Live Theme Toggle Button (☀️ Light / 🌙 Dark) -->
+      <button type="button" class="theme-toggle-btn" id="themeToggleBtn" title="Switch Theme (Light / Dark)" aria-label="Toggle theme">
+        <span class="theme-toggle-btn__icon" id="themeIcon">🌙</span>
+        <span class="theme-toggle-btn__label" id="themeLabel">Dark</span>
+      </button>
     </div>
+  </nav>
 
-    <!-- Workspace Grid -->
-    <div class="workspace-grid">
-
-      <!-- LEFT: Materials Catalog Grid -->
-      <section aria-label="Material Items List">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem; padding: 0 0.2rem;">
-          <span id="catalogCount" style="font-size:0.82rem; font-weight:800; color:#475569;">Showing items</span>
-          <span style="font-size:0.75rem; color:#64748b;">Default is 0 • Tap <strong>+ ADD</strong></span>
-        </div>
-
-        <div class="catalog-list" id="catalogList">
-          <!-- Populated dynamically via JS -->
-        </div>
-      </section>
-
-      <!-- RIGHT / MOBILE DRAWER: Selected Materials Panel -->
-      <div class="cart-drawer-overlay" id="cartDrawerOverlay"></div>
-      
-      <aside class="cart-panel" id="cartPanel" aria-label="Selected Materials List">
-        <!-- Mobile pull down indicator -->
-        <div class="cart-panel__drag-handle"></div>
-
-        <!-- Cart Header -->
-        <div class="cart-header">
-          <div class="cart-header__top">
-            <div class="cart-header__title-wrap">
-              <span style="font-size:1.15rem;">📋</span>
-              <h2 class="cart-header__title">Selected Materials</h2>
-              <span class="cart-header__badge" id="cartBadge">0 items</span>
+  <!-- ==========================================================================
+       MODULE 1: ESTIMATION FOR ITEM (Existing Material Estimation System)
+       ========================================================================== -->
+  <div id="moduleEstimation" class="app-module" role="tabpanel" aria-labelledby="btnTabEstimation">
+    
+    <!-- Top Header (A.S ELECTRICIAN) -->
+    <header class="site-header">
+      <div class="container site-header__wrapper">
+        <div class="site-header__brand">
+          <div class="site-header__logo-badge">⚡</div>
+          <div class="site-header__titles">
+            <h1 class="site-header__company">A.S ELECTRICIAN</h1>
+            <div class="site-header__tagline">
+              <span>Electrical &amp; Plumbing Estimation</span>
             </div>
-            <button type="button" class="cart-header__close-btn" id="cartCloseBtn" aria-label="Close drawer">✕</button>
-          </div>
-
-          <div class="cart-header__sub">
-            <span>Review materials before confirming</span>
-            <button type="button" class="cart-header__clear-btn" id="cartClearBtn" title="Clear all">
-              <span>🗑 Clear All</span>
-            </button>
           </div>
         </div>
 
-        <!-- Cart Items Scrollable Body -->
-        <div class="cart-body">
-          <!-- Empty State -->
-          <div class="cart-empty-state" id="cartEmpty">
-            <div class="cart-empty-state__icon">📦</div>
-            <h3 class="cart-empty-state__title">No materials selected</h3>
-            <p class="cart-empty-state__desc">Tap <strong>+ ADD</strong> on any material in the list to select it for estimation.</p>
-          </div>
-
-          <!-- Items Rows -->
-          <div id="cartList">
-            <!-- Dynamically populated via JS -->
-          </div>
-        </div>
-
-        <!-- Cart Footer -->
-        <div class="cart-footer">
-          <div class="cart-totals">
-            <span>Total Items: <strong id="cartTotalItems">0</strong></span>
-            <span>Total Units: <strong id="cartTotalUnits">0</strong></span>
-          </div>
-
-          <!-- Add Custom Item Button -->
-          <button type="button" class="cart-add-custom-btn" id="cartAddCustomBtn">
-            <span>➕</span> Add Custom / Unlisted Material
+        <div class="site-header__actions">
+          <button type="button" class="header-btn" id="resetBtn" title="Reset all to 0">
+            <span>🔄</span> <span class="btn-text">Reset 0</span>
           </button>
-
-          <!-- Confirm Button -->
-          <button type="button" class="confirm-big-btn" id="cartConfirmBtn" disabled>
-            <span>✓</span> CONFIRM ESTIMATION
+          <button type="button" class="header-btn" id="loadRefAllBtn" title="Load Reference Sheet Quantities">
+            <span>📋</span> <span class="btn-text">Load Ref Qty</span>
           </button>
         </div>
-      </aside>
+      </div>
+    </header>
 
-    </div>
-  </main>
-
-  <!-- Sticky Bottom Floating Bar (Mobile View) -->
-  <div class="floating-bottom-bar" id="mobileBottomBar">
-    <div class="floating-bottom-bar__left">
-      <span class="floating-bottom-bar__badge" id="mobileBarCount">🛒 0 Materials</span>
-      <span class="floating-bottom-bar__units" id="mobileBarUnits">0 Units Selected</span>
-    </div>
-    <button type="button" class="floating-bottom-bar__btn" id="mobileBarOpenBtn">
-      <span>View List 📋</span>
-    </button>
-  </div>
-
-  <!-- MODAL: Official Final Estimation Summary (A.S ELECTRICIAN) -->
-  <div class="modal-backdrop" id="estimateModal" role="dialog" aria-modal="true" aria-labelledby="modalEstimateTitle">
-    <div class="modal-window">
-      <div class="modal-window__header">
-        <div class="modal-window__title" id="modalEstimateTitle">
-          <span>⚡</span> A.S ELECTRICIAN — Estimation Summary
+    <!-- Project Meta Context Bar (Mobile Friendly Summary + Collapsible Editor) -->
+    <section class="meta-bar" aria-label="Project Details">
+      <div class="container">
+        
+        <!-- Mobile Quick Summary Line -->
+        <div class="meta-summary" id="metaSummaryToggle" title="Tap to edit Date and Site details">
+          <div class="meta-summary__chips">
+            <span class="meta-chip">📅 <strong id="chipDateVal">14.03.2026</strong></span>
+            <span class="meta-chip">🏗️ <strong id="chipSiteVal">SINTHAMANI</strong></span>
+            <span class="meta-chip">🔧 <strong id="chipWorkVal">Plumbing</strong></span>
+          </div>
+          <button type="button" class="meta-summary__toggle-btn" aria-label="Edit site info">
+            <span>✏️ Edit</span>
+          </button>
         </div>
-        <button type="button" class="modal-window__close-btn" id="estimateCloseBtn" title="Close">✕</button>
-      </div>
 
-      <div class="modal-window__body">
-        <div id="estimateSheetContent">
-          <!-- Rendered Official Sheet via JS -->
-        </div>
-      </div>
-
-      <!-- Action Footer: Direct PDF Download & WhatsApp Share (No print) -->
-      <div class="modal-window__footer">
-        <button type="button" class="btn-pdf-download" id="estimateDownloadPdfBtn">
-          <span>📥</span> DOWNLOAD PDF (பதிவிறக்கம்)
-        </button>
-        <button type="button" class="btn-whatsapp-share" id="estimateWhatsAppBtn">
-          <span>💬</span> Share WhatsApp
-        </button>
-        <button type="button" class="btn-back-edit" id="estimateBackBtn">
-          <span>←</span> Back / Edit
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL: Add Custom Material -->
-  <div class="modal-backdrop" id="customModal" role="dialog" aria-modal="true" aria-labelledby="customModalTitle">
-    <div class="modal-window" style="max-width: 440px; min-height: auto; margin: auto;">
-      <div class="modal-window__header">
-        <div class="modal-window__title" id="customModalTitle">
-          <span>➕</span> Add Custom Material
-        </div>
-        <button type="button" class="modal-window__close-btn" id="customModalClose" title="Close">✕</button>
-      </div>
-
-      <form id="customForm">
-        <div style="padding: 1.15rem; display: flex; flex-direction: column; gap: 0.85rem;">
+        <!-- Expandable / Desktop Input Grid -->
+        <div class="meta-fields-container" id="metaFieldsContainer">
           <div class="meta-field">
-            <label class="meta-field__label" for="customName">Material Name *</label>
-            <input type="text" id="customName" class="meta-field__input" placeholder='e.g. 2" Brass Gate Valve' required />
+            <label class="meta-field__label" for="metaDate">Date</label>
+            <input type="text" id="metaDate" class="meta-field__input" value="14.03.2026" placeholder="DD.MM.YYYY" />
           </div>
 
           <div class="meta-field">
-            <label class="meta-field__label" for="customCategory">Category</label>
-            <select id="customCategory" class="meta-field__input">
-              <option value="plumbing">Plumbing</option>
-              <option value="electrical">Electrical</option>
+            <label class="meta-field__label" for="metaSite">Site Name</label>
+            <input type="text" id="metaSite" class="meta-field__input" value="SINTHAMANI" placeholder="Enter site name" />
+          </div>
+
+          <div class="meta-field">
+            <label class="meta-field__label" for="metaWork">Work Type</label>
+            <select id="metaWork" class="meta-field__input">
+              <option value="Plumbing" selected>Plumbing Work</option>
+              <option value="Electrical">Electrical Work</option>
+              <option value="Showroom Work">Showroom Work (ஷோரூம் வேலை - 19 Items)</option>
+              <option value="Roof Pipe Line">Roof Pipe Line (ரூஃப் பைப் லைன்)</option>
+              <option value="Plumbing &amp; Electrical">Plumbing &amp; Electrical (Combined)</option>
             </select>
           </div>
 
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+          <div class="meta-field">
+            <label class="meta-field__label" for="metaEngineer">Prepared By</label>
+            <input type="text" id="metaEngineer" class="meta-field__input" value="A.S Electrician" placeholder="Electrician / Engineer" />
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Sticky Category Navigation Bar (Plumbing / Electrical) -->
+    <div class="category-nav-bar">
+      <div class="container">
+        <nav class="category-nav" role="tablist" aria-label="Work Categories">
+          <button 
+            type="button" 
+            class="category-nav__tab category-nav__tab--active" 
+            data-category="plumbing" 
+            role="tab" 
+            aria-selected="true"
+          >
+            <span>💧 Plumbing</span>
+            <span class="category-nav__badge" id="plumbingCountBadge">44</span>
+          </button>
+
+          <button 
+            type="button" 
+            class="category-nav__tab" 
+            data-category="electrical" 
+            role="tab" 
+            aria-selected="false"
+          >
+            <span>⚡ Electrical</span>
+            <span class="category-nav__badge" id="electricalCountBadge">47</span>
+          </button>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Main Body Content -->
+    <main class="container">
+
+      <!-- Search & Filter Toolbar -->
+      <div class="toolbar-card">
+        <div class="search-box">
+          <span class="search-box__icon">🔍</span>
+          <input 
+            type="text" 
+            id="searchInput" 
+            class="search-box__input" 
+            placeholder="Search material (e.g. CPVC, elbow, wire, 1½, conduit, cupler, solved)..." 
+            autocomplete="off"
+          />
+          <button type="button" id="searchClear" class="search-box__clear" style="display:none;" title="Clear search">
+            ✕
+          </button>
+        </div>
+
+        <!-- Horizontal Swipeable Subcategory Chips -->
+        <div class="subcat-chips" id="subcatChips">
+          <!-- Injected via JavaScript -->
+        </div>
+      </div>
+
+      <!-- Workspace Grid -->
+      <div class="workspace-grid">
+
+        <!-- LEFT: Materials Catalog Grid -->
+        <section aria-label="Material Items List">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem; padding: 0 0.2rem;">
+            <span id="catalogCount" style="font-size:0.82rem; font-weight:800; color:#475569;">Showing items</span>
+            <span style="font-size:0.75rem; color:#64748b;">Default is 0 • Tap <strong>+ ADD</strong></span>
+          </div>
+
+          <div class="catalog-list" id="catalogList">
+            <!-- Populated dynamically via JS -->
+          </div>
+        </section>
+
+        <!-- RIGHT / MOBILE DRAWER: Selected Materials Panel -->
+        <div class="cart-drawer-overlay" id="cartDrawerOverlay"></div>
+        
+        <aside class="cart-panel" id="cartPanel" aria-label="Selected Materials List">
+          <!-- Mobile pull down indicator -->
+          <div class="cart-panel__drag-handle"></div>
+
+          <!-- Cart Header -->
+          <div class="cart-header">
+            <div class="cart-header__top">
+              <div class="cart-header__title-wrap">
+                <span style="font-size:1.15rem;">📋</span>
+                <h2 class="cart-header__title">Selected Materials</h2>
+                <span class="cart-header__badge" id="cartBadge">0 items</span>
+              </div>
+              <button type="button" class="cart-header__close-btn" id="cartCloseBtn" aria-label="Close drawer">✕</button>
+            </div>
+
+            <div class="cart-header__sub">
+              <span>Review materials before confirming</span>
+              <button type="button" class="cart-header__clear-btn" id="cartClearBtn" title="Clear all">
+                <span>🗑 Clear All</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Cart Items Scrollable Body -->
+          <div class="cart-body">
+            <!-- Empty State -->
+            <div class="cart-empty-state" id="cartEmpty">
+              <div class="cart-empty-state__icon">📦</div>
+              <h3 class="cart-empty-state__title">No materials selected</h3>
+              <p class="cart-empty-state__desc">Tap <strong>+ ADD</strong> on any material in the list to select it for estimation.</p>
+            </div>
+
+            <!-- Items Rows -->
+            <div id="cartList">
+              <!-- Dynamically populated via JS -->
+            </div>
+          </div>
+
+          <!-- Cart Footer -->
+          <div class="cart-footer">
+            <div class="cart-totals">
+              <span>Total Items: <strong id="cartTotalItems">0</strong></span>
+              <span>Total Units: <strong id="cartTotalUnits">0</strong></span>
+            </div>
+
+            <!-- Add Custom Item Button -->
+            <button type="button" class="cart-add-custom-btn" id="cartAddCustomBtn">
+              <span>➕</span> Add Custom / Unlisted Material
+            </button>
+
+            <!-- Confirm Button -->
+            <button type="button" class="confirm-big-btn" id="cartConfirmBtn" disabled>
+              <span>✓</span> CONFIRM ESTIMATION
+            </button>
+          </div>
+        </aside>
+
+      </div>
+    </main>
+
+    <!-- Sticky Bottom Floating Bar (Mobile View for Estimation) -->
+    <div class="floating-bottom-bar" id="mobileBottomBar">
+      <div class="floating-bottom-bar__left">
+        <span class="floating-bottom-bar__badge" id="mobileBarCount">🛒 0 Materials</span>
+        <span class="floating-bottom-bar__units" id="mobileBarUnits">0 Units Selected</span>
+      </div>
+      <button type="button" class="floating-bottom-bar__btn" id="mobileBarOpenBtn">
+        <span>View List 📋</span>
+      </button>
+    </div>
+
+    <!-- MODAL: Official Final Estimation Summary (A.S ELECTRICIAN) -->
+    <div class="modal-backdrop" id="estimateModal" role="dialog" aria-modal="true" aria-labelledby="modalEstimateTitle">
+      <div class="modal-window">
+        <div class="modal-window__header">
+          <div class="modal-window__title" id="modalEstimateTitle">
+            <span>⚡</span> A.S ELECTRICIAN — Estimation Summary
+          </div>
+          <button type="button" class="modal-window__close-btn" id="estimateCloseBtn" title="Close">✕</button>
+        </div>
+
+        <div class="modal-window__body">
+          <div id="estimateSheetContent">
+            <!-- Rendered Official Sheet via JS -->
+          </div>
+        </div>
+
+        <div class="modal-window__footer">
+          <button type="button" class="btn-pdf-download" id="estimateDownloadPdfBtn">
+            <span>📥</span> DOWNLOAD PDF (பதிவிறக்கம்)
+          </button>
+          <button type="button" class="btn-whatsapp-share" id="estimateWhatsAppBtn">
+            <span>💬</span> Share WhatsApp
+          </button>
+          <button type="button" class="btn-back-edit" id="estimateBackBtn">
+            <span>←</span> Back / Edit
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL: Add Custom Material -->
+    <div class="modal-backdrop" id="customModal" role="dialog" aria-modal="true" aria-labelledby="customModalTitle">
+      <div class="modal-window" style="max-width: 440px; min-height: auto; margin: auto;">
+        <div class="modal-window__header">
+          <div class="modal-window__title" id="customModalTitle">
+            <span>➕</span> Add Custom Material
+          </div>
+          <button type="button" class="modal-window__close-btn" id="customModalClose" title="Close">✕</button>
+        </div>
+
+        <form id="customForm">
+          <div style="padding: 1.15rem; display: flex; flex-direction: column; gap: 0.85rem;">
             <div class="meta-field">
-              <label class="meta-field__label" for="customQty">Quantity *</label>
-              <input type="number" id="customQty" class="meta-field__input" value="1" min="1" inputmode="numeric" required />
+              <label class="meta-field__label" for="customName">Material Name *</label>
+              <input type="text" id="customName" class="meta-field__input" placeholder='e.g. 2" Brass Gate Valve' required />
             </div>
 
             <div class="meta-field">
-              <label class="meta-field__label" for="customUnit">Unit *</label>
-              <input type="text" id="customUnit" class="meta-field__input" value="Nos" placeholder="Nos, kg, set..." required />
+              <label class="meta-field__label" for="customCategory">Category</label>
+              <select id="customCategory" class="meta-field__input">
+                <option value="plumbing">Plumbing</option>
+                <option value="electrical">Electrical</option>
+              </select>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+              <div class="meta-field">
+                <label class="meta-field__label" for="customQty">Quantity *</label>
+                <input type="number" id="customQty" class="meta-field__input" value="1" min="1" inputmode="numeric" required />
+              </div>
+
+              <div class="meta-field">
+                <label class="meta-field__label" for="customUnit">Unit *</label>
+                <input type="text" id="customUnit" class="meta-field__input" value="Nos" placeholder="Nos, kg, set..." required />
+              </div>
+            </div>
+          </div>
+
+          <div style="padding: 0.75rem 1.15rem; background: var(--color-slate-50); border-top: 1px solid var(--color-slate-200); display: flex; justify-content: flex-end; gap: 0.5rem;">
+            <button type="button" class="btn-back-edit" id="customModalCancel" style="width: auto;">Cancel</button>
+            <button type="submit" class="btn-pdf-download" style="width: auto; padding: 0.65rem 1.15rem; font-size: 0.9rem;">Add Material</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div> <!-- End #moduleEstimation -->
+
+
+  <!-- ==========================================================================
+       MODULE 2: LABOUR SALARY & MACHINE RENT BILL GENERATOR
+       ========================================================================== -->
+  <div id="moduleLabour" class="app-module labour-app" style="display: none;" role="tabpanel" aria-labelledby="btnTabLabour">
+    
+    <!-- Hero / Top Bar -->
+    <header class="labour-hero">
+      <div class="container labour-hero__wrapper">
+        <div class="labour-hero__brand">
+          <div class="labour-hero__logo">👷</div>
+          <div>
+            <h1 class="labour-hero__title">Daily Labour &amp; Machine Log</h1>
+            <div class="labour-hero__tagline">
+              <span>Attendance, Plant Rent &amp; Weekly A4 Bill</span>
+              <span class="labour-hero__tamil-tag">கூலி &amp; வாடகை அறிக்கை</span>
             </div>
           </div>
         </div>
 
-        <div style="padding: 0.75rem 1.15rem; background: var(--color-slate-50); border-top: 1px solid var(--color-slate-200); display: flex; justify-content: flex-end; gap: 0.5rem;">
-          <button type="button" class="btn-back-edit" id="customModalCancel" style="width: auto;">Cancel</button>
-          <button type="submit" class="btn-pdf-download" style="width: auto; padding: 0.65rem 1.15rem; font-size: 0.9rem;">Add Material</button>
+        <div class="labour-hero__actions">
+          <button type="button" class="labour-btn-pill" id="labourBtnReset" title="Reset all counts to 0">
+            <span>🔄</span> <span>Reset Week</span>
+          </button>
+          <button type="button" class="labour-btn-pill labour-btn-pill--accent" id="labourBtnSample" title="Load sample week entries">
+            <span>✨</span> <span>Load Sample Data</span>
+          </button>
         </div>
-      </form>
+      </div>
+    </header>
+
+    <main class="container" style="margin-top: 0.75rem;">
+
+      <!-- Collapsible Settings Card (Accordion) -->
+      <section class="labour-settings-card" id="labourSettingsCard" aria-label="Site and Rate Settings">
+        <div class="labour-settings__header" id="labourSettingsToggle" role="button" aria-expanded="false" title="Click to edit site name, wage & rent rates">
+          <div class="labour-settings__title-group">
+            <span class="labour-settings__badge">⚙️</span>
+            <div>
+              <span class="labour-settings__title">Project Settings &amp; Standard Rates</span>
+              <span class="labour-settings__sub">திட்ட விவரங்கள் &amp; கூலி விகிதங்கள்</span>
+            </div>
+          </div>
+          <span class="labour-settings__toggle-icon">▼</span>
+        </div>
+
+        <div class="labour-settings__body">
+          <div class="labour-grid-fields">
+            <div class="labour-field">
+              <label class="labour-field__label" for="labourSiteName">
+                Project / Site Name <small>தளத்தின் பெயர்</small>
+              </label>
+              <input type="text" id="labourSiteName" class="labour-field__input" value="SINTHAMANI - Sri Murugan Towers" placeholder="Enter Site Name" />
+            </div>
+
+            <div class="labour-field">
+              <label class="labour-field__label" for="labourSupervisor">
+                Supervisor / Contractor <small>மேற்பார்வையாளர்</small>
+              </label>
+              <input type="text" id="labourSupervisor" class="labour-field__input" value="Er. A. Sathish (A.S Contractor)" placeholder="Supervisor / Contractor Name" />
+            </div>
+
+            <div class="labour-field" style="grid-column: 1 / -1;">
+              <label class="labour-field__label" for="labourMachineType">
+                Plant / Machine Type <small>இயந்திர விவரம் (கட்டிங் / டிரில்லிங் / மெஷின்)</small>
+              </label>
+              <input type="text" id="labourMachineType" class="labour-field__input" value="Machine" placeholder="e.g. Cutting Machine, Drilling Machine, JCB..." />
+              
+              <!-- Quick Machine Presets -->
+              <div class="machine-preset-chips" id="machinePresetChips">
+                <button type="button" class="preset-chip active" data-machine="Machine" title="Normal Machine">🛠️ Machine (மெஷின்)</button>
+                <button type="button" class="preset-chip" data-machine="Cutting Machine" title="Cutting Machine">⚙️ Cutting Machine (கட்டிங்)</button>
+                <button type="button" class="preset-chip" data-machine="Drilling Machine" title="Drilling Machine">🔩 Drilling Machine (டிரில்லிங்)</button>
+                <button type="button" class="preset-chip" data-machine="JCB 3DX Excavator" title="JCB Excavator">🚜 JCB Excavator</button>
+                <button type="button" class="preset-chip" data-machine="Concrete Mixer" title="Concrete Mixer">🔄 Concrete Mixer (மிக்சர்)</button>
+                <button type="button" class="preset-chip" data-machine="Tractor" title="Tractor">🚜 Tractor (டிராக்டர்)</button>
+              </div>
+            </div>
+
+            <div class="labour-field">
+              <label class="labour-field__label" for="labourWeekStart">
+                Week Starting Date <small>வாரத் தொடக்கத் தேதி</small>
+              </label>
+              <input type="date" id="labourWeekStart" class="labour-field__input" />
+            </div>
+
+            <div class="labour-field">
+              <label class="labour-field__label" for="labourWageRate">
+                Labour Wage / Person / Day (₹) <small>ஆள் கூலி / நாள்</small>
+              </label>
+              <input type="number" id="labourWageRate" class="labour-field__input" value="700" min="0" step="50" inputmode="numeric" />
+            </div>
+
+            <div class="labour-field">
+              <label class="labour-field__label" for="labourRentRate">
+                Machine Rent / Day (₹) <small>மெஷின் வாடகை / நாள்</small>
+              </label>
+              <input type="number" id="labourRentRate" class="labour-field__input" value="1500" min="0" step="100" inputmode="numeric" />
+            </div>
+
+            <div class="labour-field">
+              <label class="labour-field__label" for="labourBillNo">
+                Bill / Voucher No <small>பற்றுச் சீட்டு எண்</small>
+              </label>
+              <input type="text" id="labourBillNo" class="labour-field__input" value="LMR-202610-01" placeholder="Voucher Number" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Period Chip & Segmented View Switcher -->
+      <div class="labour-controls-bar">
+        <div class="labour-week-chip" id="labourWeekPeriodChip">
+          📅 <strong>Week:</strong> 05/10 — 11/10 (SINTHAMANI)
+        </div>
+
+        <!-- Segmented View Toggle: Mobile Cards vs Table View -->
+        <div class="labour-view-switcher" role="tablist" aria-label="View Style">
+          <button type="button" class="labour-view-btn active" id="labourViewCards" role="tab" aria-selected="true">
+            <span>📱</span> Mobile Cards
+          </button>
+          <button type="button" class="labour-view-btn" id="labourViewTable" role="tab" aria-selected="false">
+            <span>📊</span> Table View
+          </button>
+        </div>
+      </div>
+
+      <!-- View 1: Day Cards (Mobile First Primary View) -->
+      <section class="day-cards-list" id="labourCardsContainer" aria-label="Daily Cards List">
+        <!-- Rendered reactively via JS -->
+      </section>
+
+      <!-- View 2: Table Spreadsheet View -->
+      <section class="labour-table-container" id="labourTableContainer" style="display: none;" aria-label="Tabular Spreadsheet View">
+        <!-- Rendered reactively via JS -->
+      </section>
+
+    </main>
+
+    <!-- Sticky Bottom Action Bar (Fixed Thumb Reach) -->
+    <div class="labour-bottom-bar" id="labourBottomBar">
+      <div class="labour-bottom-bar__inner">
+        <!-- Left: Real-time Week Grand Total -->
+        <div class="labour-total-pill">
+          <span class="labour-total-pill__label">
+            <span>💵</span> Week Grand Total
+          </span>
+          <span class="labour-total-pill__val" id="labourBarGrandTotal">₹0</span>
+          <div class="labour-total-pill__sub" id="labourBarLabourSub">👷 0 wkr • ₹0</div>
+        </div>
+
+        <!-- Right: Actions Group -->
+        <div class="labour-actions-group">
+          <button type="button" class="btn-labour-action btn-labour-preview" id="labourBtnPreview" title="Inspect A4 Statement voucher">
+            <span>👁️</span> Preview Bill
+          </button>
+          <button type="button" class="btn-labour-action btn-labour-whatsapp" id="labourBtnWhatsApp" title="Share WhatsApp Summary">
+            <span>💬</span> WhatsApp
+          </button>
+          <button type="button" class="btn-labour-action btn-labour-pdf" id="labourBtnGetPdf" title="Download official A4 PDF bill">
+            <span>📥</span> Get PDF
+          </button>
+        </div>
+      </div>
     </div>
-  </div>
+
+    <!-- Official A4 PDF Invoice Preview Modal -->
+    <div class="modal-backdrop" id="labourVoucherModal" role="dialog" aria-modal="true" aria-labelledby="labourVoucherTitle">
+      <div class="a4-voucher-modal-window">
+        <div class="a4-voucher-modal-header">
+          <div style="display: flex; align-items: center; gap: 0.5rem; font-weight: 800; font-size: 1rem;" id="labourVoucherTitle">
+            <span>📄</span> Official Weekly Labour &amp; Machine Voucher (A4 Preview)
+          </div>
+          <button type="button" class="modal-window__close-btn" id="labourVoucherClose" title="Close">✕</button>
+        </div>
+
+        <div class="a4-voucher-modal-body">
+          <div id="labourVoucherSheetContent">
+            <!-- Rendered Official Single-Page A4 Sheet -->
+          </div>
+        </div>
+
+        <div class="modal-window__footer" style="background:#ffffff; border-top:1px solid #cbd5e1; padding:0.85rem 1.25rem;">
+          <button type="button" class="btn-pdf-download" id="labourModalPdfBtn">
+            <span>📥</span> Download A4 PDF (பதிவிறக்கம்)
+          </button>
+          <button type="button" class="btn-whatsapp-share" id="labourModalWaBtn">
+            <span>💬</span> Share WhatsApp
+          </button>
+          <button type="button" class="btn-back-edit" id="labourModalPrintBtn">
+            <span>🖨️</span> Print / பிரிண்ட்
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div> <!-- End #moduleLabour -->
 
   <!-- Toast Notification Container -->
   <div class="toast-box" id="toastContainer" aria-live="polite"></div>
@@ -314,5 +567,100 @@
   <script src="js/html2pdf.bundle.min.js"></script>
   <script src="js/data.js"></script>
   <script src="js/app.js"></script>
+  <script src="js/labour.js"></script>
+
+  <!-- Portal Dual-Button Switcher Logic -->
+  <script>
+    (function () {
+      const btnEstimation = document.getElementById("btnTabEstimation");
+      const btnLabour = document.getElementById("btnTabLabour");
+      const moduleEstimation = document.getElementById("moduleEstimation");
+      const moduleLabour = document.getElementById("moduleLabour");
+      const mobileEstBar = document.getElementById("mobileBottomBar");
+
+      function activateModule(moduleName) {
+        if (moduleName === "labour") {
+          moduleEstimation.style.display = "none";
+          moduleLabour.style.display = "block";
+          if (mobileEstBar) mobileEstBar.style.display = "none";
+
+          btnLabour.classList.add("portal-switch-btn--active");
+          btnEstimation.classList.remove("portal-switch-btn--active");
+          btnLabour.setAttribute("aria-selected", "true");
+          btnEstimation.setAttribute("aria-selected", "false");
+
+          window.location.hash = "labour";
+          localStorage.setItem("as_active_portal_module", "labour");
+
+          // Ensure Labour UI renders correctly
+          if (window.LabourApp && typeof window.LabourApp.renderAll === "function") {
+            window.LabourApp.renderAll();
+          }
+        } else {
+          moduleEstimation.style.display = "block";
+          moduleLabour.style.display = "none";
+          if (mobileEstBar) mobileEstBar.style.display = "";
+
+          btnEstimation.classList.add("portal-switch-btn--active");
+          btnLabour.classList.remove("portal-switch-btn--active");
+          btnEstimation.setAttribute("aria-selected", "true");
+          btnLabour.setAttribute("aria-selected", "false");
+
+          window.location.hash = "estimation";
+          localStorage.setItem("as_active_portal_module", "estimation");
+        }
+      }
+
+      if (btnEstimation) {
+        btnEstimation.addEventListener("click", function () {
+          activateModule("estimation");
+        });
+      }
+
+      if (btnLabour) {
+        btnLabour.addEventListener("click", function () {
+          activateModule("labour");
+        });
+      }
+
+      // Theme Management (Light Modern Pro / Dark Luxury)
+      const themeToggleBtn = document.getElementById("themeToggleBtn");
+      const themeIcon = document.getElementById("themeIcon");
+      const themeLabel = document.getElementById("themeLabel");
+
+      function applyTheme(theme) {
+        if (theme === "dark") {
+          document.documentElement.setAttribute("data-theme", "dark");
+          if (themeIcon) themeIcon.textContent = "☀️";
+          if (themeLabel) themeLabel.textContent = "Light";
+        } else {
+          document.documentElement.removeAttribute("data-theme");
+          if (themeIcon) themeIcon.textContent = "🌙";
+          if (themeLabel) themeLabel.textContent = "Dark";
+        }
+        localStorage.setItem("as_app_theme", theme);
+      }
+
+      const savedTheme = localStorage.getItem("as_app_theme") || "dark";
+      applyTheme(savedTheme);
+
+      if (themeToggleBtn) {
+        themeToggleBtn.addEventListener("click", function () {
+          const currentTheme = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+          const newTheme = currentTheme === "dark" ? "light" : "dark";
+          applyTheme(newTheme);
+        });
+      }
+
+      // Initial active module restoration
+      const hash = window.location.hash.replace("#", "");
+      const savedModule = localStorage.getItem("as_active_portal_module");
+      if (hash === "labour" || (!hash && savedModule === "labour")) {
+        activateModule("labour");
+      } else {
+        activateModule("estimation");
+      }
+    })();
+  </script>
 </body>
 </html>
