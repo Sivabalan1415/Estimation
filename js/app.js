@@ -12,7 +12,7 @@ const state = {
   projectMeta: {
     siteName: "SINTHAMANI",
     date: "14.03.2026",
-    phone: "",
+    phone: "8754290215",
     workType: "Plumbing",
     engineer: "A.S Electrician"
   }
@@ -109,6 +109,7 @@ function loadSavedState() {
     if (savedMeta) {
       state.projectMeta = { ...state.projectMeta, ...JSON.parse(savedMeta) };
     }
+    state.projectMeta.phone = state.projectMeta.phone || "8754290215";
 
     const savedCart = localStorage.getItem("as_selected_materials");
     if (savedCart) {
@@ -298,7 +299,7 @@ function bindEvents() {
       state.projectMeta = {
         siteName: "SINTHAMANI",
         date: "14.03.2026",
-        phone: "",
+        phone: "8754290215",
         workType: "Plumbing",
         engineer: "A.S Electrician"
       };

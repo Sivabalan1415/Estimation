@@ -143,7 +143,7 @@
     return {
       siteName: "SINTHAMANI - Sri Murugan Towers",
       supervisorName: "Er. A. Sathish (A.S Contractor)",
-      phone: "",
+      phone: "8754290215",
       machineType: "Machine",
       weekStartDate: mondayStr,
       defaultLabourWage: 700,
@@ -166,7 +166,7 @@
       if (saved) {
         const parsed = JSON.parse(saved);
         if (parsed && Array.isArray(parsed.days) && parsed.days.length >= 7) {
-          parsed.phone = parsed.phone || "";
+          parsed.phone = parsed.phone || "8754290215";
           return parsed;
         }
       }
