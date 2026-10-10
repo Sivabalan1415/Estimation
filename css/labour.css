@@ -1120,28 +1120,32 @@
 
 .labour-bottom-bar__inner {
   max-width: 1360px;
+  width: 100%;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.95rem;
+  gap: 0.65rem;
+  box-sizing: border-box;
 }
 
 .labour-total-pill {
   display: flex;
   flex-direction: column;
-  min-width: 135px;
+  min-width: 0;
+  flex-shrink: 0;
 }
 
 .labour-total-pill__label {
   font-size: 0.7rem;
   text-transform: uppercase;
   font-weight: 800;
-  letter-spacing: 0.6px;
+  letter-spacing: 0.4px;
   color: var(--theme-text-muted);
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.35rem;
+  white-space: nowrap;
 }
 
 .labour-total-pill__val {
@@ -1160,29 +1164,37 @@
   color: #94a3b8;
   margin-top: 2px;
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .labour-actions-group {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  flex-shrink: 0;
+  gap: 0.45rem;
+  flex: 1;
+  min-width: 0;
+  justify-content: flex-end;
 }
 
 .btn-labour-action {
-  height: 48px;
-  padding: 0 1.25rem;
+  height: 46px;
+  padding: 0 1rem;
   border-radius: var(--radius-md);
-  font-size: 0.92rem;
+  font-size: 0.88rem;
   font-weight: 900;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
   cursor: pointer;
   transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
   -webkit-tap-highlight-color: transparent;
+  white-space: nowrap;
+  flex: 1;
+  min-width: 0;
+  max-width: 140px;
+  box-sizing: border-box;
 }
 
 .btn-labour-action:active {
@@ -1271,13 +1283,104 @@
   }
 }
 
-@media (max-width: 440px) {
-  .btn-labour-action {
-    padding: 0 0.8rem;
-    font-size: 0.84rem;
+@media (max-width: 640px) {
+  .labour-bottom-bar {
+    padding: 0.55rem 0.75rem;
+    padding-bottom: calc(0.55rem + env(safe-area-inset-bottom, 0px));
+  }
+  .labour-bottom-bar__inner {
+    gap: 0.45rem;
+  }
+  .labour-total-pill {
+    min-width: 0;
+    max-width: 120px;
+    flex-shrink: 0;
+  }
+  .labour-total-pill__label {
+    font-size: 0.64rem;
+    letter-spacing: 0.2px;
   }
   .labour-total-pill__val {
-    font-size: 1.25rem;
+    font-size: 1.3rem;
+    line-height: 1.1;
+  }
+  .labour-total-pill__sub {
+    font-size: 0.68rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .labour-actions-group {
+    flex: 1;
+    min-width: 0;
+    gap: 0.4rem;
+    justify-content: flex-end;
+  }
+  .btn-labour-action {
+    height: 42px;
+    padding: 0 0.65rem;
+    font-size: 0.82rem;
+    gap: 0.35rem;
+    border-radius: 9px;
+    flex: 1;
+    min-width: 0;
+    max-width: 130px;
+    box-sizing: border-box;
+  }
+  .a4-voucher-modal-body {
+    padding: 0.85rem 0.65rem !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+  .voucher-preview-scroll-hint {
+    display: block !important;
+  }
+  .official-voucher-sheet {
+    min-width: 720px;
+    padding: 14px 16px !important;
+  }
+}
+
+@media (max-width: 440px) {
+  .labour-bottom-bar {
+    padding: 0.45rem 0.55rem;
+    padding-bottom: calc(0.45rem + env(safe-area-inset-bottom, 0px));
+  }
+  .labour-bottom-bar__inner {
+    gap: 0.35rem;
+  }
+  .labour-total-pill {
+    max-width: 105px;
+  }
+  .labour-total-pill__label {
+    font-size: 0.6rem;
+  }
+  .labour-total-pill__val {
+    font-size: 1.2rem;
+  }
+  .labour-total-pill__sub {
+    font-size: 0.64rem;
+  }
+  .labour-actions-group {
+    gap: 0.3rem;
+  }
+  .btn-labour-action {
+    height: 40px;
+    padding: 0 0.5rem;
+    font-size: 0.78rem;
+    gap: 0.25rem;
+    border-radius: 8px;
+    max-width: 115px;
+  }
+}
+
+@media (max-width: 360px) {
+  .labour-total-pill__label span {
+    display: none;
+  }
+  .btn-labour-action {
+    font-size: 0.74rem;
+    padding: 0 0.35rem;
   }
 }
 
@@ -1309,39 +1412,42 @@
 .a4-voucher-modal-body {
   padding: 1.5rem;
   overflow-y: auto;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   background: #f1f5f9;
 }
 
-/* The Exact A4 Document Sheet */
+/* The Exact A4 Document Sheet (Guaranteed 1 Single Page & Full Column Fit) */
 .official-voucher-sheet {
   background: #ffffff;
   color: #1e293b;
   width: 100%;
-  max-width: 800px;
+  max-width: 740px;
   margin: 0 auto;
-  padding: 26px 30px;
+  padding: 14px 16px;
+  box-sizing: border-box;
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
   border: 1.5px solid #cbd5e1;
   border-radius: 6px;
   font-family: 'Plus Jakarta Sans', Arial, sans-serif;
-  line-height: 1.35;
+  line-height: 1.25;
 }
 
 .ovs-header {
-  border-bottom: 2.5px solid #1e3a8a;
-  padding-bottom: 12px;
-  margin-bottom: 14px;
+  border-bottom: 2px solid #1e3a8a;
+  padding-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .ovs-header__top {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 0.75rem;
 }
 
 .ovs-header__brand-title {
-  font-size: 1.48rem;
+  font-size: 1.3rem;
   font-weight: 900;
   color: #0f172a;
   letter-spacing: -0.3px;
@@ -1350,49 +1456,50 @@
 }
 
 .ovs-header__brand-sub {
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   color: #475569;
   font-weight: 600;
-  margin-top: 3px;
+  margin-top: 2px;
 }
 
 .ovs-header__badge-box {
   text-align: right;
+  flex-shrink: 0;
 }
 
 .ovs-badge-official {
   background: #1e3a8a;
   color: #ffffff;
-  font-size: 0.68rem;
+  font-size: 0.64rem;
   font-weight: 900;
-  letter-spacing: 0.6px;
-  padding: 3px 10px;
+  letter-spacing: 0.5px;
+  padding: 2px 8px;
   border-radius: 4px;
   text-transform: uppercase;
   display: inline-block;
 }
 
 .ovs-bill-num {
-  font-size: 0.8rem;
+  font-size: 0.76rem;
   font-weight: 800;
   color: #0f172a;
-  margin-top: 4px;
+  margin-top: 3px;
   font-family: 'JetBrains Mono', monospace;
 }
 
 .ovs-doc-title {
-  font-size: 1.05rem;
+  font-size: 0.96rem;
   font-weight: 900;
   color: #1e3a8a;
   text-align: center;
-  margin-top: 8px;
+  margin-top: 6px;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.4px;
 }
 
 .ovs-doc-tamil {
   font-family: var(--font-tamil);
-  font-size: 0.82rem;
+  font-size: 0.76rem;
   color: #475569;
   text-align: center;
   font-weight: 700;
@@ -1402,43 +1509,49 @@
   background: #f8fafc;
   border: 1px solid #e2e8f0;
   border-radius: 6px;
-  padding: 10px 14px;
+  padding: 8px 10px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 8px 12px;
-  margin-bottom: 14px;
-  font-size: 0.78rem;
+  gap: 5px 10px;
+  margin-bottom: 10px;
+  font-size: 0.74rem;
+  box-sizing: border-box;
 }
 
 .ovs-meta-item strong {
   color: #64748b;
-  font-size: 0.68rem;
+  font-size: 0.62rem;
   text-transform: uppercase;
   display: block;
+  letter-spacing: 0.3px;
 }
 
 .ovs-meta-item span {
   color: #0f172a;
   font-weight: 800;
-  font-size: 0.84rem;
+  font-size: 0.78rem;
 }
 
 .ovs-table {
   width: 100%;
+  table-layout: fixed;
   border-collapse: collapse;
-  font-size: 0.76rem;
-  margin-bottom: 14px;
+  font-size: 0.7rem;
+  margin-bottom: 10px;
+  box-sizing: border-box;
 }
 
 .ovs-table th {
   background: #1e293b;
   color: #ffffff;
   font-weight: 800;
-  padding: 7px 6px;
+  padding: 5px 3px;
   text-align: center;
   border: 1px solid #334155;
-  font-size: 0.7rem;
-  line-height: 1.2;
+  font-size: 0.66rem;
+  line-height: 1.15;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 .ovs-table th small {
@@ -1446,15 +1559,21 @@
   display: block;
   font-weight: 500;
   color: #93c5fd;
-  font-size: 0.65rem;
+  font-size: 0.58rem;
+  line-height: 1.1;
 }
 
 .ovs-table td {
-  padding: 6px;
+  padding: 4px 3px;
   border: 1px solid #cbd5e1;
   text-align: center;
   color: #0f172a;
-  font-size: 0.75rem;
+  font-size: 0.68rem;
+  box-sizing: border-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+  line-height: 1.2;
 }
 
 .ovs-table td.text-left {
@@ -1464,6 +1583,7 @@
   text-align: right;
   font-family: 'JetBrains Mono', monospace;
   font-weight: 700;
+  font-size: 0.67rem;
 }
 
 .ovs-table tbody tr:nth-child(even) {
@@ -1474,74 +1594,76 @@
   background: #f1f5f9;
   font-weight: 900;
   border-top: 2px solid #0f172a;
-  border-bottom: 2.5px solid #0f172a;
-  font-size: 0.82rem;
+  border-bottom: 2px solid #0f172a;
+  font-size: 0.76rem;
 }
 
 .ovs-summary-box {
   display: grid;
   grid-template-columns: 1.5fr 1fr;
-  gap: 12px;
+  gap: 10px;
   background: #f8fafc;
   border: 1.5px solid #cbd5e1;
   border-radius: 6px;
-  padding: 12px 14px;
-  margin-bottom: 24px;
+  padding: 8px 12px;
+  margin-bottom: 12px;
+  box-sizing: border-box;
 }
 
 .ovs-words-col {
   border-right: 1px solid #cbd5e1;
-  padding-right: 12px;
+  padding-right: 10px;
 }
 
 .ovs-words-label {
-  font-size: 0.68rem;
+  font-size: 0.64rem;
   font-weight: 800;
   color: #64748b;
   text-transform: uppercase;
 }
 
 .ovs-words-val {
-  font-size: 0.88rem;
+  font-size: 0.82rem;
   font-weight: 800;
   color: #0f172a;
-  margin-top: 4px;
-  line-height: 1.3;
+  margin-top: 3px;
+  line-height: 1.25;
 }
 
 .ovs-totals-col {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
   text-align: right;
 }
 
 .ovs-tot-line {
   display: flex;
   justify-content: space-between;
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   color: #475569;
 }
 
 .ovs-tot-grand {
   display: flex;
   justify-content: space-between;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 900;
   color: #1e3a8a;
   border-top: 1.5px solid #cbd5e1;
-  padding-top: 4px;
-  margin-top: 4px;
+  padding-top: 3px;
+  margin-top: 2px;
   font-family: 'JetBrains Mono', monospace;
 }
 
 .ovs-signatures {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-top: 40px;
-  padding-top: 10px;
+  gap: 12px;
+  margin-top: 16px;
+  padding-top: 4px;
   text-align: center;
+  box-sizing: border-box;
 }
 
 .ovs-sig-block {
@@ -1553,29 +1675,29 @@
 .ovs-sig-line {
   width: 90%;
   border-top: 1.5px dashed #475569;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .ovs-sig-role {
-  font-size: 0.74rem;
+  font-size: 0.68rem;
   font-weight: 800;
   color: #0f172a;
 }
 
 .ovs-sig-tamil {
   font-family: var(--font-tamil);
-  font-size: 0.68rem;
+  font-size: 0.62rem;
   color: #64748b;
   font-weight: 600;
 }
 
 .ovs-footer-note {
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   color: #94a3b8;
   text-align: center;
-  margin-top: 22px;
+  margin-top: 10px;
   border-top: 1px solid #f1f5f9;
-  padding-top: 6px;
+  padding-top: 4px;
 }
 
 /* ==========================================================================
@@ -1642,3 +1764,26 @@
     page-break-after: avoid;
   }
 }
+
+/* Isolated Pristine Capture Container for Mobile & Desktop Single-Page PDF */
+#cleanA4CaptureWrapper {
+  position: fixed !important;
+  top: 0px !important;
+  left: 0px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+  background: #ffffff !important;
+  z-index: 9999999 !important;
+  overflow: visible !important;
+  pointer-events: none !important;
+}
+
+#cleanA4CaptureWrapper .official-voucher-sheet {
+  box-shadow: none !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+  border: 1.5px solid #cbd5e1 !important;
+  min-width: 0 !important;
+}
+

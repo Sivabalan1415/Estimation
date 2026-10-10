@@ -515,14 +515,11 @@
 
         <!-- Right: Actions Group -->
         <div class="labour-actions-group">
-          <button type="button" class="btn-labour-action btn-labour-preview" id="labourBtnPreview" title="Inspect A4 Statement voucher">
-            <span>👁️</span> Preview Bill
-          </button>
           <button type="button" class="btn-labour-action btn-labour-whatsapp" id="labourBtnWhatsApp" title="Share WhatsApp Summary">
             <span>💬</span> WhatsApp
           </button>
-          <button type="button" class="btn-labour-action btn-labour-pdf" id="labourBtnGetPdf" title="Download official A4 PDF bill">
-            <span>📥</span> Get PDF
+          <button type="button" class="btn-labour-action btn-labour-pdf" id="labourBtnGetPdf" title="Preview Bill & Download A4 PDF">
+            <span>📄</span> Preview / PDF
           </button>
         </div>
       </div>
@@ -539,20 +536,26 @@
         </div>
 
         <div class="a4-voucher-modal-body">
+          <div class="voucher-preview-scroll-hint" style="display:none; text-align:center; padding:6px 12px; margin-bottom:10px; background:#e0e7ff; color:#1e3a8a; border-radius:6px; font-size:0.75rem; font-weight:700;">
+            👈 Swipe horizontally to view full voucher (முழு அட்டவணையைப் பார்க்க இடது/வலது நகர்த்தவும்) 👉
+          </div>
           <div id="labourVoucherSheetContent">
             <!-- Rendered Official Single-Page A4 Sheet -->
           </div>
         </div>
 
-        <div class="modal-window__footer" style="background:#ffffff; border-top:1px solid #cbd5e1; padding:0.85rem 1.25rem;">
+        <div class="modal-window__footer" style="background:#ffffff; border-top:1px solid #cbd5e1; padding:0.85rem 1.25rem; display:flex; flex-wrap:wrap; gap:0.6rem; justify-content:flex-end;">
           <button type="button" class="btn-pdf-download" id="labourModalPdfBtn">
-            <span>📥</span> Download A4 PDF (பதிவிறக்கம்)
+            <span>📥</span> Download A4 PDF (Portrait)
+          </button>
+          <button type="button" class="btn-pdf-download" id="labourModalPdfLandscapeBtn" style="background: linear-gradient(135deg, #1d4ed8, #2563eb); box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);">
+            <span>📑</span> Landscape PDF (அகலம்)
           </button>
           <button type="button" class="btn-whatsapp-share" id="labourModalWaBtn">
             <span>💬</span> Share WhatsApp
           </button>
-          <button type="button" class="btn-back-edit" id="labourModalPrintBtn">
-            <span>🖨️</span> Print / பிரிண்ட்
+          <button type="button" class="btn-back-edit" id="labourModalBackBtn">
+            <span>←</span> Back / Edit
           </button>
         </div>
       </div>

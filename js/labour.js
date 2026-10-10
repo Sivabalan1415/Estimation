@@ -286,8 +286,10 @@
       // A4 Voucher Modal
       voucherModal: document.getElementById("labourVoucherModal"),
       voucherModalClose: document.getElementById("labourVoucherClose"),
+      voucherModalBackBtn: document.getElementById("labourModalBackBtn"),
       voucherSheetContent: document.getElementById("labourVoucherSheetContent"),
       voucherModalPdfBtn: document.getElementById("labourModalPdfBtn"),
+      voucherModalPdfLandscapeBtn: document.getElementById("labourModalPdfLandscapeBtn"),
       voucherModalPrintBtn: document.getElementById("labourModalPrintBtn"),
       voucherModalWaBtn: document.getElementById("labourModalWaBtn")
     };
@@ -602,17 +604,17 @@
         <table class="ovs-table">
           <thead>
             <tr>
-              <th style="width:30px;">S.No<small>வ.எண்</small></th>
-              <th style="width:110px;">Day<small>கிழமை</small></th>
-              <th style="width:75px;">Date<small>தேதி</small></th>
-              <th style="width:50px;">Labour<small>ஆட்கள்</small></th>
-              <th style="width:65px;">Rate<small>கூலி</small></th>
-              <th style="width:80px;">Labour Subtotal<small>தொழிலாளர் கூலி</small></th>
-              <th style="width:55px;">Machine<small>இயந்திரம்</small></th>
-              <th style="width:65px;">Rent<small>வாடகை</small></th>
-              <th style="width:80px;">Machine Subtotal<small>இயந்திர வாடகை</small></th>
-              <th style="width:85px;">Day Total<small>மொத்தத் தொகை</small></th>
-              <th>Remarks<small>குறிப்பு</small></th>
+              <th style="width: 4.5%;">S.No<small>வ.எண்</small></th>
+              <th style="width: 11%;">Day<small>கிழமை</small></th>
+              <th style="width: 10%;">Date<small>தேதி</small></th>
+              <th style="width: 5.8%;">Lab<small>ஆட்கள்</small></th>
+              <th style="width: 7.5%;">Rate<small>கூலி</small></th>
+              <th style="width: 9.8%;">Labour Sub<small>கூலி தொகை</small></th>
+              <th style="width: 5.8%;">Mch<small>இயந்திரம்</small></th>
+              <th style="width: 8.2%;">Rent<small>வாடகை</small></th>
+              <th style="width: 9.8%;">Machine Sub<small>வாடகை தொகை</small></th>
+              <th style="width: 11%;">Day Total<small>மொத்தத் தொகை</small></th>
+              <th style="width: 16.6%;">Remarks<small>குறிப்பு</small></th>
             </tr>
           </thead>
           <tbody>
@@ -980,60 +982,98 @@
     window.open(url, "_blank");
   }
 
-  // Client-Side PDF Download using html2pdf
-  function downloadA4PDF() {
+  // Client-Side PDF Download with Isolated Offscreen Capture (Zero Top White Space, Zero Cutoff)
+  function downloadA4PDF(orientation = "portrait") {
+    const isLandscape = orientation === "landscape";
+    const targetWidth = isLandscape ? 1040 : 740;
     const calc = computeTotals();
-    showLabourToast("Generating High-Resolution A4 PDF...", "info");
 
-    // Create an isolated container for pristine rendering
-    const printWrapper = document.createElement("div");
-    printWrapper.style.position = "absolute";
-    printWrapper.style.left = "-9999px";
-    printWrapper.style.top = "0";
-    printWrapper.style.width = "794px"; // Standard A4 pixel width at 96 DPI
-    printWrapper.style.background = "#ffffff";
-    printWrapper.innerHTML = generateVoucherHTML(calc);
-    document.body.appendChild(printWrapper);
+    showLabourToast(`Generating ${isLandscape ? "Landscape" : "Portrait"} A4 PDF... (தயாராகிறது...)`, "info");
 
-    const sheetElem = printWrapper.querySelector(".official-voucher-sheet");
+    // 1. Save scroll position
+    const savedScrollX = window.pageXOffset || document.documentElement.scrollLeft || 0;
+    const savedScrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+
+    // 2. Temporarily scroll window to top (0, 0)
+    // Mandatory on mobile browsers to prevent html2canvas adding top scroll whitespace
+    window.scrollTo(0, 0);
+
+    // 3. Create isolated capture container directly attached to document.body
+    const captureWrapper = document.createElement("div");
+    captureWrapper.id = "cleanA4CaptureWrapper";
+    captureWrapper.style.width = targetWidth + "px";
+    captureWrapper.style.minWidth = targetWidth + "px";
+    captureWrapper.style.maxWidth = targetWidth + "px";
+
+    // Inject fresh voucher HTML
+    captureWrapper.innerHTML = generateVoucherHTML(calc);
+
+    const sheet = captureWrapper.querySelector(".official-voucher-sheet");
+    if (sheet) {
+      sheet.style.width = targetWidth + "px";
+      sheet.style.minWidth = targetWidth + "px";
+      sheet.style.maxWidth = targetWidth + "px";
+      sheet.style.margin = "0";
+      sheet.style.padding = isLandscape ? "14px 20px" : "12px 14px";
+      sheet.style.boxSizing = "border-box";
+      sheet.style.border = "1.5px solid #cbd5e1";
+      sheet.style.borderRadius = "4px";
+      sheet.style.background = "#ffffff";
+    }
+
+    document.body.appendChild(captureWrapper);
 
     const sanitizedSite = (state.siteName || "Site").replace(/[^a-zA-Z0-9_-]/g, "_");
-    const filename = `Labour_Salary_Bill_${sanitizedSite}_${state.weekStartDate}.pdf`;
+    const filename = `Labour_Salary_Bill_${sanitizedSite}_${state.weekStartDate}_${orientation}.pdf`;
 
     const opt = {
-      margin: [8, 8, 8, 8],
+      margin: [4, 4, 4, 4],
       filename: filename,
       image: { type: "jpeg", quality: 0.98 },
       html2canvas: {
         scale: 2,
         useCORS: true,
         letterRendering: true,
-        logging: false
+        logging: false,
+        width: targetWidth,
+        windowWidth: targetWidth,
+        scrollX: 0,
+        scrollY: 0,
+        x: 0,
+        y: 0
       },
-      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
+      jsPDF: {
+        unit: "mm",
+        format: "a4",
+        orientation: isLandscape ? "landscape" : "portrait"
+      },
+      pagebreak: { mode: ["avoid-all", "css", "legacy"] }
+    };
+
+    const cleanup = () => {
+      if (captureWrapper && captureWrapper.parentNode) {
+        captureWrapper.parentNode.removeChild(captureWrapper);
+      }
+      window.scrollTo(savedScrollX, savedScrollY);
     };
 
     if (window.html2pdf) {
       window.html2pdf()
         .set(opt)
-        .from(sheetElem)
+        .from(sheet || captureWrapper)
         .save()
         .then(() => {
-          document.body.removeChild(printWrapper);
-          showLabourToast("PDF Voucher downloaded successfully!", "success");
+          cleanup();
+          showLabourToast("PDF Voucher downloaded successfully! ✓ (பதிவிறக்கம் முடிந்தது)", "success");
         })
         .catch((err) => {
+          cleanup();
           console.error("PDF generation error:", err);
-          document.body.removeChild(printWrapper);
-          // Fallback to window.print() if html2pdf fails
-          openVoucherModal();
-          window.print();
+          showLabourToast("PDF download failed, please retry", "warning");
         });
     } else {
-      // Fallback
-      document.body.removeChild(printWrapper);
-      openVoucherModal();
-      window.print();
+      cleanup();
+      showLabourToast("PDF generator loading, please wait a moment...", "warning");
     }
   }
 
@@ -1095,13 +1135,34 @@
     }
 
     if (labourDOM.btnWhatsApp) labourDOM.btnWhatsApp.addEventListener("click", shareOnWhatsApp);
-    if (labourDOM.btnGetPdf) labourDOM.btnGetPdf.addEventListener("click", downloadA4PDF);
+    
+    // Clicking "Preview / PDF" on bottom bar opens the preview modal first (just like Estimation!)
+    if (labourDOM.btnGetPdf) labourDOM.btnGetPdf.addEventListener("click", openVoucherModal);
     if (labourDOM.btnPreview) labourDOM.btnPreview.addEventListener("click", openVoucherModal);
 
+    // Modal controls
     if (labourDOM.voucherModalClose) labourDOM.voucherModalClose.addEventListener("click", closeVoucherModal);
-    if (labourDOM.voucherModalPdfBtn) labourDOM.voucherModalPdfBtn.addEventListener("click", downloadA4PDF);
+    if (labourDOM.voucherModalBackBtn) labourDOM.voucherModalBackBtn.addEventListener("click", closeVoucherModal);
+    if (labourDOM.voucherModalPdfBtn) labourDOM.voucherModalPdfBtn.addEventListener("click", () => downloadA4PDF("portrait"));
+    if (labourDOM.voucherModalPdfLandscapeBtn) labourDOM.voucherModalPdfLandscapeBtn.addEventListener("click", () => downloadA4PDF("landscape"));
     if (labourDOM.voucherModalPrintBtn) labourDOM.voucherModalPrintBtn.addEventListener("click", printVoucherNative);
     if (labourDOM.voucherModalWaBtn) labourDOM.voucherModalWaBtn.addEventListener("click", shareOnWhatsApp);
+
+    // Close on backdrop click
+    if (labourDOM.voucherModal) {
+      labourDOM.voucherModal.addEventListener("click", (e) => {
+        if (e.target === labourDOM.voucherModal) {
+          closeVoucherModal();
+        }
+      });
+    }
+
+    // Escape key closes modal
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && labourDOM.voucherModal?.classList.contains("modal-backdrop--open")) {
+        closeVoucherModal();
+      }
+    });
   }
 
   // Initialize Module
